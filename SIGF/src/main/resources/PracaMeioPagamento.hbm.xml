@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.compsis.sigf.domain.PracaMeioPagamento" table="praca_meio_pgto">
+    <id column="id" name="id" type="integer">
+        <generator class="increment" />
+    </id>
+    <property name="codPracaLocal" column="cod_praca_local_mp" type="string" />  
+    <many-to-one name="meioPagto" column="id_meiopgto" class="com.compsis.sigf.domain.MeioPagamento" cascade="all" lazy="false" not-null="false" />
+    <many-to-one name="praca" column="id_praca" class="com.compsis.sigf.domain.Praca" cascade="all" lazy="false" not-null="false"  />
+  </class>
+</hibernate-mapping>
