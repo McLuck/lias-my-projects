@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.compsis.sigf.domain.MeioPagamento" table="meiopagamento">
+    <id column="id" name="id" type="integer">
+      <generator class="increment"/>
+    </id>
+    <property name="configContato"/>
+    <property name="configEquipamento"/>
+    <property name="configuracao"/>
+    <property name="habilitado"/>
+    <property name="nome"/>
+    <property name="obs"/>
+    <property name="scriptsDependentes" />
+    <property name="idgestor" />
+    <property name="iddesignacao" />
+    <property name="idmeiopagtotarifa" />
+    <property name="programartarifa" />
+    <property name="posScripts" />
+    <property name="alteravel" />
+    <many-to-one cascade="merge" class="com.compsis.sigf.domain.ConfigContato" column="contato_id" insert="true" fetch="join" lazy="false" name="contato" not-null="false" update="true"/>
+    <many-to-one cascade="merge" class="com.compsis.sigf.domain.ConfigEquipamento" column="equipamento_id" insert="true" fetch="join"  lazy="false" name="equipamento" not-null="false" update="true"/>
+    <many-to-one cascade="merge" class="com.compsis.sigf.domain.Concessionaria" column="concessionaria_id" lazy="false" name="concessionaria" not-null="false"/>
+    
+    <list cascade="all-delete-orphan" inverse="true" lazy="false" name="pracaMeiosPagamentos" table="praca_meio_pgto">
+      <key column="id_meiopgto"/>
+      <index column="id" type="integer"/>
+      <one-to-many class="com.compsis.sigf.domain.PracaMeioPagamento"/>
+    </list>
+  </class>
+</hibernate-mapping>

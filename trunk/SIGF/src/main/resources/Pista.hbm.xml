@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.compsis.sigf.domain.Pista" table="pista">
+    <id column="id" name="id" type="integer">
+      <generator class="increment"/>
+    </id>
+    <property name="idLocalizacao"/>
+    <property name="ipMaquina"/>
+    <property name="nomeMaquina"/>
+    <property name="sentido"/>
+    <property name="tipo"/>
+    <property name="numeroPista"/>
+    <property name="descricao"/>
+    <many-to-one cascade="merge" class="com.compsis.sigf.domain.Praca" column="praca_id" lazy="false" name="praca" not-null="true"/>
+  </class>
+</hibernate-mapping>

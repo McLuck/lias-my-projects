@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.compsis.sigf.domain.ConfiguracaoPraca" table="configuracao_praca">
+    <id column="id" name="id" type="integer">
+      <generator class="increment"/>
+    </id>
+    <property name="cobrancaEixo"/>
+    <property name="comunicacaoNobreak"/>
+    <property name="cvAlarmeMudancaTarifa"/>
+    <property name="cvAlarmePanico"/>
+    <property name="cvAlarmeViolacao"/>
+    <property name="cvClassificaArmazenaSA"/>
+    <property name="cvDesOutrosAlarmes"/>
+    <property name="cvFechamentoQTO"/>
+    <property name="cvFechamentoRefeicao"/>
+    <property name="cvIgnorarFalhaEquipamento"/>
+    <property name="cvIgnorarManutencao"/>
+    <property name="cvIgnorarMarchaRe"/>
+    <property name="cvModelo"/>
+    <property name="cvOutrosAlarmes"/>
+    <property name="cvTrocaPista"/>
+    <property name="detectEixoSuspenso"/>
+    <property name="detectJuntoEixoChao"/>
+    <property name="nobreakMarca"/>
+    <property name="operacaoSimultaneaAntena"/>
+    <property name="sensorAVI"/>
+    <property name="sensorPistManual"/>
+    <property name="sensorPistMoto"/>
+    <list cascade="all" inverse="true" lazy="false" name="antenaPista" table="antenapista">
+      <key column="config_praca_id"/>
+      <index column="id"/>
+      <one-to-many class="com.compsis.sigf.domain.AntenaPista"/>
+    </list>
+  </class>
+</hibernate-mapping>
