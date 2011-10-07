@@ -159,6 +159,8 @@ var JQD = (function($, window, document, undefined) {
           JQD.util.window_flat();
           $(y).addClass('window_stack').show();
           $("#frameDataContent").html("");
+          $("#prc_lateral").html("");
+          $("#tab_ConfigPracas").html("");
           
           
           
@@ -168,16 +170,32 @@ var JQD = (function($, window, document, undefined) {
           if (!win.hasClass('window_full')) {
         	  JQD.util.window_resize($('div.window'));
           }
-          $.get('dadosGerais.htm?cid=3',
-        			{async:   false},
-        	  		function (response) {        	
-        				var div = document.createElement("div");
-                        div.innerHTML = response;
-                        document.getElementById("frameDataContent").appendChild(div);
-                        $('#htabtolinks').tabs();
-                        ogn('dadosgeraisconcessionaria');
-        	  		}
-        	  	);
+          var cid = $("#_cid").val();
+          try{
+        	  $.get('dadosGerais.htm?cid='+cid,
+          			{async:   false},
+          	  		function (response) {        	
+          				var div = document.createElement("div");
+                          div.innerHTML = response;
+                          document.getElementById("frameDataContent").appendChild(div);
+                          $('#htabtolinks').tabs();
+                          ogn('dadosgeraisconcessionaria');
+          	  		}
+          	  	);  
+          }catch(e){}
+          
+
+          try{
+        	  $.get('listar_pracas.htm?cmd=getPracas&cid='+cid,
+            		  {async:   false},
+            		  function (response) {        	
+            			  var div = document.createElement("div");
+            			  div.innerHTML = response;
+            			  document.getElementById("prc_lateral").appendChild(div);
+            		  }
+              );  
+          }catch(e){}
+          
         }).live('mouseenter', function() {
           $(this).die('mouseenter').draggable({
             revert: true,
@@ -278,7 +296,7 @@ var JQD = (function($, window, document, undefined) {
       wallpaper: function() {
         // Add wallpaper last, to prevent blocking.
         if ($('#desktop').length) {
-          $('body').prepend('<img id="wallpaper" class="abs" src="assets/images/misc/headerHome.png" />');
+          $('body').prepend('<img id="wallpaper" class="abs" src="images/bkg/bkg0.jpg" />');
         }
       }
     },
@@ -350,3 +368,7 @@ var JQD = (function($, window, document, undefined) {
 jQuery(document).ready(function() {
   JQD.go();
 });
+
+function changeWallpaper(urlimg){
+	$("#wallpaper").attr("src", urlimg);
+}

@@ -1,5 +1,10 @@
 <%@include file="include_htab2.jsp"%>
-<title>Sort Table</title>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#htabs3").tabs();
+	});
+</script>
 </head>
 <body>
     <div id="htabs3" class="teste">

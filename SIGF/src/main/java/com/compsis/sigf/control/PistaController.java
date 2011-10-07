@@ -2,9 +2,11 @@ package com.compsis.sigf.control;
 
 import javax.servlet.http.HttpServletRequest;
 import com.compsis.sigf.dao.AFactoryDao;
+import com.compsis.sigf.dao.ConcessionariaDAO;
 import com.compsis.sigf.dao.PistaDAO;
 import com.compsis.sigf.dao.PracaDAO;
 import com.compsis.sigf.domain.BASE;
+import com.compsis.sigf.domain.Concessionaria;
 import com.compsis.sigf.domain.Pista;
 import com.compsis.sigf.domain.Praca;
 
@@ -54,6 +56,16 @@ public class PistaController extends SimpleFormController {
             psDao.salvar(pista);
             psDao.commit();
             psDao.close();
+            
+            if(pista.getTipo()==BASE.TIPOS.TIPO_PISTA_AUTOMATICA && praca!=null && praca.getConcessionaria()!=null){
+            	Concessionaria conc = praca.getConcessionaria();
+            	conc.setExisteAVI(true);
+            	ConcessionariaDAO cdao = (ConcessionariaDAO)AFactoryDao.getInstance(ConcessionariaDAO.class);
+            	cdao.atualizar(conc);
+            	cdao.commit();
+            	cdao.close();
+            }
+            
             mav = new ModelAndView("frames/success");
         } else {
             mav = new ModelAndView("frames/error");

@@ -5,9 +5,11 @@
 package teste;
 
 import com.compsis.sigf.dao.AFactoryDao;
+import com.compsis.sigf.dao.BaseDAO;
 import com.compsis.sigf.dao.TabelaDAO;
 import com.compsis.sigf.dao.VersaoDAO;
 import com.compsis.sigf.domain.Campo;
+import com.compsis.sigf.domain.DomainObject;
 import com.compsis.sigf.domain.Tabela;
 import com.compsis.sigf.domain.Versao;
 
@@ -21,6 +23,7 @@ import java.util.TreeSet;
 public class TesteHB2 {
 
     public static void main(String... ar) {
+    	
         VersaoDAO vdao = (VersaoDAO) AFactoryDao.getInstance(VersaoDAO.class);;
         Versao v = new Versao();
         v.setNome("Teste Cascata");

@@ -18,6 +18,7 @@
     <property name="nome"/>
     <property name="numeroCliente"/>
     <property name="numeroPais"/>
+    <property name="existeAVI"/>
     <property name="operacaoSA"/>
     <property name="origemNomeArquivo"/>
     <property name="percentCorrecaoAutoCatAmb"/>

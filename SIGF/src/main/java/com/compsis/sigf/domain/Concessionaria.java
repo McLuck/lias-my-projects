@@ -14,8 +14,16 @@ public class Concessionaria extends DomainObject implements Serializable, Replic
     private String phase;
     private String nome, cnpj, calculoCatEspecialOutro;
     private String link1, link2, capacidadeLink1, capacidadeLink2;
-    private boolean categoriaAmbigua, correcaoAutomaticaCatAmbigua, exibirDescricaoPracaRelatorios;
-    private int operacaoSA, calculoCatEspecial, percentCorrecaoAutoCatAmb, numeroCliente, numeroPais, origemNomeArquivo;
+    private boolean categoriaAmbigua, correcaoAutomaticaCatAmbigua, exibirDescricaoPracaRelatorios, existeAVI;
+    public boolean isExisteAVI() {
+		return existeAVI;
+	}
+
+	public void setExisteAVI(boolean existeAVI) {
+		this.existeAVI = existeAVI;
+	}
+
+	private int operacaoSA, calculoCatEspecial, percentCorrecaoAutoCatAmb, numeroCliente, numeroPais, origemNomeArquivo;
     private ConfigAcesso configuracaAcesso;
 
     private Malote configMalote;
