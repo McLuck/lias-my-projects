@@ -355,11 +355,13 @@ function goExport(cid) {
 
 function saveConfigSensores() {
 	var params = $("#form_geoSensores").serialize();
-
+	params+="&c=submit";
+	//$('#nobreakMarca').val(params);
+	//params='cid=3&nobreakMarca=APC+2asaas&pracaid=1&pid=1&phase=1&id=1&comunicacaoNobreak=true&_comunicacaoNobreak=on&_operacaoSimultaneaAntena=on&_cvAlarmeViolacao=on&_cvAlarmeMudancaTarifa=on&_cvAlarmePanico=on&_cvOutrosAlarmes=on&cvDesOutrosAlarmes=0&cvModelo=1&_cvClassificaArmazenaSA=on&_cvFechamentoFimTurno=on&_cvFechamentoRefeicao=on&_cvTrocaPista=on&_cvFechamentoQTO=on&_cvIgnorarFalhaEquipamento=on&_cvIgnorarMarchaRe=on&_cvIgnorarManutencao=on&sensorAVI=1&sensorPistManual=1&sensorPistMoto=1&_detectEixoSuspenso=on&_detectJuntoEixoChao=on&c=submit';
 	$.ajax({
-		url : "formConfigPracaCV.htm?c=submit",
+		url : "formConfigPracaCV.htm",
 		data : params,
-		type : "post",
+		type : 'post',
 		dataType : "html",
 		contentType : 'application/x-www-form-urlencoded; charset=ISO-8859-1',
 		success : function(data) {
@@ -419,12 +421,12 @@ $(function() {
 });
 
 function clonaConcessionaria(id) {
-	var nome = window.prompt("Digite o nome da nova versão.", "(CLONE)");
+	var nome = window.prompt("Digite o nome da nova versao.", "(CLONE)");
 	if (nome == null || nome.length < 3) {
-		alert("Nome não foi aceito. Deve ter no mínimo 3 caracteres.\nOperação cancelada!");
+		alert("Nome nao foi aceito. Deve ter no minimo 3 caracteres.\nOperacao cancelada!");
 		return;
 	}
-	var msg = "Você irá clonar um registro com todas suas dependências no banco de dados.\nTem certeza que deseja continuar?";
+	var msg = "Voce ira clonar um registro com todas suas dependecias no banco de dados.\nTem certeza que deseja continuar?";
 	if (!window.confirm(msg)) {
 		return;
 	}
@@ -643,6 +645,9 @@ function saveRelatorios(cid) {
 }
 
 function saveFuncionalidades(cid) {
+	if(cid==null){
+		cid = $("#_cid").val();
+	}
 	var params = $("#form_funcionalidades").serialize() + "&cid=" + cid;
 	var type = "html";
 	$.ajax({

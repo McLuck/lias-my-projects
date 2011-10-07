@@ -61,6 +61,7 @@ public class AFactoryDao {
             }
         }
     }
+    
     public static void CLEAR_ALL(){
         L.d(AFactoryDao.class.getName() , "Impando CACHE...");
         if(mapa!=null){

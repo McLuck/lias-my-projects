@@ -4,6 +4,7 @@ import com.compsis.sigf.base.BaseTemp;
 import com.compsis.sigf.dao.AFactoryDao;
 import com.compsis.sigf.dao.ConcessionariaDAO;
 import com.compsis.sigf.domain.Arrecadacao;
+import com.compsis.sigf.domain.BASE.TIPOS;
 import com.compsis.sigf.domain.Concessionaria;
 import com.compsis.sigf.domain.ConfiguracaoImagem;
 import com.compsis.sigf.domain.Malote;
@@ -33,6 +34,27 @@ public class Geral extends SimpleFormController implements Controller {
     private Concessionaria conc;
     public static final String CONC_SESSAO = "CurrentConcessionariaSession";
     private ConcessionariaDAO cdao = (ConcessionariaDAO) AFactoryDao.getInstance(ConcessionariaDAO.class);
+    
+    public static synchronized boolean temAVI(Concessionaria concessionaria){
+		if(concessionaria!=null){
+			if(concessionaria.getPracas()!=null && !concessionaria.getPracas().isEmpty()){
+				for(Praca pr : concessionaria.getPracas()){
+					if(pr!=null){
+						if(pr.getPistas()!=null && !pr.getPistas().isEmpty()){
+							for(Pista ps : pr.getPistas()){
+								if(ps!=null){
+									if(ps.getTipo() == TIPOS.TIPO_PISTA_AUTOMATICA){
+										return true;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+    	return false;
+    }
     
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -21,7 +21,6 @@ import org.hibernate.criterion.Order;
  */
 public abstract class BaseDAO<T extends DomainObject> implements BaseInterfaceDAO<T> {
     protected String TAG = "DAO";
-    private SessionFactory sessionFactory;
     private Class<T> domainObject;
     protected HB hibernateUtil;
     protected boolean isLOGGING = false;
@@ -79,7 +78,7 @@ public abstract class BaseDAO<T extends DomainObject> implements BaseInterfaceDA
         this.domainObject = domainObject;
         this.hibernateUtil = HB.getInstancia();
     }
-
+    
     public void close() {
         L.d(TAG, "Close Session.");
         try {
@@ -173,14 +172,6 @@ public abstract class BaseDAO<T extends DomainObject> implements BaseInterfaceDA
         this.hibernateUtil = hibernateUtil;
     }
 
-    /**
-     * Atribui a fabrica de sessoes do hibernate.
-     *
-     * @param sessionFactory fabrica de sessoes do hibernate
-     */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     /**
      * Adiciona paginacoo a consulta.

@@ -25,6 +25,7 @@
     <property name="nobreakMarca"/>
     <property name="operacaoSimultaneaAntena"/>
     <property name="sensorAVI"/>
+    <property name="cvFechamentoFimTurno"/>
     <property name="sensorPistManual"/>
     <property name="sensorPistMoto"/>
     <list cascade="all" inverse="true" lazy="false" name="antenaPista" table="antenapista">

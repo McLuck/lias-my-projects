@@ -97,3 +97,61 @@ function tratarTituloGeral(name){
 		}
     }
 }
+
+function ogn_prc(id){
+	//zerar link aberto
+	zerarLinksPrx();
+	
+	//Altera a cor do link
+	$("#li_prc_prc"+id).animate({ backgroundColor: "#999" }, "fast");
+	prc_last_id = id;
+	
+	//Carrega Conteudo Praca
+	var pid = id;
+	var cid = $("#cidd").val();
+	var url = "formConfigPracaCV.htm?pid=" + pid + "&cid=" + cid;
+	if (pid != null && pid != "" && pid != undefined) {
+		var data = "<iframe src='"+url+"' id='praca_prc' name='praca_prc' style='border:none;' scrolling='no'  height='500px' frameborder='0' width='99%'>Seu navegador nao suporta a tecnologia</iframe>";
+		$("#tab_ConfigPracas").html(data);
+	}
+}
+
+var prc_last_id = 0;
+function zerarLinksPrx(){
+	try{
+		$("#li_prc_prc"+prc_last_id).animate({ backgroundColor: "#E9E9E6" }, "fast");
+	}catch(e){}
+}
+
+
+var tabscfg = new Array("tabRelatorio", "tabs-1", "tabs-3", "tabs-5", "rec_divida");
+
+function loadConfigGeral(name){
+	var id = $("#_cid").val();
+	for(var i=0;i<tabscfg.length;i++){
+		if(tabscfg[i]==name){
+			$("#li_"+name).animate({ backgroundColor: "#999" }, "fast");
+			document.getElementById(name).style.display = "block";
+			if(name=="tabs-1"){
+				loadConfigAcesso(id);
+			}else if(name=="tabRelatorio"){
+				loadRelatorios(id);
+			}else if(name=="tabs-5"){
+				loadFuncionalidades(id);
+				try{
+					$('#table_funcionalidades').dataTable();
+				}catch(e){}
+			}
+		}else{
+			try{
+				document.getElementById(tabscfg[i]).style.display = "none";
+			}catch(e){}
+			try{
+				$("#li_"+tabscfg[i]).animate({ backgroundColor: "#E9E9E6" }, "fast");
+			}catch(e){}
+		}
+	}
+}
+
+
+

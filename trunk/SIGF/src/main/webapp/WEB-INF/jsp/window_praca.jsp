@@ -15,7 +15,7 @@
 <script src="js/jquery.js"></script>
 </head>
 <body>
-	<label>Selecione a praça que deseja editar</label>
+	<%-- <label>Selecione a praça que deseja editar</label>
 	<select onchange="loadPraca();" onclick="loadPraca();"
 		id="select_praca_for_config">
 		<option value="0">&nbsp;</option>
@@ -30,6 +30,18 @@
 		<iframe src="formConfigPracaCV.htm?pid=${pc.id}&cid=${cid}" style="border: none; display: none;"
 					scrolling="no" height="600px" frameborder="0" width="700px"
 					id="ifrm${pc.id}" class="frm_hide"	name="ifrm${pc.id}"> Seu navegador não suporta Frames </iframe>
-	</c:forEach>
+	</c:forEach> --%>
+	
+	
+	
+	
+	<ul>
+    	<c:forEach items="${pracas}" var="pc">
+	    	<li id="li_prc_prc${pc.id}">
+	    		<a href="#" onclick="ogn_prc(${pc.id});">${pc.nome}</a>
+	    	</li>
+    	</c:forEach>
+    </ul>
+    <input type="hidden" name="cidd" id="cidd" value="${cid}" />
 </body>
 </html>
