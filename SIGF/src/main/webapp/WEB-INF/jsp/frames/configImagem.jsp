@@ -73,8 +73,8 @@
 				Qual será a estrutura dos diretórios na qual serão armazenadas as
 				imagens?<br />
 				<form:select path="confimg.estruturaDiretorio">
-					<form:option value="1" label="aaaamm\ddhh" />
-					<form:option value="2" label="aaaa\mm\dd\hh" />
+					<form:option value="0" label="aaaamm\ddhh" />
+					<form:option value="1" label="aaaa\mm\dd\hh" />
 				</form:select>
 			</div>
 

@@ -197,7 +197,7 @@ public class TabelaDAO extends BaseDAO<Tabela> {
     private String getSelect(int vid, String ids){
         ids = ids.replace(" ", "").trim().replace(",,", ",");
         StringBuffer sb = new StringBuffer();
-        sb.append("select t.id as id, t.nome, t.ordem as ordem, cqry.nome, cqry.valor as valor from tcampo cFiltro, ttabela t, tcampo cqry where t.id = cFiltro.tabela_id and t.id = cqry.tabela_id and cFiltro.nome = \"idfuncionalidade\" AND  cFiltro.valor not in (");
+        sb.append("select t.id as id, t.nome, t.ordem as ordem, cqry.nomecampo, cqry.valor as valor from tcampo cFiltro, ttabela t, tcampo cqry where t.id = cFiltro.tabela_id and t.id = cqry.tabela_id and cFiltro.nomecampo = \"idfuncionalidade\" AND  cFiltro.valor not in (");
         sb.append(ids);
         sb.append(") AND t.versao_id = ");
         sb.append(vid);

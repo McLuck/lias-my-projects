@@ -163,7 +163,6 @@ var JQD = (function($, window, document, undefined) {
           $("#tab_ConfigPracas").html("");
           
           
-          
           var win = $($('div.window')).closest('div.window');
 
           // Is it maximized already?
@@ -180,6 +179,9 @@ var JQD = (function($, window, document, undefined) {
                           document.getElementById("frameDataContent").appendChild(div);
                           $('#htabtolinks').tabs();
                           ogn('dadosgeraisconcessionaria');
+                          try{
+                        	  carregado = false;
+                          }catch(e){}
           	  		}
           	  	);  
           }catch(e){}
@@ -269,6 +271,10 @@ var JQD = (function($, window, document, undefined) {
         $('a.window_close').live('click', function() {
           $(this).closest('div.window').hide();
           $($(this).attr('href')).hide('fast');
+          try{
+        	  //nula variaveis das janelas
+        	  hideFrameOptions();
+          }catch(e){}
         });
 
         // Show desktop button, ala Windows OS.

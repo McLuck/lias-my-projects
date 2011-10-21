@@ -20,13 +20,19 @@
     <property name="numeroPais"/>
     <property name="existeAVI"/>
     <property name="operacaoSA"/>
+    <property name="textoTermoDivida"/>
+    <property name="imprimirTermoDivida"/>
     <property name="origemNomeArquivo"/>
+    <property name="anosEstimativaTrafego"/>
     <property name="percentCorrecaoAutoCatAmb"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.Malote" column="malote_id" lazy="false" name="configMalote" not-null="true"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.ServidorBD" column="serverbd_id" lazy="false" name="servidorBD" not-null="true"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.Arrecadacao" column="arrecadacao_id" lazy="false" name="configArrecadacao" not-null="true"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.ConfiguracaoImagem" column="config_img_id" lazy="false" name="configImagem" not-null="false"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.ConfigAcesso" column="configAcesso_id" lazy="false" name="configuracaAcesso" not-null="false"/>
+
+    <many-to-one cascade="merge" class="com.compsis.sigf.domain.MotivoFechamentoPista" column="motivofechamento_id" lazy="false" name="motivoFechamento" not-null="false"/>
+    
     <!--one-to-one cascade="merge" class="com.compsis.sigf.domain.ConfiguracaoImagem" constrained="true" name="configImagem" lazy="false" foreign-key="config_img_id"/-->
     <list cascade="all-delete-orphan" inverse="true" lazy="false" name="pracas" table="praca">
       <key column="concessionaria_id"/>

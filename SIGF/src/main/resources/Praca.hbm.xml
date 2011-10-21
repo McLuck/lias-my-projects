@@ -9,24 +9,30 @@
     <property name="cnpj"/>
     <property name="descricao"/>
     <property name="distanciaCCA"/>
-    <property name="localizacoes"/>
-    <property name="sentido1"/>
-    <property name="sentido2"/>
-    <property name="siglaSentido1"/>
-    <property name="siglaSentido2"/>
+    
     <property name="trafegoEstimado"/>
     <property name="numeroPraca"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.ConfiguracaoPraca" column="config_praca_id" insert="true" lazy="false" name="configuracao" not-null="true" update="true"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.Concessionaria" column="concessionaria_id" lazy="false" name="concessionaria" not-null="true"/>
-    <list cascade="all" inverse="true" lazy="false" name="pistas" table="pista">
+    
+    <!-- <list cascade="all" inverse="true" lazy="false" name="pistas" table="pista">
       <key column="praca_id"/>
       <index column="id" type="integer"/>
       <one-to-many class="com.compsis.sigf.domain.Pista"/>
+    </list> -->
+    
+    <list cascade="all" inverse="true" lazy="false" name="localizacoes" table="localizacao">
+      <key column="praca_id"/>
+      <index column="id" type="integer"/>
+      <one-to-many class="com.compsis.sigf.domain.Localizacao"/>
     </list>
+    
+    
     <list cascade="all-delete-orphan" inverse="true" lazy="false" name="pracaMeiosPgto" table="praca_meio_pgto">
-      <key column="id_praca"/>
+      <key column="praca_id"/>
       <index column="id" type="integer"/>
       <one-to-many class="com.compsis.sigf.domain.PracaMeioPagamento"/>
     </list>
+ 
   </class>
 </hibernate-mapping>

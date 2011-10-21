@@ -1,6 +1,6 @@
 /**
-             * retorna a posicao X do elemento
-             */
+ * retorna a posicao X do elemento
+ */
 function pX(objeto){
     var atual_left = 0;
     if (objeto.offsetParent) {
@@ -31,9 +31,10 @@ function loadTrsPraca(cid){
 	});
 }
 
+
 /**
-             * retorna a posicao Y do elemento
-             */
+ * retorna a posicao Y do elemento
+ */
 function pY(objeto)
 {
     var atual_top = 0;
@@ -62,16 +63,83 @@ function openDadosGeral (i){
 
 function ogn(name){
 	hideAllDados();
-    document.getElementById(name).style.display = "block";
+	document.getElementById(name).style.display = "block";
+	
     tratarTituloGeral(name);
     tratarLink(name);
+}
+function loadCategFromTab(){
+	var cid = $("#cid").val();
+	loadCATEGsTable(cid);
 }
 
 function ogn(name, cid){
 	hideAllDados();
-    document.getElementById(name).style.display = "block";
+	document.getElementById(name).style.display = "block";
+	if(name=="dadosgeraiscategorias"){
+		try{
+			loadCategFromTab();
+		}catch(e){}
+	}
     tratarTituloGeral(name);
     tratarLink(name);
+}
+
+var tempRowSelected = null;
+var idRegistro = null;
+function clickRow(elem, idReg){
+	idRegistro = idReg;
+	if(tempRowSelected!=null){
+		try{
+			if(tempRowSelected==elem){
+				hideFrameOptions();
+				$(tempRowSelected).removeClass('row_selected');
+				tempRowSelected = null;
+				return;
+			}else{
+				$(tempRowSelected).removeClass('row_selected');
+			}
+		}catch(e){}
+	}
+	$(elem).addClass('row_selected');
+	tempRowSelected = elem;
+	showFrameOptions();
+}
+
+var tempOptions = null;
+function showFrameOptions(){
+	if(tempOptions!=null){
+		return;
+	}
+	tempOptions = $("#opcoesEffects");// .show("blind");
+	$(tempOptions).show("fade"); 
+	
+}
+function hideFrameOptions(){
+	if(tempOptions==null){
+		return;
+	}
+	$(tempOptions).hide("fade");
+	tempOptions = null;
+}
+
+function deletePraca(cid){
+	if(!CONFIRMA_EXCLUSAO()){
+		return;
+	}
+	try{
+		$.ajax({
+	        url : "gerenciarPracasCompleta.htm?cid="+cid+"&cmd=del&dominio=praca&pracaid="+idRegistro,
+	        type: "get",
+	        async : true,
+	        contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1' ,
+	        success : function(data) {
+	        	$(tempRowSelected).remove();
+	        	hideFrameOptions(); 
+	        	$("#dialogApagar1").dialog({ closeOnEscape: true})
+	        }
+	    });
+	}catch(e){}
 }
 
 function tratarLink(name){
@@ -99,14 +167,14 @@ function tratarTituloGeral(name){
 }
 
 function ogn_prc(id){
-	//zerar link aberto
+	// zerar link aberto
 	zerarLinksPrx();
 	
-	//Altera a cor do link
+	// Altera a cor do link
 	$("#li_prc_prc"+id).animate({ backgroundColor: "#999" }, "fast");
 	prc_last_id = id;
 	
-	//Carrega Conteudo Praca
+	// Carrega Conteudo Praca
 	var pid = id;
 	var cid = $("#cidd").val();
 	var url = "formConfigPracaCV.htm?pid=" + pid + "&cid=" + cid;
@@ -124,7 +192,7 @@ function zerarLinksPrx(){
 }
 
 
-var tabscfg = new Array("tabRelatorio", "tabs-1", "tabs-3", "tabs-5", "rec_divida");
+var tabscfg = new Array("tabRelatorio", "tabs-1", "tabs-3", "rec_dividass", "tabs-5");
 
 function loadConfigGeral(name){
 	var id = $("#_cid").val();
@@ -136,6 +204,8 @@ function loadConfigGeral(name){
 				loadConfigAcesso(id);
 			}else if(name=="tabRelatorio"){
 				loadRelatorios(id);
+			}else if(name=="rec_dividass"){
+				loadConfigDividaTermo(id);
 			}else if(name=="tabs-5"){
 				loadFuncionalidades(id);
 				try{
@@ -147,7 +217,7 @@ function loadConfigGeral(name){
 				document.getElementById(tabscfg[i]).style.display = "none";
 			}catch(e){}
 			try{
-				$("#li_"+tabscfg[i]).animate({ backgroundColor: "#E9E9E6" }, "fast");
+				$("#li_"+(tabscfg[i])).animate({ backgroundColor: "#E9E9E6" }, "fast");
 			}catch(e){}
 		}
 	}
@@ -155,3 +225,140 @@ function loadConfigGeral(name){
 
 
 
+function loadConfigDividaTermo(cid){
+    $.ajax({
+        url : "config_geral.htm?cmd=configGeral&cid="+cid,
+        type: "get",
+        async : true,
+        contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1' ,
+        success : function(data) {
+            $("#framRecDivida").html(data);
+        }
+    });
+}
+
+function addEventChangeLocal(pistaid){
+	$("#desc_loc_pista"+pistaid).change(function () {
+		carregarSentidosDoLocal(pistaid);
+      }).trigger('change');
+}
+
+function proximoCampo(ele, e){
+	try{
+		if (!e) var e = window.event
+		if (e.keyCode) code = e.keyCode;
+		else if (e.which) code = e.which;
+		
+		//ENTER E TAB redirecionam para o proximo campos
+		if(code==9 || code == 13){
+			var idp = $(ele).attr("nextinput");
+			if(idp instanceof Function){
+				idp;
+			}else{
+				$("#"+idp).focus();
+				return false;
+			}
+		}
+	}catch(e){}
+}
+function proximoCampo(ele, e, idp){
+	try{
+		if (!e) var e = window.event
+		if (e.keyCode) code = e.keyCode;
+		else if (e.which) code = e.which;
+		
+		//ENTER E TAB redirecionam para o proximo campos
+		if(code==9 || code == 13){
+			if(idp instanceof Function){
+				idp;
+			}else{
+				$("#"+idp).focus();
+				return false;
+			}
+		}
+	}catch(e){}
+}
+
+function carregarSentidosDoLocal(pistaid){
+	$("#sentido_pst_"+pistaid).html("");
+	var localid = $("#desc_loc_pista"+pistaid).val();
+	
+    $("#sentidos"+localid +" option").each(function () {
+          //str += $(this).text() + " ";
+    	var optn = "<option value='"+$(this).val()+"'>"+$(this).text()+"</option>";
+          $("#sentido_pst_"+pistaid).append(optn);
+    });
+}
+function tratarLabelForSentidosLocalizacao(localid){
+	var str = "";
+	$("#sentidos"+localid +" option").each(function () {
+        str += $(this).val()+ " ";
+    });
+	$("#labelSentidosPraca"+localid).html(str);
+}
+//Criar requisicoes ajax para tratar varios sentidos para varias pracas
+function add(localid) {
+	$("#sigla"+localid).val("");
+	$("#descc"+localid).val("");
+	$("#novoSentido"+localid).dialog({
+		modal: true,
+		minWidth: 330,
+		buttons: {
+			"Sair": function() { $(this).dialog("destroy"); },
+			"Salvar" : function(){
+				var sigla = $("#sigla"+localid).val();
+				var descc = $("#descc"+localid).val();
+				if(sigla.length == 2 && descc.length >=3){
+					$("#sentidos"+localid).append("<option value='"+sigla+"'>"+descc+"</option>");
+		        	tratarLabelForSentidosLocalizacao(localid);
+				}
+				
+				//Elimina o AJAX porque guarda tudo no cliente (JS) e envia todos os parametros de uma so vez
+				/*if(localid=="00"){
+					//Novo registro, nao manda para o BD
+					$("#sentidos"+localid).append("<option value='"+sigla+"'>"+descc+"</option>");
+					return;
+				}
+				if(sigla.length ==2 && descc.length>=3){
+					$.ajax({
+				        url : "gerenciarPracasCompleta.htm?cmd=add&localid="+localid+"&dominio=sentido&sigla="+sigla+"&sentido="+descc,
+				        type: "get",
+				        async : true,
+				        contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1' ,
+				        success : function(data) {
+				        	$("#sentidos"+localid).append("<option value='"+sigla+"'>"+descc+"</option>");
+				        	tratarLabelForSentidosLocalizacao(localid);
+				        }
+				    });
+				}*/
+				$(this).dialog("destroy");
+			}
+		}
+	});
+}
+
+function remove(localid) {
+	var sigla = $('#sentidos'+localid).val();
+	if(sigla!=null && sigla != undefined && sigla!=""){
+		$('#sentidos'+localid+' option:selected').remove();
+    	tratarLabelForSentidosLocalizacao(localid);
+		
+    	//Elimina ajax para enviar tudo de uma vez so no request do formulario
+		/*$.ajax({
+	        url : "gerenciarPracasCompleta.htm?cmd=del&localid="+localid+"&dominio=sentido&sigla="+sigla,
+	        type: "get",
+	        async : true,
+	        contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1' ,
+	        success : function(data) {
+	        	$('#sentidos'+localid+' option:selected').remove();
+	        	tratarLabelForSentidosLocalizacao(localid);
+	        }
+	    });*/
+	}
+}
+function digita(localid) {
+	if ($("#sigla"+localid).val().length == 2) {
+		$("#descc"+localid).focus();
+	}
+	$("#sigla"+localid).val($("#sigla"+localid).val().toUpperCase());
+}

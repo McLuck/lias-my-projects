@@ -157,7 +157,7 @@ public class BaseTemp {
     }
 
     public static void FakeDatas() {
-        Praca p = new Praca();
+       /* Praca p = new Praca();
         p.setCnpj("0123456789");
         p.setDescricao("Este ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© um registro para o primeiro teste de spring-mvc.");
         p.setDistanciaCCA("10km");
@@ -218,6 +218,6 @@ public class BaseTemp {
         conf.setTipoPista(BASE.LISTAS.TIPOS_PISTAS);
         BaseTemp.CONCESSIONARIA.setConfigImagem(conf);
         BaseTemp.CONCESSIONARIA.getConfigImagem().setTiposTransacoes(BASE.LISTAS.TIPOS_TRANSACAO);
-        BaseTemp.CONCESSIONARIA.setMeiosPagamento(BASE.LISTAS.MEIOS_PAGAMENTO);
+        BaseTemp.CONCESSIONARIA.setMeiosPagamento(BASE.LISTAS.MEIOS_PAGAMENTO);*/
     }
 }

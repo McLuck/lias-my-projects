@@ -78,9 +78,6 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
         }
         tabelas.add(t);
 
-
-
-
         //Caminhos
         //Resource para imagens
         t = (Tabela) modelo.replicate(null);
@@ -97,6 +94,19 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
         }
         tabelas.add(t);
 
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("3");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("d:\\sicat\\sgap-sa\\resources\\report");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("4");
+        	}
+        }
+        tabelas.add(t);
 
         //Politica de senha
         t = (Tabela) modelo.replicate(null);
@@ -136,7 +146,7 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
             } else if (cp.getNome().equals("valor")) {
                 cp.setValor(conc.getConfiguracaAcesso().getDiaSenhaExpirar());
             } else if (cp.getNome().equals("sistema")) {
-                cp.setValor("1");
+                cp.setValor("0");
             } else if (cp.getNome().equals("tipo")) {
                 cp.setValor("4");
             }
@@ -321,7 +331,7 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
             if (cp.getNome().equals("idpreferencia")) {
                 cp.setValor("6");
             } else if (cp.getNome().equals("valor")) {
-                cp.setValor("10");
+                cp.setValor("1");
             } else if (cp.getNome().equals("sistema")) {
                 cp.setValor("0");
             } else if (cp.getNome().equals("tipo")) {
@@ -330,6 +340,20 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
         }
         tabelas.add(t);
 
+        //Indica o horário da primeira geração dos arquivos
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("7");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
 
 
         //Intervalo entre HB
@@ -626,7 +650,7 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
             if (cp.getNome().equals("idpreferencia")) {
                 cp.setValor("5");
             } else if (cp.getNome().equals("valor")) {
-                cp.setValor(conc.isExibirDescricaoPracaRelatorios());
+                cp.setValor(conc.isExibirDescricaoPracaRelatorios()?"1":"0");
             } else if (cp.getNome().equals("sistema")) {
                 cp.setValor("0");
             } else if (cp.getNome().equals("tipo")) {
@@ -651,6 +675,78 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
         }
         tabelas.add(t);
 
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("102");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0 0 1,15 * * ?");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("4");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("103");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("4");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("116");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("3001");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("120");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("3");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("3002");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("120");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("3");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+
         String origemArquiv = conc.isCategoriaAmbigua() ? "1" : "0";
         t = (Tabela) modelo.replicate(null);
         for (Campo cp : t.getCampos()) {
@@ -667,21 +763,6 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
         tabelas.add(t);
 
 
-
-        //Correcao Automatica Cat Ambigua
-        t = (Tabela) modelo.replicate(null);
-        for (Campo cp : t.getCampos()) {
-            if (cp.getNome().equals("idpreferencia")) {
-                cp.setValor("62");
-            } else if (cp.getNome().equals("valor")) {
-                cp.setValor(conc.isCorrecaoAutomaticaCatAmbigua() ? "1" : "0");
-            } else if (cp.getNome().equals("sistema")) {
-                cp.setValor("0");
-            } else if (cp.getNome().equals("tipo")) {
-                cp.setValor("3");
-            }
-        }
-        tabelas.add(t);
 
 
         //Porcentagem de Correcao para categoria Ambigua
@@ -736,6 +817,22 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
         }
         tabelas.add(t);
 
+        
+        //
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4000");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("2;3;4;5;6;7;14;15;16;17;18;19;20;21;");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+
         t = (Tabela) modelo.replicate(null);
         for (Campo cp : t.getCampos()) {
             if (cp.getNome().equals("idpreferencia")) {
@@ -777,6 +874,124 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
             }
         }
         tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4017");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4018");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4019");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor(conc.getConfigMalote().getOpcExibicaoInterface());
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4022");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4023");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4024");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor(conc.getConfigMalote().isLacreRepete()?"0":"1");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4025");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor(conc.getConfigMalote().isLacreRepete()?conc.getConfigMalote().getDiasSemRepetirLacre():"-1");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4027");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor(conc.getConfiguracaAcesso().getToleranciaBloqueio());
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        
 
         t = (Tabela) modelo.replicate(null);
         for (Campo cp : t.getCampos()) {
@@ -895,13 +1110,13 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
         tabelas.add(t);
 
 
-
+        //Servidor de imagens
         t = (Tabela) modelo.replicate(null);
         for (Campo cp : t.getCampos()) {
             if (cp.getNome().equals("idpreferencia")) {
                 cp.setValor("10");
             } else if (cp.getNome().equals("valor")) {
-                cp.setValor(conc.getConfigImagem().getServer() + ":18080/vasves");
+                cp.setValor(conc.getConfigImagem().getIpServer() + ":18080/vasves");
             } else if (cp.getNome().equals("sistema")) {
                 cp.setValor("1");
             } else if (cp.getNome().equals("tipo")) {
@@ -923,9 +1138,9 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
                 cp.setValor("1");
             }
         }
-
         tabelas.add(t);
 
+        
         t = (Tabela) modelo.replicate(null);
         for (Campo cp : t.getCampos()) {
             if (cp.getNome().equals("idpreferencia")) {
@@ -951,6 +1166,76 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
             } else if (cp.getNome().equals("tipo")) {
                 cp.setValor("1");
             }
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("20");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("-1");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("4");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("26");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("27");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("D:\\SICAT\\sgmp\\PDV\\Cadastros");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("60");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("120000");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("4");
+        	}
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("28");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
         }
         tabelas.add(t);
 
@@ -1021,6 +1306,33 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
             } else if (cp.getNome().equals("tipo")) {
                 cp.setValor("1");
             }
+        }
+        tabelas.add(t);
+        
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4003");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("1");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
+        }
+        tabelas.add(t);
+        t = (Tabela) modelo.replicate(null);
+        for (Campo cp : t.getCampos()) {
+        	if (cp.getNome().equals("idpreferencia")) {
+        		cp.setValor("4003");
+        	} else if (cp.getNome().equals("valor")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("sistema")) {
+        		cp.setValor("0");
+        	} else if (cp.getNome().equals("tipo")) {
+        		cp.setValor("1");
+        	}
         }
         tabelas.add(t);
 

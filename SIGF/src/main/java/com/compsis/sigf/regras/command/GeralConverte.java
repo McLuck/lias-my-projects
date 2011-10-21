@@ -1,6 +1,7 @@
 package com.compsis.sigf.regras.command;
 
 import com.compsis.sigf.domain.Concessionaria;
+import com.compsis.sigf.domain.Localizacao;
 import com.compsis.sigf.domain.Pista;
 import com.compsis.sigf.domain.Praca;
 
@@ -55,8 +56,19 @@ public class GeralConverte {
          * @param praca Objeto de Praca. (Sessão deve estar aberta) <br>
          * @return ID da localizalçao no formato correto para a tabela <b>origem</b>
          */
-        public static Long GET_ID_LOCALIZACAO(Praca praca) {
-            String id = String.valueOf(GET_ID_PRACA(praca)).concat("00");
+        public static Long GET_ID_LOCALIZACAO(Localizacao loc) {
+        	String id = "";
+        	try{
+        		id = String.valueOf(GET_ID_PRACA(loc.getPraca()));
+        	}catch(Exception e){
+        		System.err.println("Verificar erro em GET_ID_LOCALIZACAO.");
+        		id = "0";
+        	}
+        	String aux = String.valueOf(loc.getNumero());
+        	while(aux.length()<2){
+        		aux = "0"+aux;
+        	}
+            id = id.concat(aux);
             return Long.parseLong(id);
         }
 
@@ -71,7 +83,7 @@ public class GeralConverte {
             while (id.length() < 2) {
                 id = "0".concat(id);
             }
-            id = String.valueOf(GET_ID_LOCALIZACAO(p.getPraca())).concat(id);
+            id = String.valueOf(GET_ID_LOCALIZACAO(p.getLocalizacao())).concat(id);
             return Long.parseLong(id);
         }
 
@@ -82,8 +94,8 @@ public class GeralConverte {
          * @return ID da pista sentido no formato correto para a tabela <b>origem</b>
          */
         public static Long GET_ID_PISTA_SENTIDO(Pista p) {
-            Praca praca = p.getPraca();
-            String id = (p.getSentido().trim().equals(praca.getSentido1().trim())) ? "1" : "2";
+            Praca praca = p.getLocalizacao().getPraca();
+            String id = String.valueOf(p.getNumeroSentido());
             id = String.valueOf(GET_ID_PISTA(p)).concat(id);
             return Long.parseLong(id);
         }
@@ -91,20 +103,33 @@ public class GeralConverte {
         /**
          * Trata a ID do sentido. <br>
          * Tipo Origem: 6 <br>
-         * @param praca Objeto Praca que se deseja a ID do sentido (Sessão deve estar aberta)
+         * @param local Objeto Praca que se deseja a ID do sentido (Sessão deve estar aberta)
          * @param sentido Numero do Sentido (1 ou 2)
          * @return ID do sentido no formato correto para a tabela <b>origem</b>
          */
-        public static Long GET_ID_SENTIDO(Praca praca, int sentido) {
+        public static Long GET_ID_SENTIDO(Localizacao local, int sentido) {
             String id = String.valueOf(sentido);
             //00 pra expressar as pracas + o digito do sentido = 3 digitos.
             while (id.length() < 3) {
                 id = "0".concat(id);
             }
             //ID concessionaria + praca + localizacao + formacao feita acima
-            id = String.valueOf(GET_ID_LOCALIZACAO(praca)).concat(id);
+            id = String.valueOf(GET_ID_LOCALIZACAO(local)).concat(id);
             return Long.parseLong(id);
         }
+
+        public static Long GET_ID_SENTIDO(Praca praca, int sentido) {
+        	String id = String.valueOf(sentido);
+        	//00 pra expressar as pracas + o digito do sentido = 3 digitos.
+        	while (id.length() < 3) {
+        		id = "0".concat(id);
+        	}
+        	//ID concessionaria + praca + localizacao + formacao feita acima
+        	id = String.valueOf(GET_ID_PRACA(praca)).concat(id);
+        	return Long.parseLong(id);
+        }
+
+        
 
         //Tratamento de Multiplos itens
         /**
@@ -116,11 +141,15 @@ public class GeralConverte {
          */
         public static String GET_IDS_PISTAS_SENTIDOS(Praca p) {
             StringBuilder sb = new StringBuilder();
-            for (Pista pt : p.getPistas()) {
-                if (pt != null) {
-                    sb.append(GET_ID_PISTA_SENTIDO(pt));
-                    sb.append(";");
-                }
+            for(Localizacao loc : p.getLocalizacoes()){
+            	if(loc!=null){
+            		for (Pista pt : loc.getPistas()) {
+                        if (pt != null) {
+                            sb.append(GET_ID_PISTA_SENTIDO(pt));
+                            sb.append(";");
+                        }
+                    }		
+            	}
             }
             return sb.toString();
         }
@@ -134,12 +163,17 @@ public class GeralConverte {
          */
         public static String GET_IDS_PISTAS(Praca p) {
             StringBuilder sb = new StringBuilder();
-            for (Pista pt : p.getPistas()) {
-                if (pt != null) {
-                    sb.append(GET_ID_PISTA(pt));
-                    sb.append(";");
-                }
+            for(Localizacao loc : p.getLocalizacoes()){
+            	if(loc!=null){
+            		for (Pista pt : loc.getPistas()) {
+                        if (pt != null) {
+                            sb.append(GET_ID_PISTA(pt));
+                            sb.append(";");
+                        }
+                    }		
+            	}
             }
+            
             return sb.toString();
         }
 

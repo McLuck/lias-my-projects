@@ -5,10 +5,12 @@
 		<meta name="description"
 		content="SIGF." />
 		<title>SIGF</title>
+		 
 		<script type="text/javascript" src="js/jquery.js"></script>
 		<script type="text/javascript" src="js/concessionaria.js"></script>
 		<script type="text/javascript" src="js/desktop_tratamento.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/wysiwyg.js"></script>
 		
 		<!--[if lt IE 7]>
 		<script>
@@ -25,17 +27,54 @@
 		<link rel="stylesheet" href="css/thickbox.css" />
 		
 		
-		<link rel="stylesheet" href="css/themes/base/jquery.ui.all.css">
+		<link rel="stylesheet" href="css/themes/base/jquery.ui.core.css">
+		<link rel="stylesheet" href="css/themes/base/jquery.ui.theme.css">
+		<link rel="stylesheet" href="css/themes/base/jquery.ui.allplugins.css">
+		<link rel="stylesheet" href="css/themes/base/jquery.ui.theme.css">
+
+		<link rel="stylesheet" href="css/themes/def1/icones.css">
 
 		<script src="js/ui/jquery.ui.core.js"></script>
 		<script src="js/ui/jquery.ui.widget.js"></script>
 		<script src="js/ui/jquery.ui.tabs.js"></script>
 		<link rel="stylesheet" href="css/htabs.css">
 		<link rel="stylesheet" href="css/demo_table.css">
-
+		
+		
 		<script src="js/ui/jquery.ui.mouse.js"></script>
 		<script src="js/ui/jquery.ui.sortable.js"></script>
 		<script type="text/javascript" src="js/jquery.dataTables.js"></script>
+
+
+
+
+		<script type="text/javascript" src="js/globaljs.js"></script>
+		
+		
+		
+		<!-- HTML5 Shim, IE8 and bellow recognize HTML5 elements -->
+	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->		
+	<!-- Modernizr -->
+	<script src="js/modernizr-1.5.min.js"></script>
+	<!-- Webforms2 -->
+	<script src="webforms2/webforms2-p.js"></script>	
+	<!-- jQuery and jQuery UI -->
+	<link rel="stylesheet" href="ui-themes/aristo/jquery.ui.all.css"> 
+	<script src="js/jquery-1.4.3.min.js"></script>
+	<script src="js/jquery-ui-1.8.5.min.js"></script>
+	<!-- jQuery Numeric Spinner -->	
+	<link rel="stylesheet" href="components/spinner/ui.spinner.css"> 
+	<script src="components/spinner/ui.spinner.js"></script>
+	<!-- jQuery Color Picker -->
+	<link rel="stylesheet" href="components/colorpicker/colorpicker.css">
+	<script src="components/colorpicker/colorpicker.js"></script>
+	<!-- jQuery Placehol -->
+	<script src="components/placeholder/jquery.placehold-0.2.min.js"></script>
+
+	<!-- Demo page layout -->
+	<link rel="stylesheet" href="css/html5forms.layout.css">
+	<!-- <script src="js/html5forms.js"></script> -->
+	<script src="js/html5forms.fallback.js"></script>	
 	</head>
 	<body>
 		<input type="hidden" id="_cid" name="_cid" value="3" />
@@ -52,7 +91,7 @@
 				src="assets/images/icons/icon_16_system.png" /> Configurações Gerais </a>
 				
 				<a
-				class="abs icon" style="left: 90%; top: 85%;"
+				class="abs icon" style="left: 20px; top: 260px;"
 				href="#icon_dock_network"> <img
 				src="assets/images/icons/Settings.png" /> Preferências </a>
 				 <!--a
@@ -149,9 +188,9 @@
 									<li id="li_tabs-1">
 										<a href="#" onclick="loadConfigGeral('tabs-1');" >Controle de Acesso</a>
 									</li>
-									<li id="li_rec_divida">
+									<li id="li_rec_dividass">
 										<!--<a title="Configurar Pracas" href="configPracas.htm?cid=3&keepThis=true&TB_iframe=true&height=600&width=1024" id="link_dadosgeraispraca" class="thickbox" style="z-index: 200;">Pracas</a>-->
-										<a title="Configurar Praças" onclick="loadConfigGeral('rec_divida');" href="#" style="z-index: 200;">Reconhecimento Dívidas</a>
+										<a title="Configurar Praças" onclick="loadConfigGeral('rec_dividass');" href="#" style="z-index: 200;">Reconhecimento Dívidas</a>
 									</li>
 									<li id="li_tabs-3">
 										<a href="#" onclick="loadConfigGeral('tabs-3');" id="link_dadosgeraissgbd">Interoperabilidade</a>
@@ -179,8 +218,9 @@
 						            </div>
 						        </div>
 						
-						        <div id="rec_divida" style="display: none;">
-						            <p>Configurações do Termo de reconhecimento de dívidas.</p>
+						        <div id="rec_dividass" style="display: none;">
+						            <div id="framRecDivida">
+						            </div>
 						        </div>
 						
 						        <div id="tabs-3" style="display: none;">
@@ -255,6 +295,9 @@
 										</tr>
 										<tr  onclick="changeWallpaper('images/bkg/bkg9.jpg');">
 											<td><img width="50px" height="50px" src="images/bkg/bkg9.jpg" /></td><td>Background 9</td>
+										</tr>
+										<tr  onclick="changeWallpaper('images/bkg/bkg10.jpg');">
+											<td><img width="50px" height="50px" src="images/bkg/bkg10.jpg" /></td><td>Background 9</td>
 										</tr>
 									</tbody>
 								</table>

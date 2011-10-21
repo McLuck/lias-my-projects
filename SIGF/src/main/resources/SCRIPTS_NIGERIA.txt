@@ -24,11 +24,7 @@ insert into statusprocessamentoartesp(idstatus,descricaostatus,datainsercao) val
 insert into tipolancamentolote(idtipolancamento, descricao, datainsercao) values(0, 'Pagamento', trunc(sysdate));
 insert into tipolancamentolote(idtipolancamento, descricao, datainsercao) values(1, 'Estorno', trunc(sysdate));
 insert into tipolancamentolote (idtipolancamento, descricao, datainsercao)values(2, 'Valor Serviço', trunc(sysdate));
-Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(0, 'Recebimento de Cadastros');
-Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(1, 'Geração de Lotes');
-Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(2, 'Envio de Lotes');
-Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(3, 'Recebimento de Protocolo Ténico');
-Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(4, 'Recebimento de Protocolo Financeiro');
+
 insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(0, 'Cancellation', 0, trunc(sysdate));
 insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(0, 'Cancellation', 1, trunc(sysdate));
 insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(1, 'Payment', 0, trunc(sysdate));
@@ -124,6 +120,7 @@ Insert into TipoCodigoMensagem (idtipocv, descricaotipocv, flagvisualizacao, dat
 Insert into TipoCodigoMensagem (idtipocv, descricaotipocv, flagvisualizacao, datainsercao) Values (8, 'Mudanças de estado na pista', 1, trunc(sysdate));
 Insert into TipoCodigoMensagem (idtipocv, descricaotipocv, flagvisualizacao, datainsercao) Values (9, 'Ocorrências operacionais', 1, trunc(sysdate));
 insert into TipoCodigoMensagem (idtipocv, descricaotipocv, flagvisualizacao, datainsercao) values (10, 'Heart beat', 0, trunc(sysdate));
+insert into CodigoMensagem (CodigoCV, Descricao, IdTipoCV, Grupo, DataInsercao, FlagSumarizacao) values (-9, 'Ocorrência inserção manual AVI com TAG bloqueado', 0, 1, GETDATE(), 0);
 Insert into CodigoMensagem (codigocv, descricao, grupo, datainsercao, flagsumarizacao, idtipocv) Values (-7, 'Occurrence of Manual Inssertion of Credit Granted', 1, trunc(sysdate), 0, 0);
 Insert into CodigoMensagem (codigocv, descricao, grupo, datainsercao, flagsumarizacao, idtipocv) Values (-6, 'Occurrence of Manual Inssertion of Violation', 1, trunc(sysdate), 0, 0);
 Insert into CodigoMensagem (codigocv, descricao, grupo, datainsercao, flagsumarizacao, idtipocv) Values (-5, 'Occurrence of Manual Inssertion of Exempt', 1, trunc(sysdate), 0, 0);

@@ -31,7 +31,7 @@
 				<prop key="verPista.htm">pistaController</prop>
 				<prop key="listaPista.htm">listaPistaController</prop>
 				<prop key="configPracas.htm">configPracasController</prop>
-				<!-- <prop key="bdmanager.htm">serverbdController</prop> -->
+				<prop key="bdmanager.htm">serverbdController</prop>
 				<prop key="formConcessinaria.htm">formConcessionariaController</prop>
 				<prop key="dadosGerais.htm">formConcessionariaController</prop>
 				<prop key="formCategoria.htm">formCategoriaController</prop>
@@ -48,7 +48,9 @@
 				<prop key="formRelatorios.htm">relatorioController</prop>
 				<prop key="formFuncionalidade.htm">funcionalidadeController</prop>
 				<prop key="teste.htm">testeController</prop>
-				
+
+
+				<prop key="gerenciarPracasCompleta.htm">pracaControllerCompleto</prop>
 			</props>
 		</property>
 	</bean>
@@ -72,6 +74,8 @@
 		p:viewName="adm/index" />
 
 	<bean name="concessionariaController" class="com.compsis.sigf.control.ConcessionariaController" />
+
+	<bean name="pracaControllerCompleto" class="com.compsis.sigf.control.PracaControllerCompleto" />
 
 	<bean name="relatorioController" class="com.compsis.sigf.control.RelatorioController" />
 

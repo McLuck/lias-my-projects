@@ -48,7 +48,6 @@ public abstract class BaseDAO<T extends DomainObject> implements BaseInterfaceDA
             L.d(TAG, "Commit");
             getSession().getTransaction().commit();
         } catch (Exception e) {
-            L.d(TAG, e);
         }
     }
 
@@ -61,7 +60,6 @@ public abstract class BaseDAO<T extends DomainObject> implements BaseInterfaceDA
             long fim = Calendar.getInstance().getTimeInMillis();
             L.d(TAG,"Clear finalizado em "+((fim-inicio)/1000)+" seg(s).");
         } catch (Exception e) {
-            L.d(TAG, e);
         }
     }
 
@@ -111,6 +109,7 @@ public abstract class BaseDAO<T extends DomainObject> implements BaseInterfaceDA
      * {@inheritDoc}
      */
     public void excluir(T obj) {
+    	getSession().getTransaction().begin();
         L.d(TAG, "Delete");
         this.getSession().delete(obj);
         this.getSession().flush();

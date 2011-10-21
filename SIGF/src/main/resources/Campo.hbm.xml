@@ -5,7 +5,7 @@
     <id column="id" name="id" type="integer">
       <generator class="increment"/>
     </id>
-    <property column="nome" name="nome" type="string"/>
+    <property column="nomecampo" name="nome" type="string"/>
     <property column="valor" name="valor" type="string"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.Tabela" column="tabela_id" name="tabela" not-null="true" />
   </class>

@@ -99,6 +99,10 @@ input, textarea, option {
 	display: inline-block;
 }
 
+.salvar{
+	background-image: url('../images/check2.png');
+}
+
 select{
 	font-family:Verdana;
     font-size: 12px;
@@ -107,7 +111,7 @@ select{
     clear: both;
     height: 20px;
     float: none;
-    width: 300px;
+    width: 305px;
 }
 
 body {

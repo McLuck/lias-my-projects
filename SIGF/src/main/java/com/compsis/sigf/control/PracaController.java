@@ -35,38 +35,7 @@ public class PracaController extends SimpleFormController  {
         if(p.getConcessionaria()==null){
             p.setConcessionaria(conc);
         }
-        if(p.getPrcSent1()!=null){
-        	try{
-        		String pc1 = p.getPrcSent1();
-        		if(pc1.length()>=2){
-        			//SP, Sao Paulo
-        			String siglaSent1 = pc1.substring(0, 2);
-        			p.setSiglaSentido1(siglaSent1);
-        			
-        			if(pc1.length()>3){
-        				String sent1 = pc1.substring(3, pc1.length()).trim();
-            			p.setSentido1(sent1);
-        			}
-        		}
-        	}catch(Exception e){
-        	}
-        }
-        if(p.getPrcSent2()!=null){
-        	try{
-        		String pc2 = p.getPrcSent2();
-        		if(pc2.length()>=2){
-        			String sigla = pc2.substring(0, 2);
-        			p.setSiglaSentido2(sigla);
-        			
-        			if(pc2.length()>3){
-        				String sent2 = pc2.substring(3, pc2.length()).trim();
-        				p.setSentido2(sent2);
-        			}
-        		}
-        	}catch(Exception e){
-        		
-        	}
-        }
+        
         if(p.getConfiguracao()==null){
             p.setConfiguracao(new ConfiguracaoPraca());
             p.getConfiguracao().setPraca(p);   
@@ -117,11 +86,7 @@ public class PracaController extends SimpleFormController  {
         	pdao.clear();
         	pdao.setChache(true);
         	prc = pdao.obter(Integer.parseInt(pracaid));
-        	String p11 = ((prc.getSiglaSentido1()!=null)?prc.getSiglaSentido1():"  ").concat(", ").concat((prc.getSentido1()!=null)?prc.getSentido1():"");
-        	String p12 = ((prc.getSiglaSentido2()!=null)?prc.getSiglaSentido2():"  ").concat(", ").concat((prc.getSentido2()!=null)?prc.getSentido2():"");
         	
-        	prc.setPrcSent1(p11);
-        	prc.setPrcSent2(p12);
             //prc = (Praca) BaseTemp.GET(Integer.parseInt(pracaid), Praca.class, null);
             return prc;
         }

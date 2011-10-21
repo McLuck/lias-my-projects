@@ -109,28 +109,35 @@
 							</tr>
 						</thead>
 						<tr class='odd'>
-							<td style="width: 80px;"><input type="text" readonly name="id" size="3"
+							<td style="width: 80px;">
+								<input type="hidden" name="id" id="id" value="${pts.id}" />
+							<input type="text" name="numeroPista" size="3"
 								onkeyup="runScript(${pts.id}, event);" style="width: 50px;"
-								value="${pts.id}" /></td>
+								value="${pts.numeroPista}" /></td>
+							
 							<td width="80px"><select name="sentido" style="width: 80px;"
 								onkeyup="runScript(${pts.id}, event);">
 									<option value="${siglaS1}">${siglaS1}</option>
 									<option value="${siglaS2}">${siglaS2}</option>
 									<option value="${siglaS3}">${siglaS3}</option>
 							</select></td>
+							
 							<td width="50px"><input type="text" style="width: 100px;"
 								name="idLocalizacao" onkeyup="runScript(${pts.id}, event);"
 								id="idLocalizacao_input${pts.id}" size="6"
 								value="${pts.idLocalizacao}" /></td>
+							
 							<td width="80px"><select name="tipo" id="tipo%{pts.id}"
 								style="width: 80px;" onkeyup="runScript(${pts.id}, event);">
 									<c:forEach items="${tipospista}" var="tppt">
 										<option value="${tppt.id}">${tppt.nome}</option>
 									</c:forEach>
 							</select></td>
+							
 							<td><input type="text" onkeyup="runScript(${pts.id}, event);"
 								style="width: 150px;" name="nomeMaquina" id="nomeMaquina${pts.id}"
 								size="10" value="${pts.nomeMaquina}" /></td>
+							
 							<td width="150px"><input type="text"
 								onkeyup="runScript(${pts.id}, event);" name="ipMaquina"
 								style="width: 150px;" id="ipMaquina${pts.id}" size="15"

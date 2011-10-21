@@ -12,8 +12,17 @@ import java.util.List;
  * 
  */
 public class Pista extends DomainObject implements Replicable{
-    private Praca praca;
-    private int idLocalizacao, tipo, numeroPista;
+    /*private Praca praca;*/
+	private Localizacao localizacao;
+    public Localizacao getLocalizacao() {
+		return localizacao;
+	}
+
+	public void setLocalizacao(Localizacao localizacao) {
+		this.localizacao = localizacao;
+	}
+
+	private int idLocalizacao, tipo, numeroPista;
     private String nomeMaquina, ipMaquina, sentido, descricao;
     
     public String getTipoStr(){
@@ -71,6 +80,10 @@ public class Pista extends DomainObject implements Replicable{
      */
     public String getSentido() {
         return sentido;
+    }
+    
+    public int getNumeroSentido(){
+    	return localizacao.getNumeroSentido(sentido);
     }
 
     /**
@@ -136,19 +149,19 @@ public class Pista extends DomainObject implements Replicable{
         this.ipMaquina = ipMaquina;
     }
 
-    /**
+   /* *//**
      * @return the praca
-     */
+     *//*
     public Praca getPraca() {
         return praca;
     }
 
-    /**
+    *//**
      * @param praca the praca to set
-     */
+     *//*
     public void setPraca(Praca praca) {
         this.praca = praca;
-    }
+    }*/
 
     @Override
     public Replicable replicate(Object o) {
@@ -157,7 +170,8 @@ public class Pista extends DomainObject implements Replicable{
         p.setIdLocalizacao(idLocalizacao);
         p.setIpMaquina(ipMaquina);
         p.setNomeMaquina(nomeMaquina);
-        p.setPraca((Praca)o);
+        /*p.setPraca((Praca)o);*/
+        p.setLocalizacao((Localizacao)o);
         p.setSentido(sentido);
         p.setTipo(tipo);
         return p;

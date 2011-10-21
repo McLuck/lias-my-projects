@@ -1,5 +1,6 @@
 package com.compsis.sigf.regras.command;
 
+import com.compsis.sigf.domain.Localizacao;
 import com.compsis.sigf.domain.Praca;
 
 import java.util.HashMap;
@@ -19,9 +20,16 @@ public class PracaCommand implements Command, PropertyRetriever, UpdateCommand{
     @Override
     public void execute() {
         param.put(Command.KEYS.PRACA_ID_PRACA_ORIGEM, GeralConverte.IDS.GET_ID_PRACA(praca));
-        param.put(Command.KEYS.PRACA_ID_LOCALIZACAO_ORIGEM, GeralConverte.IDS.GET_ID_LOCALIZACAO(praca));
-        param.put(Command.KEYS.PRACA_ID_SENTIDO_ORIGEM1, GeralConverte.IDS.GET_ID_SENTIDO(praca, 1));
-        param.put(Command.KEYS.PRACA_ID_SENTIDO_ORIGEM2, GeralConverte.IDS.GET_ID_SENTIDO(praca, 2));
+        Localizacao loc = null;
+        for(Localizacao l : praca.getLocalizacoes()){
+        	if(l!=null){
+        		loc = l;
+        		break;
+        	}
+        }
+        param.put(Command.KEYS.PRACA_ID_LOCALIZACAO_ORIGEM, GeralConverte.IDS.GET_ID_LOCALIZACAO(loc));
+        param.put(Command.KEYS.PRACA_ID_SENTIDO_ORIGEM1, GeralConverte.IDS.GET_ID_SENTIDO(loc, 1));
+        param.put(Command.KEYS.PRACA_ID_SENTIDO_ORIGEM2, GeralConverte.IDS.GET_ID_SENTIDO(loc, 2));
     }
 
     @Override

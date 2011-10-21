@@ -8,7 +8,9 @@ import com.compsis.sigf.domain.BASE;
 import com.compsis.sigf.domain.Campo;
 import com.compsis.sigf.domain.Categoria;
 import com.compsis.sigf.domain.Concessionaria;
+import com.compsis.sigf.domain.Localizacao;
 import com.compsis.sigf.domain.MeioPagamento;
+import com.compsis.sigf.domain.MotivoFechamentoPista;
 import com.compsis.sigf.domain.Pista;
 import com.compsis.sigf.domain.Praca;
 import com.compsis.sigf.domain.PracaMeioPagamento;
@@ -149,6 +151,168 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
             scrpt = scrpt.replace("#funcionalidadesacesso#", temp);
         }
         scriptsProntos.append(scrpt);
+        
+        
+        
+        //Tratamento de motivofechamentopista
+        {
+        	MotivoFechamentoPista mf = conc.getMotivoFechamento();
+        	TabelaDAO tdao = (TabelaDAO) AFactoryDao.getInstance(TabelaDAO.class);
+        	List<Tabela> listaMotivos = tdao.getByVersaoAndNome(vid, "motivofechamentopista");
+        	Tabela t = listaMotivos.get(0);
+        	if(mf.isFechamentoAntecipado()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("14");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("Fechamento Antecipado");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isFimTurno()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("3");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("Fim de Turno");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isGinastica()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("16");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("Gin�stica Laboral");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isManutencaoPista()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("15");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("Manuten��o da Pista");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isQre()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("17");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("QRE");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isQtoBanheiro()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("13");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("QTO (banheiro)");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isRefeicao()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("10");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("Refei��o");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isServicoInterno()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("18");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("Servi�o Interno");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isServicoInterno()){
+            	if(t!=null){
+            		Tabela t2 = (Tabela)t.replicate(null);
+            		for(Campo cp : t2.getCampos()){
+            			if(cp!=null){
+            				if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+            					cp.setValor("18");
+            				}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+            					cp.setValor("Servi�o Interno");
+            				}
+            			}
+            		}
+            		tabelas.add(t2);
+            	}
+        	}
+        	if(mf.isTrocaTurno()){
+        		if(t!=null){
+        			Tabela t2 = (Tabela)t.replicate(null);
+        			for(Campo cp : t2.getCampos()){
+        				if(cp!=null){
+        					if(cp.getNome().toLowerCase().trim().equals("codigocv")){
+        						cp.setValor("12");
+        					}else if(cp.getNome().toLowerCase().trim().equals("descricao")){
+        						cp.setValor("Troca de Pista");
+        					}
+        				}
+        			}
+        			tabelas.add(t2);
+        		}
+        	}
+        	//FIM DO TRATAMENTO DE MOTIVOFECHAMENTOPISTA
+        }
+        
         {
             //Tratamento da Concessinaria;
             L.d(this.getClass().getName(), "Tratando insert origem Tipo 1 - Concessionaria ...");
@@ -172,8 +336,6 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
                 TabelaDAO tdao = (TabelaDAO) AFactoryDao.getInstance(TabelaDAO.class);
                 List<Tabela> listTable = tdao.getByVersaoAndNome(vid, "categoria");
                 Tabela ta = listTable != null && !listTable.isEmpty() ? listTable.get(0) : null;
-                CategoriaDAO catDAo = (CategoriaDAO) AFactoryDao.getInstance(CategoriaDAO.class);
-                List<Categoria> listTeste = catDAo.obterTodos();
                 if (ta != null) {
                     int idc = 1;
                     for (Categoria cat : conc.getCategorias()) {
@@ -181,13 +343,13 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
                             Tabela ttemp = (Tabela) ta.replicate(null);
                             for (Campo cp : ttemp.getCampos()) {
                                 if (cp != null) {
+                                	idc = cat.getCatid();
                                     if (cp.getNome().trim().toLowerCase().equals("idcategoria")) {
                                         cp.setValor(idc);
-                                        idc++;
                                     } else if (cp.getNome().trim().toLowerCase().equals("codigocategoriacv")) {
                                         cp.setValor(cat.getCgmp());
                                     } else if (cp.getNome().trim().toLowerCase().equals("descricao")) {
-                                        cp.setValor("cat " + idc);
+                                        cp.setValor(cat.getDescricao());
                                     } else if (cp.getNome().trim().toLowerCase().equals("numeroeixos")) {
                                         cp.setValor(cat.getEf());
                                     } else if (cp.getNome().trim().toLowerCase().equals("rodagemdupla")) {
@@ -196,6 +358,8 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
                                         cp.setValor(cat.getRm());
                                     } else if (cp.getNome().trim().toLowerCase().equals("tipoveiculo")) {
                                         cp.setValor(cat.getTipoStr().toUpperCase().charAt(0));
+                                    } else if (cp.getNome().trim().toLowerCase().equals("habilitaClassificacao")) {
+                                    	cp.setValor((cat.isHabilitada())?"1":"0"); 
                                     }
                                 }
                             }
@@ -214,25 +378,28 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
 
             L.d(this.getClass().getName(), "Append de scripts padrões da concessionária...");
             //Agrega Scripts defaults da concessionaria
-            String auxConc = (conc.getNumeroPais() == BASE.PAIS_BRASIL) ? BASE.ConjuntosInserts.SCRIPT_CONC_BRASIL : BASE.ConjuntosInserts.SCRIPT_CONC_NIGERIA;
+            String auxConc = (conc.getNumeroPais() == BASE.PAIS_NIGERIA) ? BASE.ConjuntosInserts.SCRIPT_CONC_NIGERIA : BASE.ConjuntosInserts.SCRIPT_CONC_BRASIL;
             auxConc = auxConc.replace("#concorigem#", String.valueOf(GeralConverte.IDS.GET_ID_CONCESSIONARIA(conc)));
             scriptsProntos.append(auxConc);
 
-            String auxGeral = (conc.getNumeroPais() == BASE.PAIS_BRASIL) ? BASE.ConjuntosInserts.SCRIPT_GERAL_BRASIL : BASE.ConjuntosInserts.SCRIPT_GERAL_NIGERIA;
+            String auxGeral = (conc.getNumeroPais() == BASE.PAIS_NIGERIA) ? BASE.ConjuntosInserts.SCRIPT_GERAL_NIGERIA : BASE.ConjuntosInserts.SCRIPT_GERAL_BRASIL;
             scriptsProntos.append(auxGeral);
 
             L.d(this.getClass().getName(), "Tratando Meios de Pagamento e suas dependencias...");
             //Agrega Scripts defaults dos Meios de Pagamentos Selecionados
             List<Tabela> lstAux = new ArrayList<Tabela>();
+            String a = "";
             for (MeioPagamento mp : conc.getMeiosPagamento()) {
                 if (mp != null) {
+                	if(!mp.isHabilitado()){
+                		continue;
+                	}
                     MeioPagamentoAdapt mpa = new MeioPagamentoAdapt(mp, vid);
-                    lstAux.addAll(mpa.getTabelas());
+                    a = a.concat(mpa.getScripts());
                 }
             }
             //ordena
-            Collections.sort(lstAux);
-            String a = ManagementScript.getInstance().export(lstAux);
+            //Collections.sort(lstAux);
             String temp = scriptsProntos.toString();
             temp = temp.replace("#meiopagamentos#", a);
             scriptsProntos.setLength(0);
@@ -281,38 +448,44 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
                         }
                     }
 
-                    //Insere a localizaÃ§Ã£o
-                    t = (Tabela) modelo.replicate(null);
-                    for (Campo cp : t.getCampos()) {
-                        if (cp.getNome().equals("idorigem")) {
-                            cp.setValor(GeralConverte.IDS.GET_ID_LOCALIZACAO(pr));
-                        } else if (cp.getNome().equals("tipoorigem")) {
-                            cp.setValor("3");
-                        } else if (cp.getNome().equals("descricao")) {
-                            cp.setValor("Principal " + pr.getNome());
-                        } else if (cp.getNome().equals("praca")) {
-                            cp.setValor(pr.getNumeroPraca());
-                        } else if (cp.getNome().equals("idorigempai")) {
-                            cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
-                        }
+/*                    //Insere a localizacao
+                    for(Localizacao loc : pr.getLocalizacoes()){
+                    	if(loc!=null){
+                    		t = (Tabela) modelo.replicate(null);
+                            for (Campo cp : t.getCampos()) {
+                                if (cp.getNome().equals("idorigem")) {
+                                    cp.setValor(GeralConverte.IDS.GET_ID_LOCALIZACAO(loc));
+                                } else if (cp.getNome().equals("tipoorigem")) {
+                                    cp.setValor("3");
+                                } else if (cp.getNome().equals("descricao")) {
+                                    cp.setValor("Principal " + pr.getNome());
+                                } else if (cp.getNome().equals("praca")) {
+                                    cp.setValor(pr.getNumeroPraca());
+                                } else if (cp.getNome().equals("idorigempai")) {
+                                    cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
+                                }else if (cp.getNome().equals("sentido")) {
+	                            	cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
+	                            }
+                            }
+                            tabelasPrincipais.add(t);
+                    	}
                     }
-                    tabelasPrincipais.add(t);
-                    //Implementar Lista de LocalizaÃ§Ãµes AQUI, caso seja necessÃ¡rio.
+                    //Implementar Lista de Localizacpes AQUI, caso seja necessario.
+*/
 
 
 
-
-                    //Agrega Scripts Defaults da PraÃ§a
+                    //Agrega Scripts Defaults da Praca
                     String auxPraca = (pr.getConcessionaria().getNumeroPais() == BASE.PAIS_NIGERIA) ? BASE.ConjuntosInserts.SCRIPT_PRACA_NIGERIA : BASE.ConjuntosInserts.SCRIPT_PRACA_BRASIL;
                     auxPraca = auxPraca.replace("#pracaorigem#", String.valueOf(GeralConverte.IDS.GET_ID_PRACA(pr)));
-                    auxPraca = auxPraca.replace("#urlimg#", pr.getConcessionaria().getConfigImagem().getIpServer());
+                    auxPraca = auxPraca.replace("#urlimg#", pr.getConcessionaria().getConfigImagem().getIpServer().concat(":18080/vasves"));
                     scriptsProntos.append(auxPraca);
 
 
 
 
                     {
-                        //Trabalha nos cÃ³digos dos meios de pagamentos por praÃ§a.
+                        //Trabalha nos codigos dos meios de pagamentos por praca.
                         //Tabela codigopracameiopagamento
                         //Relacionamento N:M
                         TabelaDAO tdao = (TabelaDAO) AFactoryDao.getInstance(TabelaDAO.class);
@@ -329,15 +502,29 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
                         }
                         if (tpmp != null) {
                             for (PracaMeioPagamento pm : pr.getPracaMeiosPgto()) {
-                                if (pm != null) {
+                                if (pm != null && pm.getMeioPagto().isHabilitado()) {
+                                	String[]cod = pm.getCodPracaLocal().split(",");
+                                	
                                     Tabela tbaux = (Tabela) tpmp.replicate(null);
                                     for (Campo cp : tbaux.getCampos()) {
                                         if (cp.getNome().trim().toLowerCase().equals("idmeiopagamentointeroperacao")) {
                                             cp.setValor(pm.getMeioPagto().getConfiguracao());
                                         } else if (cp.getNome().trim().toLowerCase().equals("codigopracalocal")) {
-                                            cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
+                                            cp.setValor(GeralConverte.IDS.GET_ID_SENTIDO(pr, 1));
                                         } else if (cp.getNome().trim().toLowerCase().equals("codigopracameiopagamento")) {
-                                            cp.setValor(pm.getCodPracaLocal());
+                                            cp.setValor(cod[0].trim());
+                                        }
+                                    }
+                                    tabelas.add(tbaux);
+                                    
+                                    tbaux = (Tabela) tpmp.replicate(null);
+                                    for (Campo cp : tbaux.getCampos()) {
+                                        if (cp.getNome().trim().toLowerCase().equals("idmeiopagamentointeroperacao")) {
+                                            cp.setValor(pm.getMeioPagto().getConfiguracao());
+                                        } else if (cp.getNome().trim().toLowerCase().equals("codigopracalocal")) {
+                                            cp.setValor(GeralConverte.IDS.GET_ID_SENTIDO(pr, 2));
+                                        } else if (cp.getNome().trim().toLowerCase().equals("codigopracameiopagamento")) {
+                                            cp.setValor(cod[1].trim());
                                         }
                                     }
                                     tabelas.add(tbaux);
@@ -348,201 +535,158 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
 
                     {
                         //Insere as pistas
-                        L.d(this.getClass().getName() , "Tratando dados das Pistas da Praça...");
-                        for (Pista pt : pr.getPistas()) {
-                            if (pt != null) {
-                                Tabela tpt = (Tabela) modelo.replicate(null);
-                                for (Campo cp : tpt.getCampos()) {
+                        L.d(this.getClass().getName() , "Tratando dados das Pistas da Praca...");
+                        for(Localizacao loc : pr.getLocalizacoes()){
+                        	if(loc!=null){
+                        		t = (Tabela) modelo.replicate(null);
+                                for (Campo cp : t.getCampos()) {
                                     if (cp.getNome().equals("idorigem")) {
-                                        cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt));
+                                        cp.setValor(GeralConverte.IDS.GET_ID_LOCALIZACAO(loc));
                                     } else if (cp.getNome().equals("tipoorigem")) {
-                                        cp.setValor("4");
+                                        cp.setValor("3");
                                     } else if (cp.getNome().equals("descricao")) {
-                                        cp.setValor(pt.getDescricao());
+                                        cp.setValor(loc.getDescricao());
                                     } else if (cp.getNome().equals("praca")) {
                                         cp.setValor(pr.getNumeroPraca());
                                     } else if (cp.getNome().equals("idorigempai")) {
-                                        cp.setValor(GeralConverte.IDS.GET_ID_LOCALIZACAO(pr));
-                                    } else if (cp.getNome().equals("pista")) {
-                                        cp.setValor(pt.getNumeroPista());
-                                    } else if (cp.getNome().equals("numerocabine")) {
-                                        cp.setValor(pt.getNumeroPista());
-                                    } else if (cp.getNome().equals("tipopistaarrecadacao")) {
-                                        cp.setValor(pt.getTipo());
+                                        cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
                                     }
                                 }
-                                tabelasPrincipais.add(tpt);
-
-                                //Insere operador pra cada pista
-                                tpt = (Tabela) operador.replicate(null);
-                                for (Campo cp : tpt.getCampos()) {
-                                    if (cp != null) {
-                                        if (cp.getNome().equals("idoperador")) {
-                                            String id = String.valueOf(pr.getNumeroPraca());
-                                            String auxx = String.valueOf(pt.getNumeroPista());
-                                            while (auxx.length() < 4) {
-                                                auxx = "0".concat(auxx);
+                                tabelasPrincipais.add(t);
+                        		for (Pista pt : loc.getPistas()) {
+                                    if (pt != null) {
+                                        Tabela tpt = (Tabela) modelo.replicate(null);
+                                        for (Campo cp : tpt.getCampos()) {
+                                            if (cp.getNome().equals("idorigem")) {
+                                                cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt));
+                                            } else if (cp.getNome().equals("tipoorigem")) {
+                                                cp.setValor("4");
+                                            } else if (cp.getNome().equals("descricao")) {
+                                                cp.setValor(pt.getNumeroPista());
+                                            } else if (cp.getNome().equals("praca")) {
+                                                cp.setValor(pr.getNumeroPraca());
+                                            } else if (cp.getNome().equals("idorigempai")) {
+                                                cp.setValor(GeralConverte.IDS.GET_ID_LOCALIZACAO(loc));
+                                            } else if (cp.getNome().equals("pista")) {
+                                                cp.setValor(pt.getNumeroPista());
+                                            } else if (cp.getNome().equals("numerocabine")) {
+                                                cp.setValor(pt.getNumeroPista());
+                                            } else if (cp.getNome().equals("tipopistaarrecadacao")) {
+                                                cp.setValor(pt.getTipo());
                                             }
-                                            id = "-" + id.concat(auxx);
-                                            cp.setValor(id);
-                                        } else if (cp.equals("nome")) {
-                                            cp.setValor("TPT Pista ".concat(String.valueOf(pt.getNumeroPista())));
-                                        } else if (cp.getNome().equals("situacaocadastro")) {
-                                            cp.setValor("3");
                                         }
-                                    }
-                                }
+                                        tabelasPrincipais.add(tpt);
 
-                                //Insere Operador Origem para cada operador
-                                tpt = (Tabela) operadororigem.replicate(null);
-                                for (Campo cp : tpt.getCampos()) {
-                                    if (cp != null) {
-                                        if (cp.getNome().equals("idoperador")) {
-                                            String id = String.valueOf(pr.getNumeroPraca());
-                                            String auxx = String.valueOf(pt.getNumeroPista());
-                                            while (auxx.length() < 4) {
-                                                auxx = "0".concat(auxx);
+                                        //Insere operador pra cada pista
+                                        tpt = (Tabela) operador.replicate(null);
+                                        for (Campo cp : tpt.getCampos()) {
+                                            if (cp != null) {
+                                                if (cp.getNome().equals("idoperador")) {
+                                                    String id = String.valueOf(pr.getNumeroPraca());
+                                                    String auxx = String.valueOf(pt.getNumeroPista());
+                                                    while (auxx.length() < 4) {
+                                                        auxx = "0".concat(auxx);
+                                                    }
+                                                    id = "-" + id.concat(auxx);
+                                                    cp.setValor(id);
+                                                } else if (cp.equals("nome")) {
+                                                    cp.setValor("TPT Pista ".concat(String.valueOf(pt.getNumeroPista())));
+                                                } else if (cp.getNome().equals("situacaocadastro")) {
+                                                    cp.setValor("3");
+                                                }
                                             }
-                                            id = "-" + id.concat(auxx);
-                                            cp.setValor(id);
-                                        } else if (cp.getNome().equals("idorigem")) {
-                                            cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
                                         }
+
+                                        //Insere Operador Origem para cada operador
+                                        tpt = (Tabela) operadororigem.replicate(null);
+                                        for (Campo cp : tpt.getCampos()) {
+                                            if (cp != null) {
+                                                if (cp.getNome().equals("idoperador")) {
+                                                    String id = String.valueOf(pr.getNumeroPraca());
+                                                    String auxx = String.valueOf(pt.getNumeroPista());
+                                                    while (auxx.length() < 4) {
+                                                        auxx = "0".concat(auxx);
+                                                    }
+                                                    id = "-" + id.concat(auxx);
+                                                    cp.setValor(id);
+                                                } else if (cp.getNome().equals("idorigem")) {
+                                                    cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
+                                                }
+                                            }
+                                        }
+
+
+                                        //Insere Pista Sentido
+                                        tpt = (Tabela) modelo.replicate(null);
+                                        for (Campo cp : tpt.getCampos()) {
+                                            if (cp.getNome().equals("idorigem")) {
+                                                cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt) + "1");
+                                            } else if (cp.getNome().equals("tipoorigem")) {
+                                                cp.setValor("5");
+                                            } else if (cp.getNome().equals("descricao")) {
+                                                cp.setValor(pt.getNumeroPista() + " " + pt.getSentido());
+                                            } else if (cp.getNome().equals("praca")) {
+                                                cp.setValor(pr.getNumeroPraca());
+                                            } else if (cp.getNome().equals("idorigempai")) {
+                                                cp.setValor(GeralConverte.IDS.GET_ID_PISTA_SENTIDO(pt));
+                                            } else if (cp.getNome().equals("pista")) {
+                                                cp.setValor(pt.getNumeroPista());
+                                            } else if (cp.getNome().equals("numerocabine")) {
+                                                cp.setValor(pt.getNumeroPista());
+                                            } else if (cp.getNome().equals("tipopistaarrecadacao")) {
+                                                cp.setValor(pt.getTipo());
+                                            } else if (cp.getNome().equals("sentido")) {
+                                                cp.setValor(pt.getNumeroSentido());
+                                            }
+                                        }
+                                        tabelasPrincipais.add(tpt);
+                                      
+                                        //Insere caminhoCV
+                                        Tabela tcv = (Tabela) caminhoCV.replicate(null);
+                                        for (Campo cp : tcv.getCampos()) {
+                                            if (cp.getNome().equals("idorigem")) {
+                                                cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt));
+                                            } else if (cp.getNome().equals("caminhoarquivo")) {
+                                                String caminho = pt.getIpMaquina().trim();
+                                                caminho = caminho.concat("\\sicat$\\CV\\DADOS\\CV");
+                                                caminho = caminho.concat(String.valueOf(pt.getNumeroPista()));
+                                                cp.setValor(caminho);
+                                            }
+                                        }
+                                        tabelas.add(tcv);
                                     }
                                 }
-
-
-                                //Insere Pista Sentido
-                                if (pt.getSentido().trim().equals(pr.getSigla3().trim())) {
-                                    //reversivel
-                                    tpt = (Tabela) modelo.replicate(null);
-                                    for (Campo cp : tpt.getCampos()) {
-                                        if (cp.getNome().equals("idorigem")) {
-                                            cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt) + "1");
-                                        } else if (cp.getNome().equals("tipoorigem")) {
-                                            cp.setValor("5");
-                                        } else if (cp.getNome().equals("descricao")) {
-                                            cp.setValor(pt.getNumeroPista() + " " + pr.getSiglaSentido1());
-                                        } else if (cp.getNome().equals("praca")) {
-                                            cp.setValor(pr.getNumeroPraca());
-                                        } else if (cp.getNome().equals("idorigempai")) {
-                                            cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt));
-                                        } else if (cp.getNome().equals("pista")) {
-                                            cp.setValor(pt.getNumeroPista());
-                                        } else if (cp.getNome().equals("numerocabine")) {
-                                            cp.setValor(pt.getNumeroPista());
-                                        } else if (cp.getNome().equals("tipopistaarrecadacao")) {
-                                            cp.setValor(pt.getTipo());
-                                        } else if (cp.getNome().equals("sentido")) {
-                                            cp.setValor("1");
+                        		
+                        		
+                        		//Insere todos os sentidos
+                        		int psc = 0;
+                        		for(int i=0;i<loc.getSentidos().size();i++){
+                        			if(loc.getSentidos().get(i)!=null){
+                        				t = (Tabela) modelo.replicate(null);
+                        				psc++;
+                                        for (Campo cp : t.getCampos()) {
+                                            if (cp.getNome().equals("idorigem")) {
+                                                cp.setValor(GeralConverte.IDS.GET_ID_SENTIDO(loc, psc));
+                                            } else if (cp.getNome().equals("tipoorigem")) {
+                                                cp.setValor("6");
+                                            } else if (cp.getNome().equals("descricao")) {
+                                                cp.setValor(loc.getSentidos().get(i).getSentido());
+                                            } else if (cp.getNome().equals("praca")) {
+                                                cp.setValor(pr.getNumeroPraca());
+                                            } else if (cp.getNome().equals("idorigempai")) {
+                                                cp.setValor(GeralConverte.IDS.GET_ID_SENTIDO(loc, psc));
+                                            } else if (cp.getNome().equals("sentido")) {
+                                                cp.setValor(psc);
+                                            }
                                         }
-                                    }
-                                    tabelasPrincipais.add(tpt);
+                                        tabelasPrincipais.add(t);
+                        			}
+                        		}
 
-                                    tpt = (Tabela) modelo.replicate(null);
-                                    for (Campo cp : tpt.getCampos()) {
-                                        if (cp.getNome().equals("idorigem")) {
-                                            cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt) + "2");
-                                        } else if (cp.getNome().equals("tipoorigem")) {
-                                            cp.setValor("5");
-                                        } else if (cp.getNome().equals("descricao")) {
-                                            cp.setValor(pt.getNumeroPista() + " " + pr.getSiglaSentido1());
-                                        } else if (cp.getNome().equals("praca")) {
-                                            cp.setValor(pr.getNumeroPraca());
-                                        } else if (cp.getNome().equals("idorigempai")) {
-                                            cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt));
-                                        } else if (cp.getNome().equals("pista")) {
-                                            cp.setValor(pt.getNumeroPista());
-                                        } else if (cp.getNome().equals("numerocabine")) {
-                                            cp.setValor(pt.getNumeroPista());
-                                        } else if (cp.getNome().equals("tipopistaarrecadacao")) {
-                                            cp.setValor(pt.getTipo());
-                                        } else if (cp.getNome().equals("sentido")) {
-                                            cp.setValor("2");
-                                        }
-                                    }
-                                    tabelasPrincipais.add(tpt);
-                                } else {
-                                    String sigla = (pt.getSentido().trim().equals(pr.getSentido1().trim())) ? pr.getSiglaSentido1() : pr.getSiglaSentido2();
-                                    String sentido = (pt.getSentido().trim().equals(pr.getSentido1().trim())) ? "1" : "2";
-                                    tpt = (Tabela) modelo.replicate(null);
-                                    for (Campo cp : tpt.getCampos()) {
-                                        if (cp.getNome().equals("idorigem")) {
-                                            cp.setValor(GeralConverte.IDS.GET_ID_PISTA_SENTIDO(pt));
-                                        } else if (cp.getNome().equals("tipoorigem")) {
-                                            cp.setValor("5");
-                                        } else if (cp.getNome().equals("descricao")) {
-                                            cp.setValor(pt.getNumeroPista() + " " + sigla);
-                                        } else if (cp.getNome().equals("praca")) {
-                                            cp.setValor(pr.getNumeroPraca());
-                                        } else if (cp.getNome().equals("idorigempai")) {
-                                            cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt));
-                                        } else if (cp.getNome().equals("pista")) {
-                                            cp.setValor(pt.getNumeroPista());
-                                        } else if (cp.getNome().equals("numerocabine")) {
-                                            cp.setValor(pt.getNumeroPista());
-                                        } else if (cp.getNome().equals("tipopistaarrecadacao")) {
-                                            cp.setValor(pt.getTipo());
-                                        } else if (cp.getNome().equals("sentido")) {
-                                            cp.setValor(sentido);
-                                        }
-                                    }
-                                    tabelasPrincipais.add(tpt);
-                                }
-                                //Insere caminhoCV
-                                Tabela tcv = (Tabela) caminhoCV.replicate(null);
-                                for (Campo cp : tcv.getCampos()) {
-                                    if (cp.getNome().equals("idorigem")) {
-                                        cp.setValor(GeralConverte.IDS.GET_ID_PISTA(pt));
-                                    } else if (cp.getNome().equals("caminhoarquivo")) {
-                                        String caminho = pt.getIpMaquina().trim();
-                                        caminho = caminho.concat("\\sicat$\\CV\\DADOS\\CV");
-                                        caminho = caminho.concat(String.valueOf(pt.getNumeroPista()));
-                                        cp.setValor(caminho);
-                                    }
-                                }
-                                tabelas.add(tcv);
-                            }
+                        		
+                        	}
+                        	
                         }
-
-
-
-                        //Insere Sentido
-                        t = (Tabela) modelo.replicate(null);
-                        for (Campo cp : t.getCampos()) {
-                            if (cp.getNome().equals("idorigem")) {
-                                cp.setValor(GeralConverte.IDS.GET_ID_SENTIDO(pr, 1));
-                            } else if (cp.getNome().equals("tipoorigem")) {
-                                cp.setValor("6");
-                            } else if (cp.getNome().equals("descricao")) {
-                                cp.setValor(pr.getSentido1());
-                            } else if (cp.getNome().equals("praca")) {
-                                cp.setValor(pr.getNumeroPraca());
-                            } else if (cp.getNome().equals("idorigempai")) {
-                                cp.setValor(GeralConverte.IDS.GET_ID_LOCALIZACAO(pr));
-                            } else if (cp.getNome().equals("sentido")) {
-                                cp.setValor("1");
-                            }
-                        }
-                        tabelasPrincipais.add(t);
-
-                        t = (Tabela) modelo.replicate(null);
-                        for (Campo cp : t.getCampos()) {
-                            if (cp.getNome().equals("idorigem")) {
-                                cp.setValor(GeralConverte.IDS.GET_ID_SENTIDO(pr, 2));
-                            } else if (cp.getNome().equals("tipoorigem")) {
-                                cp.setValor("6");
-                            } else if (cp.getNome().equals("descricao")) {
-                                cp.setValor(pr.getSentido2());
-                            } else if (cp.getNome().equals("praca")) {
-                                cp.setValor(pr.getNumeroPraca());
-                            } else if (cp.getNome().equals("idorigempai")) {
-                                cp.setValor(GeralConverte.IDS.GET_ID_LOCALIZACAO(pr));
-                            } else if (cp.getNome().equals("sentido")) {
-                                cp.setValor("2");
-                            }
-                        }
-                        tabelasPrincipais.add(t);
                     }
                 }
                 gc();

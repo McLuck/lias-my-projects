@@ -60,7 +60,7 @@ public class JsonServlet extends HttpServlet {
     				}
     			});
     			
-    			JSONArray jarr = JSONArray.fromObject(p.getPistas(), config);
+    			JSONArray jarr = JSONArray.fromObject(p, config);
     			jarr.set(0, "aaData");
     			String ii = jarr.toString();
     			
@@ -92,7 +92,7 @@ public class JsonServlet extends HttpServlet {
     			int id = Integer.parseInt(request.getParameter("id"));
     			PistaDAO pdao = (PistaDAO)AFactoryDao.getInstance(PistaDAO.class);
     			Pista pista = pdao.obter(id);
-    			pista.getPraca();
+    			/*pista.getPraca();*/
     			pista.setIdLocalizacao(Integer.parseInt(request.getParameter("idLocalizacao")));
     			pista.setTipo(Integer.parseInt(request.getParameter("tipo")));
     			pista.setSentido(request.getParameter("sentido"));

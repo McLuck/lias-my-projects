@@ -4,6 +4,7 @@ import com.compsis.sigf.base.BaseTemp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Compsis
@@ -30,6 +31,7 @@ public class BASE {
         public static List<ComboBox> SGBDs;
         public static List<ComboBox> LINKS;
         public static List<ComboBox> PERCENTUAL_CORRECAO_AUTOMATICA_CATEGORIAS_AMBIGUAS;
+        public static Map<Integer, String> CORRECAO_CATEGORIA;
 
         /**
          * Carrega uma lista de categorias padrões para poupar tempo do usuário.
