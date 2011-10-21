@@ -15,6 +15,7 @@
     <property name="rm"/>
     <property name="descricao"/>
     <property name="modelo"/>
+    <property name="catid"/>
     <property name="descOutroCalculoCatEsp"/>
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.Concessionaria" column="concessionaria_id" name="concessionaria" not-null="false"/>
   </class>

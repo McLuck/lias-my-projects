@@ -7,6 +7,7 @@ import com.compsis.sigf.domain.Arrecadacao;
 import com.compsis.sigf.domain.BASE.TIPOS;
 import com.compsis.sigf.domain.Concessionaria;
 import com.compsis.sigf.domain.ConfiguracaoImagem;
+import com.compsis.sigf.domain.Localizacao;
 import com.compsis.sigf.domain.Malote;
 import com.compsis.sigf.domain.Pista;
 import com.compsis.sigf.domain.Praca;
@@ -40,11 +41,17 @@ public class Geral extends SimpleFormController implements Controller {
 			if(concessionaria.getPracas()!=null && !concessionaria.getPracas().isEmpty()){
 				for(Praca pr : concessionaria.getPracas()){
 					if(pr!=null){
-						if(pr.getPistas()!=null && !pr.getPistas().isEmpty()){
-							for(Pista ps : pr.getPistas()){
-								if(ps!=null){
-									if(ps.getTipo() == TIPOS.TIPO_PISTA_AUTOMATICA){
-										return true;
+						if(pr.getLocalizacoes()!=null && !pr.getLocalizacoes().isEmpty()){
+							for(Localizacao lc : pr.getLocalizacoes()){
+								if(lc!=null){
+									if(lc.getPistas()!=null){
+										for(Pista ps : lc.getPistas()){
+											if(ps!=null){
+												if(ps.getTipo() == TIPOS.TIPO_PISTA_AUTOMATICA){
+													return true;
+												}
+											}
+										}
 									}
 								}
 							}
@@ -120,7 +127,18 @@ public class Geral extends SimpleFormController implements Controller {
             }else if(cmd.equals("configGeral")){
                 ModelAndView mav = new ModelAndView("config_geral");
                 mav.addObject("cid", cid);
+                mav.addObject("conc", conc);
                 return mav;
+            }else if(cmd.equals("saveDivida")){
+            	String imprimir = request.getParameter("imprimirTermoDivida");
+            	String texto = request.getParameter("textoTermoDivida");
+            	conc.setImprimirTermoDivida(imprimir!=null);
+            	conc.setTextoTermoDivida(texto);
+            	cdao.salvar(conc);
+            	cdao.commit();
+            	cdao.close();
+            	
+            	return new ModelAndView("frames/success");
             }
         }
         throw new UnsupportedOperationException("Not supported yet.");

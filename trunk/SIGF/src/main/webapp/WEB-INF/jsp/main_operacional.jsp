@@ -101,13 +101,20 @@
 							id="nome_contato_config_visa_vale_pedagio" /> <br />
 					</fieldset>
 				</div>
-				<button onclick="salvarConfigMP();">Salvar</button>
-				<button onclick="closeConfigMP();">Fechar</button>
+				
+				<input type="image" src="images/salvar_img.png" style="width: 60px;height: 20px;padding-top: 16px;display: inline;" onclick="closeConfigMP();" />
+				<!-- <input type="image" onclick="salvarConfigMP();" alt="Salvar" title="Salvar" style="width: 30px; height: 30px; text-align: right; float: right;" src="images/check.png" /> -->
+				<!-- <button onclick="salvarConfigMP();">Salvar</button> -->
+				<input type="image" onclick="closeConfigMP();" alt="Fechar" title="Fechar" style="width: 30px; height: 30px; text-align: right; float: right;" src="images/back.png" />
+				<!-- <button onclick="closeConfigMP();">Fechar</button> -->
 			</fieldset>
 		</form>
 	</div>
 	<div style="text-align: right">
-		<button value="Salvar" onclick="saveAllOperacional(${cid});">Salvar</button>
+		<input type="image" src="images/salvar_img.png" style="width: 60px;height: 20px;padding-top: 16px;display: inline;" onclick="saveAllOperacional(${cid});" />
+		
+		<%-- <input type="image" onclick="saveAllOperacional(${cid});" alt="Salvar" title="Salvar" style="width: 40px; height: 40px; text-align: right; float: right;" src="images/check.png" /> --%>
+		<%-- <button value="Salvar" onclick="saveAllOperacional(${cid});">Salvar</button> --%>
 	</div>
 
 </body>

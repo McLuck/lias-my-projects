@@ -12,6 +12,7 @@
     <property name="tipo"/>
     <property name="numeroPista"/>
     <property name="descricao"/>
-    <many-to-one cascade="merge" class="com.compsis.sigf.domain.Praca" column="praca_id" lazy="false" name="praca" not-null="true"/>
+    <!-- <many-to-one cascade="merge" class="com.compsis.sigf.domain.Praca" column="praca_id" lazy="false" name="praca" not-null="true"/> -->
+    <many-to-one cascade="merge" class="com.compsis.sigf.domain.Localizacao" column="local_id" lazy="false" name="localizacao" not-null="true"/>
   </class>
 </hibernate-mapping>

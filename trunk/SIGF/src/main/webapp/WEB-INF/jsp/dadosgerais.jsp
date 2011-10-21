@@ -7,13 +7,21 @@
 	String pathJS = "js/";
 	String pathCSS = "css/";
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/thickbox.js"></script>
 <link rel="stylesheet" href="css/thickbox.css" />
+
+<link rel="stylesheet" href="css/demo_table.css" />
+
+<style type="text/css">
+.ui-widget-content {
+	border: 0px;
+}
+</style>
 
 <title>Dados Gerais</title>
 		<script type="text/javascript">
@@ -37,10 +45,28 @@
 				document.write ('<iframe id="frame_operacional" frameborder="0" name="contentFrame" allowtransparency="true" src="main_operacional.htm?cid=${cid}" width="100%" style="border: none;background-color:transparent;" scrolling="auto" height="' + espaco_iframe + '">'); 
 				document.write ('</iframe>') ;	
 			}
+			
+			var idtempCat = null;
+        	function clickOpenTR(id){
+        		if(idtempCat!=null){
+        			try{
+        				fecharTRdeEdicao(idtempCat);
+        			}catch(e){}
+        		}
+        		idtempCat = id;
+        		$("#categoria_table_content_" + id).hide();
+        		document.getElementById("categoria_edit_content_"+id).style.display = "table-row";
+        	}
+        	
+        	function fecharTRdeEdicao(id){
+        		$("#categoria_edit_content_"+id).hide();
+        		document.getElementById("categoria_table_content_" + id).style.display = "table-row";
+        		idtempCat = null;
+        	}
 		</script>
 </head>
 
-<body>
+<body> -->
 
 	<div id="wait_frame"
 		style="background-color: white; text-align: center; border solid blue 1px; padding-top: 6%; width: 100%; height: 50%; z-index: 90; position: absolute; top: 0px; left: 180px; display: none;">
@@ -65,12 +91,12 @@
 			<div style="float: left; margin-bottom: 8px;">
 				<form:hidden path="conc.id" id="cid" />
 				<label for="c_dg_numeroCli">Código:</label>
-				<form:input path="conc.numeroCliente" id="c_dg_numeroCli" cssStyle="width: 51px;"/>
+				<form:input path="conc.numeroCliente" id="c_dg_numeroCli" cssStyle="width: 51px;" placeholder="00" />
 				<input type="hidden" name="phase" value="1" /> <label
 					for="c_dg_nome">Nome:</label>
-				<form:input path="conc.nome" id="c_dg_nome" />
+				<form:input path="conc.nome" id="c_dg_nome" placeholder="Concessionária XPTO" />
 				<label for="c_dg_cnpj">CNPJ:</label>
-				<form:input path="conc.cnpj" id="c_dg_cnpj" />
+				<form:input path="conc.cnpj" id="c_dg_cnpj" placeholder="10.999.888/0001-11" />
 			</div>
 
 
@@ -87,17 +113,15 @@
 						onclick="opc_operacao_sa();" value="2" id="c_dg_link2"
 						label="Distribuída - Um servidor por praça." />
 				</div>				
-				<div style="margin-bottom: 10px; margin-left: 0px;display: block;clear: both;float: none;">
-					<fieldset id="fildset_link" <c:if test="conc.operacaoSA!=1">style="display: none;"</c:if>>
-						<legend>Link</legend>
+				<div style="margin-bottom: 10px; margin-left: 0px;display: block;clear: both;float: none; ">
 	
-						<div id="htabtolinks" style="width: 99%">
-				            <ul style="border: 0px;">
-				                <li><a href="#tablink1">Primário</a></li>
+						<div id="htabtolinks" style="width: 99%;<c:if test="conc.operacaoSA!=1">display: none;</c:if>">
+				            <ul style="border: 0px; border-bottom: 1px #AAA solid;">
+				                <li><a href="#tablink1">Link primário</a></li>
 				                <li><a href="#tablink2">Redundância</a></li>
 				            </ul>
 				            
-				            <div id="tablink1" style="padding-left: 0px;">
+				            <div id="tablink1" style="padding-left: 4px;">
 				            	
 											<label>Tipo:</label>
 											<form:select path="conc.link1" id="tp_link_primario" cssStyle="margin-bottom: 5px;">
@@ -108,11 +132,11 @@
 										
 										
 											<label>Capacidade:</label>
-											<form:input path="conc.capacidadeLink1" id="capac_link_primario" />
+											<form:input path="conc.capacidadeLink1" id="capac_link_primario" placeholder="3Mbps" />
 																
 				            </div>
 				            
-				            <div id="tablink2" style="padding-left: 0px;">
+				            <div id="tablink2" style="padding-left: 4px;">
 				            	
 					            	
 										<label>Tipo:</label>
@@ -123,40 +147,86 @@
 										</form:select>
 						            						
 										<label>Capacidade:</label>
-										<form:input path="conc.capacidadeLink2" id="capac_link_redundancia" />
+										<form:input path="conc.capacidadeLink2" id="capac_link_redundancia" placeholder="1Mbps" />
 									
 				            	
 				            </div>
 	            		</div>	
-					</fieldset>
 				</div>
 			</fieldset>
 		</form>
 		<div id="frame_dados_sgbd_salvar" style="text-align: right;">
-			<button onclick="saveConc1(${cid});">Salvar <img src="images/chk.jpg" alt="Salvar" title="Salvar" height="15" width="15" /></button>
+			<input type="image" src="images/salvar_img.png" style="width: 60px;height: 20px;padding-top: 16px;display: inline;" onclick="saveConc1(${cid});" />
+			<!-- <button ><img src="images/check2.png" alt="Salvar" title="Salvar" style="margin-top: 0px; padding-bottom: 5px;" height="20" width="20" /> Salvar</button> -->
+			<%-- <input type="image" onclick="saveConc1(${cid});" alt="Salvar" title="Salvar" style="width: 60px; height: 40px;text-align: right;float: right;margin-top: 5px;" src="images/save2.png" /> --%>
 		</div>
 	</div>
 
 
 	<div id="dadosgeraispraca" >
+		<div>
+			<form action="#" id="formConfigPracasConc" onsubmit="return false;">
+				<fieldset>
+					<legend>Configuração geral praça</legend>
+					<div style="float: left;">
+						<form:checkbox path="conc.exibirDescricaoPracaRelatorios" cssClass="SpecialCaseForLabel" />
+						<label style="width: 400px;margin-bottom: 5px;">Exibir nome da praça nos relatórios</label>
+						
+						
+						Estimativa de tráfego para
+						<input type="number" name="anosEstimativaTrafego" id="anosEstimativaTrafego" maxlength="2" style="width: 40px; display: inline;" value="${conc.anosEstimativaTrafego}"/> anos
+					</div>
+					<div style="float: right;margin-top: 40px;">
+						<%-- <input type="image" onclick="saveConc3(${cid});" alt="Salvar" title="Salvar" style="width: 60px; height: 40px;text-align: right;float: right;margin-top: 5px;" src="images/save2.png" /> --%>
+						
+						<%-- <button value="Salvar" onclick="saveConc3(${cid});"><img src="images/check2.png" alt="Salvar" title="Salvar" style="margin-top: 0px; padding-bottom: 5px;" height="20" width="20" />Salvar</button> --%>
+						<input type="image" src="images/salvar_img.png" style="width: 60px;height: 20px;padding-top: 16px;display: inline;" onclick="saveConc3(${cid});" />
+					</div>
+				</fieldset>
+			</form>
+		</div>
 		<div id="tabela_geral_pracas">
+		<p id="msg_status_cfgprc">
+			&nbsp;
+		</p>
 		
-		<a title="Configurar Praças" href="#" onclick="window.open('configPracas.htm?cid=3', 'Pracas', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=110, LEFT=110, WIDTH=1034, HEIGHT=600');" style="font-family: Verdana; font-size: 13px;">Editar</a>
-									
-				<table id="lista_pracas" style="width: 100%">
-					<thead>
-						<tr>
-							<th>Detalhes</th>
-						</tr>
-					</thead>
-					<tbody id="lista_pracas_trs">
-						<c:forEach items="${pracas}" var="pc">
+		<div id="dialogApagar1" title="Notificação de registro apagado">A praça solicitada foi apagada com sucesso!</div>
+		<!-- <a title="Configurar Praças" href="#" onclick="window.open('configPracas.htm?cid=3', 'Pracas', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=110, LEFT=110, WIDTH=1034, HEIGHT=600');" style="font-family: Verdana; font-size: 13px;">Editar</a> -->
+		
+			<fieldset>
+				<legend>Praças</legend>
+				<div id="frameOpcoesTable" style="height: 24px;">
+					<div id="opcoesEffects" style="display: none; background-color: #EEEEEE; float:right;" class="ui-state-default ui-corner-all">
+						<div class="icone-horizontal novo-documento16" onclick="window.open('gerenciarPracasCompleta.htm?cid=${cid}&cmd=novo', 'Pracas', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=110, LEFT=110, WIDTH=900, HEIGHT=600');" title="Novo"></div>
+						<div class="icone-horizontal edit-documento16" title="Alterar" onclick="window.open('gerenciarPracasCompleta.htm?cid=${cid}&pracaid='+idRegistro, 'Pracas', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=110, LEFT=110, WIDTH=900, HEIGHT=600');"></div>
+						<div class="icone-horizontal del-documento16" title="Apagar" onclick="deletePraca(${cid});"></div>
+						<div class="icone-horizontal abrir-documento16" title="Abrir" onclick="window.open('gerenciarPracasCompleta.htm?cid=${cid}&pracaid='+idRegistro, 'Pracas', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=110, LEFT=110, WIDTH=900, HEIGHT=600');"></div>
+					</div>
+				</div>
+				<table id="listaPracasTable" style="width: 100%" class="display">
+						<thead>
 							<tr>
-								<td>${pc.description}</td>
+								<th>Detalhes</th>
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+						</thead>
+						<% int i=0; %>
+						<tbody id="lista_pracas_trs">
+							<c:forEach items="${pracas}" var="pc">
+								<c:if test="${pc!=null}">
+									<tr onclick="clickRow(this, ${pc.id});"
+										<% 
+												i++;
+												out.print((i%2==0)?"class='even'":"class='odd'");
+											%>> 
+											<td <%-- onclick="window.open('gerenciarPracasCompleta.htm?cid=${cid}&pracaid=${pc.id}', 'Pracas', 'STATUS=NO, TOOLBAR=NO, LOCATION=NO, DIRECTORIES=NO, RESISABLE=NO, SCROLLBARS=YES, TOP=110, LEFT=110, WIDTH=900, HEIGHT=600');" --%>>
+													${pc.description}
+											</td>
+								</tr>
+								</c:if>
+							</c:forEach>
+						</tbody>
+					</table>
+			</fieldset>
 		</div>
 		
 	</div>
@@ -199,19 +269,15 @@
 							<form:radiobutton path="conc.servidorBD.os" cssClass="SpecialCaseForLabel"
 								onclick="opc_so_sgbd()" id="sgbd_so_lnx" value="3" label="Linux" />
 			
-							<br />
 							<label>Distribuição</label>
 							<form:input path="conc.servidorBD.linuxDetalhe"
-								id="sgbd_so_linux_name" />
-							
-							<br/>
-
+								id="sgbd_so_linux_name" placeholder="Nome da distribuição" />
 				
 							<form:radiobutton path="conc.servidorBD.os" cssClass="SpecialCaseForLabel"
 								onclick="opc_sgbd_so()" id="sgbd_so" value="4" label="Outro" />
 
 							<label>Outro sistema? Qual?</label>
-							<form:input path="conc.servidorBD.osDetalhe" id="sgbd_so_name"  />
+							<form:input path="conc.servidorBD.osDetalhe" id="sgbd_so_name" placeholder="Sistema Operacional Alternativo" />
 
 
 						</div>
@@ -246,7 +312,9 @@
 
 		</div>
 		<div id="frame_dados_sgbd_salvar" style="text-align: right;">
-			<button onclick="saveBD(${cid});">Salvar</button>
+			<%-- <button onclick="saveBD(${cid});"><img src="images/check2.png" alt="Salvar" title="Salvar" style="margin-top: 0px; padding-bottom: 5px;" height="20" width="20" /> Salvar</button> --%>
+			<input type="image" src="images/salvar_img.png" style="width: 60px;height: 20px;padding-top: 16px;display: inline;" onclick="saveBD(${cid});" />
+			<%-- <input type="image" onclick="saveBD(${cid});" alt="Salvar" title="Salvar" style="width: 60px; height: 40px;text-align: right;float: right;margin-top: 5px;" src="images/save2.png" /> --%>
 		</div>
 
 	</div>
@@ -256,7 +324,7 @@
 
 		<fieldset>
 			<legend>Configuração de categorias:</legend>
-			<button value="Carregar Categorias" onclick="loadCATEGsTable(${cid});">Carregar categorias</button>
+			<%-- <button value="Carregar Categorias" onclick="loadCATEGsTable(${cid});">Carregar categorias</button> --%>
 			
 			<p id="msg_status_categ" style="color: red;">&nbsp;</p>
 			<div id="screen_categorias_config_frame">
@@ -284,7 +352,7 @@
 					onclick="opc_cat_esp_tp();" id="cats_opc_3"
 					label="Outra Fórmula, Especificar:" value="4" />
 				<form:input path="conc.calculoCatEspecialOutro"
-					id="cats_opc_outra_value" />
+					id="cats_opc_outra_value" placeholder="Cálculo da tarifa especial" />
 			</fieldset>
 
 
@@ -317,7 +385,9 @@
 			</fieldset>
 		</form>
 		<div style="text-align: right;">
-			<button value="Salvar" onclick="saveConc2(${cid});">Salvar</button>
+			<%-- <button value="Salvar" onclick="saveConc2(${cid});"><img src="images/check2.png" alt="Salvar" title="Salvar" style="margin-top: 0px; padding-bottom: 5px;" height="20" width="20" /> Salvar</button> --%>
+			<input type="image" src="images/salvar_img.png" style="width: 60px;height: 20px;padding-top: 16px;display: inline;" onclick="saveConc2(${cid});" />
+			<%-- <input type="image" onclick="saveConc2(${cid});" alt="Salvar" title="Salvar" style="width: 60px; height: 40px;text-align: right;float: right;margin-top: 5px;" src="images/save2.png" /> --%>
 		</div>
 
 	</div>
@@ -327,7 +397,7 @@
 			<fieldset>
 				<legend>Tipos de aquisição de imagens das pistas:</legend>
 				<p id="msg_status_configImag1" style="color: red;"></p>
-				<table width="100%" border="1">
+				<table width="100%" border="1" class="display">
 					<thead>
 						<tr>
 							<th>Tipo de Pista</th>
@@ -339,11 +409,19 @@
 						</tr>
 					</thead>
 
+<%
+	i = 0;
+%>
 					<form action="" onsubmit="return false;" method="POST"
 						name="form_pts_img_adq" id="form_pts_img_adq">
 						<c:forEach items="${conc.configImagem.tipoPista}" var="pts">
 							<c:if test="${pts!=null}">
-								<tr>
+								<tr
+								<%
+									i++;
+									out.print((i%2==0)?"class='even'":"class='odd'");
+								%>
+								>
 									<td>${pts.nome}</td>
 									<td><input type="checkbox" 
 										${pts.imgVASStr} name="imgVAS${pts.id}" class="SpecialCaseForLabel" />
@@ -380,7 +458,7 @@
 					</div>
 					<div style="width: 32%; float: left;">
 						IP:<br />
-						<form:input path="conc.configImagem.ipServer" cssStyle="width: 100px;"  maxlength="15" onkeypress ="return ( maskIP(event,this) );" onblur="if (!validateIP(this.value)) this.style.backgroundColor='#FF9999';" onfocus="this.style.backgroundColor='transparent';"/>
+						<form:input path="conc.configImagem.ipServer" placeholder="10.0.17.17" cssStyle="width: 100px;"  maxlength="15" onkeypress ="return ( maskIP(event,this) );" onblur="if (!validateIP(this.value)) this.style.backgroundColor='#FF9999';" onfocus="this.style.backgroundColor='transparent';"/>
 					</div>
 					<div style="width: 32%; float: left;">
 						Qual será a estrutura dos diretórios na qual serão armazenadas as
@@ -408,19 +486,26 @@
 			<fieldset>
 				<legend>Transações</legend>
 				<div style="width: 50%; float: left;">
-					<table border="0">
+					<table border="0" class="display">
 						<thead>
 							<tr>
 								<th>Transação</th>
 								<th>Adquirir?</th>
 							</tr>
 						</thead>
-
+<%
+	i=0;
+%>
 						<form method="POST" action="" id="form_capt_por_tipo"
 							name="form_capt_por_tipo" onsubmit="return false;">
 							<c:forEach items="${conc.configImagem.tiposTransacoes}" var="tt">
 								<c:if test="${tt!=null}">
-									<tr>
+									<tr
+									<%
+										i++;
+										out.print((i%2==0)?"class='even'":"class='odd'");
+									%>
+									>
 										<td>${tt.nome}</td>
 										<td><input type="checkbox" class="SpecialCaseForLabel"
 											${tt.adqrImagStr} name="adquireImagem${tt.id}"
@@ -431,13 +516,15 @@
 						</form>
 					</table>
 				</div>
-				<div style="float: left;">
+				<div style="float: left; padding-left: 10px;">
 					Quantidade a ser adquirida:<br />
-					<form:input path="conc.configImagem.qtdAdquirida" cssStyle="width:170px;" />
+					<form:input path="conc.configImagem.qtdAdquirida" cssStyle="width:170px;" placeholder="7" />
 				</div>
 			</fieldset>
 			<div style="text-align: right;">
-				<button onclick="saveAllImgConfig(${cid});" value="Salvar">Salvar</button>
+				<input type="image" src="images/salvar_img.png" style="width: 60px;height: 20px;padding-top: 16px;display: inline;" onclick="saveAllImgConfig(${cid});" />
+				<%-- <button onclick="saveAllImgConfig(${cid});" value="Salvar"><img src="images/check2.png" alt="Salvar" title="Salvar" style="margin-top: 0px; padding-bottom: 5px;" height="20" width="20" /> Salvar</button> --%>
+				<%-- <input type="image" onclick="saveAllImgConfig(${cid});" alt="Salvar" title="Salvar" style="width: 60px; height: 40px;text-align: right;float: right;margin-top: 5px;" src="images/save2.png" /> --%>
 			</div>
 		</div>
 	</div>
@@ -467,7 +554,7 @@
 		<div id="content_scritps"></div>
 		<div id="content_scritps_download"></div>
 	</div>
-
+<!-- 
 
 </body>
-</html>
+</html> -->

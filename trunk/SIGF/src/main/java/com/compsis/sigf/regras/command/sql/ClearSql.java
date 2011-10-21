@@ -43,8 +43,40 @@ public class ClearSql extends SQLInserts implements Command, PropertyRetriever {
                 sb.append(sc);*/
         }
         
-        //APPEND INSERTS FINAIS
-        sb.append("INSERT into perfilpapelfunc(idpapel, idfuncionalidade, idperfil, datainsercao)values(0, 1, 0, dbo.trunc_date(getDate()));");
+        
+        
+        
+        /*
+         * APPEND SCRIPTS POS INSERTS
+         */
+        sb.append("INSERT  into origemtipopista select idorigem, 0, 0, dbo.trunc_date(getdate()) from origem where tipoorigem = 2;" );
+        sb.append("Insert Into Origemmotivocorrecao select Idorigem, Idmotivocorrecao, 0, dbo.trunc_date(getDate()) From Motivocorrecao, Origem Where Tipoorigem = 2;");
+        String aux = sb.toString();
+        
+        //Padroniza data
+        aux = aux.replace("trunc(sysdate)", "dbo.trunc_date(getDate())");
+        aux = aux.replace("sysdate", "dbo.trunc_date(getDate())");
+
+        //Remove Itens que faltam ser implementados
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1083, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1097, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1096, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1089, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1091, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1090, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1093, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1092, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1095, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO papelfuncionalidade (idpapel, idfuncionalidade, datainsercao) VALUES (0, 1094, dbo.trunc_date(getDate()));", "");
+        aux = aux.replace("INSERT  INTO relatorio (idrelatorio, idgrupo, idorigem, titulo, datainsercao, versao, arquivo, modo, listarelatorio, arquivoDetalhe, usebean) VALUES (1071, 15, 76029, 'Resumo Mensal do Movimento de Tráfego e Arrecadação", "");
+
+        aux = aux.replace("", "");
+        
+        
+        sb.setLength(0);
+        sb.append(aux);
+        
+        
         L.d(this.getClass().getName() , "SQL foi tratado com sucesso!");
     }
 

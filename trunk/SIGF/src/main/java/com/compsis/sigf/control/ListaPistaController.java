@@ -6,6 +6,7 @@ import com.compsis.sigf.dao.AFactoryDao;
 import com.compsis.sigf.dao.PistaDAO;
 import com.compsis.sigf.dao.PracaDAO;
 import com.compsis.sigf.domain.BASE;
+import com.compsis.sigf.domain.Localizacao;
 import com.compsis.sigf.domain.Pista;
 import com.compsis.sigf.domain.Praca;
 
@@ -50,13 +51,23 @@ public class ListaPistaController implements Controller  {
         
         Praca p = pdao.obter(Integer.parseInt(pracaid));
         
-        List<Pista> pistas = p.getPistas();
+        List<Pista> pistas = new ArrayList<Pista>();
+        
+        if(p.getLocalizacoes()!=null){
+        	for(Localizacao lc : p.getLocalizacoes()){
+        		if(lc!=null){
+        			if(lc.getPistas()!=null){
+        				for(Pista pt : lc.getPistas()){
+        					if(pt!=null){
+        						pistas.add(pt);
+        					}
+        				}
+        			}
+        		}
+        	}
+        }
+        
         mav.addObject("pistas", pistas);
-        mav.addObject("siglaS1", p.getSiglaSentido1());
-        mav.addObject("siglaS2", p.getSiglaSentido2());
-        mav.addObject("descS1", p.getSentido1());
-        mav.addObject("descS2", p.getSentido2());
-        mav.addObject("siglaS3", p.getSigla3());
         return mav;
     }
 

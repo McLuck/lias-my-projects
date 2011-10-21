@@ -9,29 +9,58 @@ import java.util.List;
  * 
  */
 public class Praca extends DomainObject implements Replicable{
-    private String nome;
+
+	private static final long serialVersionUID = 9220401698579800542L;
+	private String nome;
     private int numeroPraca;
     private Concessionaria concessionaria;
     private ConfiguracaoPraca configuracao;
-    private List<Pista> pistas;
+    /*private List<Pista> pistas;*/
     private List<PracaMeioPagamento> pracaMeiosPgto;
-    private String cnpj, trafegoEstimado, distanciaCCA, localizacoes, descricao, sentido1, siglaSentido1, sentido2, siglaSentido2, prcSent1, prcSent2;
-    
+    private List<Localizacao> localizacoes;
+    private String cnpj, trafegoEstimado, distanciaCCA, descricao/*, sentido1, siglaSentido1, sentido2, siglaSentido2, prcSent1, prcSent2*/;
+
+	public List<Localizacao> getLocalizacoes() {
+		return localizacoes;
+	}
+
+	public void setLocalizacoes(List<Localizacao> localizacoes) {
+		this.localizacoes = localizacoes;
+	}
+    /*
     public String getPrcSent1() {
+    	prcSent1 = (siglaSentido1!=null && sentido1!=null)?siglaSentido1.concat(", ").concat(sentido1):"";
 		return prcSent1;
 	}
 
 	public void setPrcSent1(String prcSent1) {
 		this.prcSent1 = prcSent1;
+		if(prcSent1!=null && !prcSent1.isEmpty()){
+			try{
+				String v[] = prcSent1.split(",");
+				this.siglaSentido1 = v[0].trim();
+				this.sentido1 = v[1].trim();
+			}catch(Exception e){
+			}
+		}
 	}
 
 	public String getPrcSent2() {
+		prcSent2 = (siglaSentido2!=null && sentido2!=null)?siglaSentido2.concat(", ").concat(sentido2):"";
 		return prcSent2;
 	}
 
 	public void setPrcSent2(String prcSent2) {
 		this.prcSent2 = prcSent2;
-	}
+		if(prcSent2!=null && !prcSent2.isEmpty()){
+			try{
+				String v[] = prcSent2.split(",");
+				this.siglaSentido2 = v[0].trim();
+				this.sentido2 = v[1].trim();
+			}catch(Exception e){
+			}
+		}
+	}*/
 
 	public Praca(){
         configuracao = new ConfiguracaoPraca(this);
@@ -39,8 +68,8 @@ public class Praca extends DomainObject implements Replicable{
     
     public String getDescription(){
         StringBuilder sb = new StringBuilder();
-        sb.append("ID: ");
-        sb.append(getId());
+        sb.append("Codigo: ");
+        sb.append(getNumeroPraca());
         sb.append("; ");
         if(nome!=null){
             sb.append("Nome: ");
@@ -50,16 +79,6 @@ public class Praca extends DomainObject implements Replicable{
         if(trafegoEstimado!=null){
             sb.append("Trafego Estimado: ");
             sb.append(trafegoEstimado);
-            sb.append("; ");
-        }
-        if(distanciaCCA!=null){
-            sb.append("Distancia do CCA: ");
-            sb.append(distanciaCCA);
-            sb.append("; ");
-        }
-        if(descricao!=null){
-            sb.append("Descricao: ");
-            sb.append(descricao);
             sb.append("; ");
         }
         
@@ -102,6 +121,7 @@ public class Praca extends DomainObject implements Replicable{
         if ((this.descricao == null) ? (other.descricao != null) : !this.descricao.equals(other.descricao)) {
             return false;
         }
+        /*
         if ((this.sentido1 == null) ? (other.sentido1 != null) : !this.sentido1.equals(other.sentido1)) {
             return false;
         }
@@ -113,7 +133,7 @@ public class Praca extends DomainObject implements Replicable{
         }
         if ((this.siglaSentido2 == null) ? (other.siglaSentido2 != null) : !this.siglaSentido2.equals(other.siglaSentido2)) {
             return false;
-        }
+        }*/
         return true;
     }
    
@@ -160,20 +180,6 @@ public class Praca extends DomainObject implements Replicable{
     }
 
     /**
-     * @return the localizacoes
-     */
-    public String getLocalizacoes() {
-        return localizacoes;
-    }
-
-    /**
-     * @param localizacoes the localizacoes to set
-     */
-    public void setLocalizacoes(String localizacoes) {
-        this.localizacoes = localizacoes;
-    }
-
-    /**
      * @return the descricao
      */
     public String getDescricao() {
@@ -186,52 +192,52 @@ public class Praca extends DomainObject implements Replicable{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
-    /**
+/*
+    *//**
      * @return the sentido1
-     */
+     *//*
     public String getSentido1() {
         return sentido1;
     }
 
-    /**
+    *//**
      * @param sentido1 the sentido1 to set
-     */
+     *//*
     public void setSentido1(String sentido1) {
         this.sentido1 = sentido1;
     }
 
-    /**
+    *//**
      * @return the siglaSentido1
-     */
+     *//*
     public String getSiglaSentido1() {
         return siglaSentido1;
     }
 
-    /**
+    *//**
      * @param siglaSentido1 the siglaSentido1 to set
-     */
+     *//*
     public void setSiglaSentido1(String siglaSentido1) {
         this.siglaSentido1 = siglaSentido1;
     }
 
-    /**
+    *//**
      * @return the sentido2
-     */
+     *//*
     public String getSentido2() {
         return sentido2;
     }
 
-    /**
+    *//**
      * @param sentido2 the sentido2 to set
-     */
+     *//*
     public void setSentido2(String sentido2) {
         this.sentido2 = sentido2;
     }
 
-    /**
+    *//**
      * @return the siglaSentido2
-     */
+     *//*
     public String getSiglaSentido2() {
         return siglaSentido2;
     }
@@ -240,27 +246,27 @@ public class Praca extends DomainObject implements Replicable{
         return siglaSentido1+"/"+siglaSentido2;
     }
 
-    /**
+    *//**
      * @param siglaSentido2 the siglaSentido2 to set
-     */
+     *//*
     public void setSiglaSentido2(String siglaSentido2) {
         this.siglaSentido2 = siglaSentido2;
     }
+*/
 
-
-    /**
+   /* *//**
      * @return the pistas
-     */
+     *//*
     public List<Pista> getPistas() {
         return pistas;
     }
 
-    /**
+    *//**
      * @param pistas the pistas to set
-     */
+     *//*
     public void setPistas(List<Pista> pistas) {
         this.pistas = pistas;
-    }
+    }*/
 
     /**
      * @return the nome
@@ -312,21 +318,29 @@ public class Praca extends DomainObject implements Replicable{
         p.setConfiguracao((ConfiguracaoPraca)configuracao.replicate(p));
         p.setDescricao(descricao);
         p.setDistanciaCCA(distanciaCCA);
-        p.setLocalizacoes(localizacoes);
         p.setNome(nome);
-        p.setSentido1(sentido1);
+        /*p.setSentido1(sentido1);
         p.setSentido2(sentido2);
         p.setSiglaSentido1(siglaSentido1);
-        p.setSiglaSentido2(siglaSentido2);
+        p.setSiglaSentido2(siglaSentido2);*/
+        
         p.setTrafegoEstimado(trafegoEstimado);
         
-        List<Pista> listP = new ArrayList<Pista>();
+       /* List<Pista> listP = new ArrayList<Pista>();
         for(Pista pt : pistas){
             if(pt!=null){
                 listP.add((Pista)pt.replicate(p));
             }
         }
-        p.setPistas(listP);
+        p.setPistas(listP);*/
+        
+        if(localizacoes!=null){
+        	List<Localizacao> listaL = new ArrayList<Localizacao>();
+        	for(Localizacao l : this.localizacoes){
+        		listaL.add((Localizacao)l.replicate(p));
+        	}
+        	p.setLocalizacoes(listaL);
+        }
         return p;
     }
 

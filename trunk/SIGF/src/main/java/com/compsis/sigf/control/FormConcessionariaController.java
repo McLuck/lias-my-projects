@@ -199,6 +199,12 @@ public class FormConcessionariaController extends SimpleFormController {
         	cdao.commit();
         	cdao.close();
         	cdao.clear();
+        }else if(cmd!=null && cmd.equals("cfgprc")){
+        	conc.setAnosEstimativaTrafego(Integer.parseInt(request.getParameter("anosEstimativaTrafego")));
+        	conc.setExibirDescricaoPracaRelatorios((request.getParameter("exibirDescricaoPracaRelatorios")!=null)?request.getParameter("exibirDescricaoPracaRelatorios").equals("true"):false);
+        	cdao.salvar(conc);
+        	cdao.commit();
+        	cdao.close();
         }
         return conc;
     }

@@ -13,8 +13,37 @@ import java.util.List;
 public class Concessionaria extends DomainObject implements Serializable, Replicable{
     private String phase;
     private String nome, cnpj, calculoCatEspecialOutro;
-    private String link1, link2, capacidadeLink1, capacidadeLink2;
-    private boolean categoriaAmbigua, correcaoAutomaticaCatAmbigua, exibirDescricaoPracaRelatorios, existeAVI;
+    private String link1, link2, capacidadeLink1, capacidadeLink2, textoTermoDivida;
+    public Concessionaria(){
+    	motivoFechamento = new MotivoFechamentoPista();
+    }
+    public String getTextoTermoDivida() {
+		return textoTermoDivida;
+	}
+
+	public void setTextoTermoDivida(String textoTermoDivida) {
+		this.textoTermoDivida = textoTermoDivida;
+	}
+
+	public boolean isImprimirTermoDivida() {
+		return imprimirTermoDivida;
+	}
+
+	public void setImprimirTermoDivida(boolean imprimirTermoDivida) {
+		this.imprimirTermoDivida = imprimirTermoDivida;
+	}
+
+	private int anosEstimativaTrafego;
+    
+    public int getAnosEstimativaTrafego() {
+		return anosEstimativaTrafego;
+	}
+
+	public void setAnosEstimativaTrafego(int anosEstimativaTrafego) {
+		this.anosEstimativaTrafego = anosEstimativaTrafego;
+	}
+
+	private boolean categoriaAmbigua, correcaoAutomaticaCatAmbigua, exibirDescricaoPracaRelatorios, existeAVI, imprimirTermoDivida;
     public boolean isExisteAVI() {
 		return existeAVI;
 	}
@@ -29,7 +58,16 @@ public class Concessionaria extends DomainObject implements Serializable, Replic
     private Malote configMalote;
     private ServidorBD servidorBD;
     private Arrecadacao configArrecadacao;
-    private ConfiguracaoImagem configImagem;
+    private MotivoFechamentoPista motivoFechamento;
+    public MotivoFechamentoPista getMotivoFechamento() {
+		return motivoFechamento;
+	}
+
+	public void setMotivoFechamento(MotivoFechamentoPista motivoFechamento) {
+		this.motivoFechamento = motivoFechamento;
+	}
+
+	private ConfiguracaoImagem configImagem;
     private List<Praca> pracas;
     private List<Categoria> categorias;
     private List<MeioPagamento> meiosPagamento;
@@ -423,6 +461,8 @@ public class Concessionaria extends DomainObject implements Serializable, Replic
         c.setNumeroCliente(numeroCliente);
         c.setNumeroPais(numeroPais);
         c.setOperacaoSA(operacaoSA);
+        c.setExibirDescricaoPracaRelatorios(exibirDescricaoPracaRelatorios);
+        c.setAnosEstimativaTrafego(anosEstimativaTrafego);
         c.setOrigemNomeArquivo(origemNomeArquivo);
         c.setPercentCorrecaoAutoCatAmb(percentCorrecaoAutoCatAmb);
         c.setServidorBD((ServidorBD)servidorBD.replicate(c));

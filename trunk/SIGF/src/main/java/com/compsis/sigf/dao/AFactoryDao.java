@@ -49,6 +49,7 @@ public class AFactoryDao {
         mapa.put(TabelaDAO.class.getName(), TabelaDAO.getInstance());
         mapa.put(TipoPistaDAO.class.getName(), TipoPistaDAO.getInstance());
         mapa.put(VersaoDAO.class.getName(), VersaoDAO.getInstance());
+        mapa.put(LocalizacaoDAO.class.getName(), LocalizacaoDAO.getInstance());
         L.d(AFactoryDao.class.getName() , "DAOS Carregados em memoria.");
     }
     

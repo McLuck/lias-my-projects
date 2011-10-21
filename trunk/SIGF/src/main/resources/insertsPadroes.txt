@@ -1,3 +1,18 @@
+Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(0, 'Recebimento de Cadastros');
+Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(1, 'Geração de Lotes');
+Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(2, 'Envio de Lotes');
+Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(3, 'Recebimento de Protocolo Ténico');
+Insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)Values(4, 'Recebimento de Protocolo Financeiro');
+insert into TipoProcessamentoMeioPagamento(codigotipoprocessamento, descricaotipoprocessamento)values(5, 'Recebimento Vale Pedágio Comprado');
+insert into TipoProcessamentoMeioPagamento(codigotipoprocessamento, descricaotipoprocessamento)values(6, 'Recebimento Vale Pedágio Realizado');
+insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)values(7, 'Processamento de Cadastro Total');
+insert into TipoProcessamentoMeioPagamento(CodigoTipoProcessamento, DescricaoTipoProcessamento)values(8, 'Processamento de Cadastro');
+insert into TipoProcessamentoMeioPagamento(codigotipoprocessamento, descricaotipoprocessamento)values(9, 'Recebimento Desc. Manut. Geral');
+insert into TipoProcessamentoMeioPagamento(codigotipoprocessamento, descricaotipoprocessamento)values(10, 'Recebimento Desc. Manut. Substituição');
+insert into TipoProcessamentoMeioPagamento(codigotipoprocessamento, descricaotipoprocessamento)values(11, 'Recebimento Desc. Manut. Manutenção');
+insert into TipoProcessamentoMeioPagamento(codigotipoprocessamento, descricaotipoprocessamento)values(12, 'Recebimento Desc. Manut. Concessionárias');
+
+
 -- Papaeis
 insert into papel (idpapel, descricao, flagvisivel, datainsercao) values(0, 'Administrativo',1, dbo.trunc_date(getDate()));
 insert into papel (idpapel, descricao, flagvisivel, datainsercao) values(1, 'Arrecadador', 1, dbo.trunc_date(getDate()));
@@ -7,7 +22,7 @@ insert into papel (idpapel, descricao, flagvisivel, datainsercao) values(4, 'Tes
 insert into papel (idpapel, descricao, flagvisivel, datainsercao) values(7, 'Pista Fechada', 0 , dbo.trunc_date(getDate()));
 insert into papel (idpapel, descricao, flagvisivel, datainsercao) values(8, 'Pista Automática', 0, dbo.trunc_date(getDate()));
 insert into papel (idpapel, descricao, flagvisivel, datainsercao) values(9, 'Responsável por Pista', 1, dbo.trunc_date(getDate()));
-insert into papel (idpapel, descricao, flagvisivel, datainsercao) values (5, 'Coupon Seller', 1, dbo.trunc_date(getDate()));
+insert into papel (idpapel, descricao, flagvisivel, datainsercao) values (5, 'Vendedor de Cupons', 1, dbo.trunc_date(getDate()));
 insert into papel (idpapel, descricao, flagvisivel, datainsercao) values(10, 'Manutenção', 1, dbo.trunc_date(getDate()));
 
 -- Perfis 
@@ -21,16 +36,19 @@ insert into perfil(idperfil, descricao, datainsercao,idpapelnaoadm) values(9, 'R
 
 
 
-insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(1,'Cash',trunc(sysdate));
-insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(2,'Voucher',trunc(sysdate)); 
-insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(3,'Credit Card',trunc(sysdate)); 
-insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(4,'Debit Card',trunc(sysdate));  
-insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(5,'AVI',trunc(sysdate)); 
-insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(6,'Business SmartCard',trunc(sysdate));  
-insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(7,'Individual SmartCard',trunc(sysdate));
+
+
+
+insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(1,'Cash',dbo.trunc_date(getDate()));
+insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(2,'Voucher',dbo.trunc_date(getDate())); 
+insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(3,'Credit Card',dbo.trunc_date(getDate())); 
+insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(4,'Debit Card',dbo.trunc_date(getDate()));  
+insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(5,'AVI',dbo.trunc_date(getDate())); 
+insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(6,'Business SmartCard',dbo.trunc_date(getDate()));  
+insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(7,'Individual SmartCard',dbo.trunc_date(getDate()));
 Insert into Designacaomeiopagamento(Iddesignacao,descricao,datainsercao) values(8,'Time Envelope Discount', sysdate);
-Insert Into Designacaomeiopagamento(Iddesignacao,Descricao,Datainsercao) values(9,'Credit Granted',trunc(sysdate));
-insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(10,'Vale Pedágio',trunc(sysdate));
+Insert Into Designacaomeiopagamento(Iddesignacao,Descricao,Datainsercao) values(9,'Credit Granted',dbo.trunc_date(getDate()));
+insert into DesignacaoMeioPagamento(IdDesignacao,Descricao,DataInsercao) values(10,'Vale Pedágio',dbo.trunc_date(getDate()));
 
 
 #PREFERENCIAS#
@@ -201,7 +219,7 @@ insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos,ac
 -------------------------------------------------------------
 -- Funcionalidades Relacionadas ao Menu de Receita do SGAP --
 -------------------------------------------------------------
-insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos,acessivel) values(59,'Receita.Transações.Correção Preliminar' ,trunc(sysdate),'Transacao/actionCorrecaoTransacao.do?action=correcaoTransacaoPreliminar',1);
+insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos,acessivel) values(59,'Receita.Transações.Correção Preliminar' ,dbo.trunc_date(getDate()),'Transacao/actionCorrecaoTransacao.do?action=correcaoTransacaoPreliminar',1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, acessivel) values(60, 'Receita.Transações.Correção Definitiva' ,dbo.trunc_date(getDate()),'Transacao/actionCorrecaoTransacao.do?action=correcaoTransacaoDefinitiva',1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, acessivel) values(61, 'Receita.Transações.Revisão' ,dbo.trunc_date(getDate()),'Transacao/actionCorrecaoTransacao.do?action=revisaoTransacao',1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, acessivel) values(62, 'Receita.Transações.Verificação' ,dbo.trunc_date(getDate()),'Transacao/actionCorrecaoTransacao.do?action=verificacaoTransacao',1);
@@ -241,7 +259,7 @@ insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, c
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(88, 'Configuração.Historico de Cadastros', dbo.trunc_date(getDate()), 'ConfiguracaoInterop/actionHistoricoCadastro.do?action=indexHistoricoCadastro', null,  1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(89, 'Configuração.Isentos.Carregar Arquivo Isento Edital',dbo.trunc_date(getDate()),'Isento/actionVeiculoIsento.do?action=indexProcessamentoCadastroEdital',null,1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(90, 'Receita.Transações.Correção Definitiva.Corrigir Todas', dbo.trunc_date(getDate()), NULL, NULL, 0);
-insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(91, 'Configuração.Isentos.Emissao de Voucher',trunc(sysdate),'Isento/actionEmissaoVoucher.do?action=indexEmissaooucher',null,1);
+insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(91, 'Configuração.Isentos.Emissao de Voucher',dbo.trunc_date(getDate()),'Isento/actionEmissaoVoucher.do?action=indexEmissaooucher',null,1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(92, 'Receita.Transações.Visualização Fotos Falhas', dbo.trunc_date(getDate()),'Transacao/actionCorrecaoTransacao.do?action=visualizacaoImagensFalhas', null, 1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(93, 'Interoperabilidade.Cadastros.Recebimento de Cadastros Completos', dbo.trunc_date(getDate()), 'RecebimentoCadastro/actionRecebimentoCadastro.do?action=listRecebimentoCadastroListaFull', null, 1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(94, 'Configuração.Reverter Senha', dbo.trunc_date(getDate()), 'Configuracao/actionOperador.do?action=indexReverterSenha', null, 1);
@@ -249,8 +267,8 @@ insert into Funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, c
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(96, 'Interoperabilidade.Configurações.Feriado Bancário', dbo.trunc_date(getDate()), 'ConfiguracaoInterop/actionFeriadoBancario.do?action=indexFeriadoBancario', null, 1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(97, 'Configuração.Pré Correção',dbo.trunc_date(getDate()),'Configuracao/actionConfiguracaoPreCorrecao.do?action=indexConfiguracaoPreCorrecao',null, 1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(98, 'Receita.Transações.Pré Correção',dbo.trunc_date(getDate()),'Transacao/actionCorrecaoTransacao.do?action=indexPreCorrecao',null, 1);
-insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos,acessivel) values(99, 'Receita.Transações.Cancelamento de Transações',trunc(sysdate),'Transacao/actionCancelamentoTransacao.do?action=indexCancelamentoTransacao',1);
-insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos,acessivel) values(100, 'Ferramentas.Relatórios Legados',trunc(sysdate),'Relatorio/actionRelatorio.do?action=listRelatoriosLegados',1);
+insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos,acessivel) values(99, 'Receita.Transações.Cancelamento de Transações',dbo.trunc_date(getDate()),'Transacao/actionCancelamentoTransacao.do?action=indexCancelamentoTransacao',1);
+insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos,acessivel) values(100, 'Ferramentas.Relatórios Legados',dbo.trunc_date(getDate()),'Relatorio/actionRelatorio.do?action=listRelatoriosLegados',1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(101, 'Ferramentas.Exportação de Transações para Auditoria',dbo.trunc_date(getDate()),'Transacao/actionArquivoTransacao.do?action=indexArquivoTransacao',null, 1);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(102, 'Apagar Arquivos de Transações para Auditoria', dbo.trunc_date(getDate()),null,null, 0);
 insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, caminhomenu, acessivel) values(103, 'Configuração.Notificação de Eventos',dbo.trunc_date(getDate()),'Transacao/actionNotificacaoEventos.do?action=indexNotificacaoEventos',null, 1);
@@ -460,35 +478,9 @@ insert into funcionalidade(idfuncionalidade, descricao, datainsercao, metodos, a
 #funcionalidadesacesso#
 
 
-
+insert into meiopagamento(idmeiopagamento, descricao, idgestor, programartarifa, idmeiopagtotarifa, iddesignacao, alteravel, dataalteracao, datainsercao) values(0,'Nominal' , null, 0, 1, 1, 0, dbo.trunc_date(getDate()), dbo.trunc_date(getDate()));
 #meiopagamentos#
-
-
-
-------------------- Pode haver erros
-/*** Rotinas Interoperabilidade **/
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(100, 'br.com.compsisnet.xp.sgcc.interop.ccrio.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCCRIORemote', null, null, 'br.com.compsisnet.xp.sgcc.interop.ccrio.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeCCRIORemote', 'appletManutencaoTransacaoCcrio', 'recebimentoCadastrosCCRIO', null, null, null, trunc(sysdate));
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(101, 'br.com.compsisnet.xp.sgcc.interop.ccrio.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCCRIORemote', null, null, 'br.com.compsisnet.xp.sgcc.interop.ccrio.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeCCRIORemote', 'appletManutencaoTransacaoCcrio', 'recebimentoCadastrosCCRIO', null, null, null, trunc(sysdate));
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(7, 'br.com.compsisnet.xp.sgcc.interop.dbtrans.facade.interfaces.DisponibilizacaoCadastroDBTransRemote', 'envioLotesDBTrans', 'geracaoLotesDBTrans', '', 'appletManutencaoTransacaoCartao', '', '', '', '', trunc(sysdate));
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(14, 'br.com.compsisnet.xp.sgcc.interop.cgmp.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCGMPRemote', 'envioLotesCGMP', 'geracaoLotesCGMP', 'br.com.compsisnet.xp.sgcc.interop.cgmp.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeCGMPRemote', 'appletManutencaoTransacaoCgmp', 'recebimentoCadastrosCGMP', null, 'recebimentoProtocolosFinanceirosCGMP', 'recebimentoProtocolosTecnicosCGMP', trunc(sysdate));
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(15, '', '', '', '', 'appletManutencaoTransacaoCartao', '', '', '', '', trunc(sysdate));
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(17, 'br.com.compsisnet.xp.sgcc.interop.cartao.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCartaoRemote', NULL, NULL, NULL, 'appletManutencaoTransacaoCartao', NULL, NULL, NULL, NULL, trunc(sysdate));
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(18, 'br.com.compsisnet.xp.sgcc.interop.cartao.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCartaoRemote', NULL, NULL, NULL, 'appletManutencaoTransacaoCartao', NULL, NULL, NULL, NULL, trunc(sysdate));
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros,recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico,datainsercao ) values ( 19, 'br.com.compsisnet.xp.sgcc.interop.sgmp.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroSGMPRemote', 'envioLotesSGMP', 'geracaoLotesSGMP', 'br.com.compsisnet.xp.sgcc.interop.sgmp.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeSGMPRemote', 'appletManutencaoTransacaoSgmp', 'recebimentoCadastrosSGMP', null, 'recebimentoProtocolosFinanceirosSGMP', 'recebimentoProtocolosTecnicosSGMP',  trunc(sysdate)); 
-insert into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros,recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico,datainsercao ) values ( 20, 'br.com.compsisnet.xp.sgcc.interop.sgmp.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroSGMPRemote', 'envioLotesSGMP', 'geracaoLotesSGMP', 'br.com.compsisnet.xp.sgcc.interop.sgmp.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeSGMPRemote', 'appletManutencaoTransacaoSgmp', 'recebimentoCadastrosSGMP', null, 'recebimentoProtocolosFinanceirosSGMP', 'recebimentoProtocolosTecnicosSGMP',  trunc(sysdate));
-
-
-/*** Tempos Meio Pagamento **/
-insert into temposmeiopagamento (idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos, varreduraprotocolosfinanceiros, datainsercao)values (14, '0 0/30 * * * ?', '0 40 0,8,16 * * ?', '0 0 0,8,16 * * ?', null, '0 0 1,9,17 * * ?', '0 0 2,10,18 * * ?', trunc(sysdate));
-insert into temposmeiopagamento(idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos,varreduraprotocolosfinanceiros, datainsercao) values(15, '', '', '', null, '', '', trunc(sysdate));
-insert into temposmeiopagamento(idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos, varreduraprotocolosfinanceiros, datainsercao)values(17, NULL, NULL, NULL, NULL, NULL, NULL,trunc(sysdate));
-insert into temposmeiopagamento(idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos, varreduraprotocolosfinanceiros, datainsercao)values(18, NULL, NULL, NULL, NULL, NULL, NULL, trunc(sysdate));
-insert into temposmeiopagamento(idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos, varreduraprotocolosfinanceiros, datainsercao)values(7, '', '', '0 0/60 * * * ?', null, '', '', trunc(sysdate));
-insert into temposmeiopagamento (idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos,varreduraprotocolosfinanceiros, datainsercao) values (19, '0 0/5 * * * ?', null, '0 0/30 * * * ?', null, null, null, trunc(sysdate));
-insert into temposmeiopagamento (idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos,varreduraprotocolosfinanceiros, datainsercao) values (20, '0 0/5 * * * ?', null, '0 0/30 * * * ?', null, null, null, trunc(sysdate));
-
------------------ Verificar dependencias
-
+insert into meiopagamento(idmeiopagamento, descricao, idgestor, programartarifa, idmeiopagtotarifa, iddesignacao, alteravel, dataalteracao, datainsercao) values(4,'Promessa Pagto', null, 0, 1, 2, 0, dbo.trunc_date(getDate()), dbo.trunc_date(getDate()));
 
 ---------------------------
 --TipoSumarioOperacional -- 
@@ -518,15 +510,20 @@ insert into TipoSumarioOperacional(TipoSumario, Descricao, DataInsercao) values(
 insert into TipoSumarioOperacional(TipoSumario, Descricao, DataInsercao) values(23, 'Desconto Não Confirmado', dbo.trunc_date(getDate()));
 insert into TipoSumarioOperacional(TipoSumario, Descricao, DataInsercao) values(24, 'Crédito Concedido Confirmado', dbo.trunc_date(getDate()));
 insert into TipoSumarioOperacional(TipoSumario, Descricao, DataInsercao) values(25, 'Crédito Concedido Não Confirmado', dbo.trunc_date(getDate()));
-Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(26, 'Recebimento de Voucher de Não Pagante em Pista', dbo.trunc_date(getDate()));
-Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(27, 'Recebimento de Voucher de Violação em Pista', dbo.trunc_date(getDate()));
+Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(26, 'recebimento de voucher de não pagante em pista', dbo.trunc_date(getDate()));
+Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(27, ' recebimento de voucher de violação em pista', dbo.trunc_date(getDate()));
 Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(28, 'Desconto Concedido em Pista' , dbo.trunc_date(getDate()));
 Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(29, 'Isento por Passagens Múltiplas' , dbo.trunc_date(getDate()));
 Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(30, 'ISPM/ISPP não confirmado' , dbo.trunc_date(getDate()));
-Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(31, 'Voucher de Não Pagante – Miniturno da MSG', dbo.trunc_date(getDate()));
-Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(32, 'Voucher de Violação – Miniturno da MSG', dbo.trunc_date(getDate()));
+Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(31, 'recebimento duplicado de voucher de não pagante em pista', dbo.trunc_date(getDate()));
+Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(32, 'recebimento duplicado de voucher de violação em pista', dbo.trunc_date(getDate()));
 Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(33, 'Voucher de Não Pagante – Miniturno do Recebimento', dbo.trunc_date(getDate()));
 Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(34, 'Voucher de Violação – Miniturno do Recebimento ', dbo.trunc_date(getDate()));
+Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(35, 'valor a mais recebido no voucher de não pagante' , dbo.trunc_date(getDate()));
+Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(36, 'valor a mais recebido no voucher de violação' , dbo.trunc_date(getDate()));
+Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(37, 'valor a menos recebido no voucher de não pagante' , dbo.trunc_date(getDate()));
+Insert Into Tiposumariooperacional(tiposumario, Descricao, Datainsercao) Values(38, 'valor a menos recebido no voucher de violação' , dbo.trunc_date(getDate()));
+
 
 ------------------
 -- Tabela Falha -- 
@@ -708,12 +705,6 @@ insert into operador(idoperador, nome,idcargo, situacaocadastro, senhaadm, tenta
 ---------------------------------------------------------------------------
 insert into rangeip(idrangeip, ipinicial, ipfinal, datainsercao) values(1, '0.0.0.0', '255.255.255.255', dbo.trunc_date(getDate()));
 
-------------------------------------------------------------------------------
--- Configuração do Cadastro dos tipos de pista que podem sofrer pré-correção
-------------------------------------------------------------------------------
-insert into origemtipopista select idorigem, 0, 0, dbo.trunc_date(getdate()) from origem where tipoorigem = 2;
-Insert Into Origemmotivocorrecao select Idorigem, Idmotivocorrecao, 0, dbo.trunc_date(getDate()) From Motivocorrecao, Origem Where Tipoorigem = 2;
-
 -------------------
 -- Tipo Violacao --  
 -------------------
@@ -726,7 +717,7 @@ insert into tipoviolacao (idtipoviolacao, descricao, ativo, datainsercao) values
 insert into tipoviolacao (idtipoviolacao, descricao, ativo, datainsercao) values(6, 'Manutenção', 0, dbo.trunc_date(getDate()));
 
 insert into textoadicionalimpressao (idtextoadicional, idtipo, texto) values ('1', '1', 'O usuário da concessionária reconhece a passagem acima e compromete-se a realizar o pagamento no prazo máximo de 15 dias a contar da data e hora da passagem, sob pena da autuação, realizada por agente de trânsito competente, pela infração de "evasão de pedágio" prevista no artigo 209 do Código de Trânsito Brasileiro. O Usuário reconhece a finalidade desse documento de caráter emergencial, e declara estar ciente que não será autorizado caso de reincidência.');
-insert into motivoimpressao (idmotivoimpressao, descricao, dataalteracao, datainsercao) values (1, 'Via do Usuário', trunc(sysdate), trunc(sysdate));
+insert into motivoimpressao (idmotivoimpressao, descricao, dataalteracao, datainsercao) values (1, 'Via do Usuário', dbo.trunc_date(getDate()), dbo.trunc_date(getDate()));
 
 
 ---------------------- ADD SEGUNDA PARTE. VERIFICAR DEPENDENCIAS.
@@ -794,7 +785,6 @@ insert into sgcfgmeiopagamento (idcobranca, iddesignacao, idmeiopagamento, descr
 insert into sgcfgmeiopagamento (idcobranca, iddesignacao, idmeiopagamento, descricao, datainsercao, FormaPagamento) values(5, 2, 3, 'Cheque', dbo.trunc_date(getDate()), 1);
 insert into sgcfgmeiopagamento (idcobranca, iddesignacao, idmeiopagamento, descricao, datainsercao, FormaPagamento) values(5, 2, 4, 'Promessa de Pagamento', dbo.trunc_date(getDate()), 1);
 insert into sgcfgmeiopagamento (idcobranca, iddesignacao, idmeiopagamento, descricao, datainsercao, FormaPagamento) values(5, 2, 14, 'ViaFácil/SemParar', dbo.trunc_date(getDate()), 2);
-
 insert into SgcfgMeioPagamento (idcobranca, iddesignacao, idmeiopagamento, descricao, datainsercao, FormaPagamento) values(5, 5, 14, 'ViaFácil/SemParar', dbo.trunc_date(getDate()), 2);
 
 
@@ -808,12 +798,18 @@ insert into sgcfgmotivosocupacao(idocupacao, descricao, motivofechamento, datain
 insert into sgcfgmotivosocupacao(idocupacao, descricao, motivofechamento, datainsercao) values(14, 'Fechamento Antecipado', 1, dbo.trunc_date(getDate()));
 
 
-insert into classedetarifa(idclassedetarifa, idmeiopagamento, descricao, codigoprivilegio, editavel, datainsercao) values(-1, 1, 'Nominal', 0, 0, dbo.trunc_date(getDate()));
-insert into classedetarifa(idclassedetarifa, idmeiopagamento, descricao, codigoprivilegio, editavel, datainsercao) values( 1, 1, 'Dinheiro, Cupons', 0, 0, dbo.trunc_date(getDate()));
-insert into classedetarifa(idclassedetarifa, idmeiopagamento, descricao, codigoprivilegio, editavel, datainsercao) values( 2, 1, 'Usuario Local', 1, 0, dbo.trunc_date(getDate()));
-insert into classedetarifa(idclassedetarifa, idmeiopagamento, descricao, codigoprivilegio, editavel, datainsercao) values(14, 14, 'Via Fácil/Sem Parar', 0, 0, dbo.trunc_date(getDate()));
-insert into classedetarifa(idclassedetarifa, idmeiopagamento, descricao, codigoprivilegio, editavel, datainsercao) values(15, 15, 'Visa Vale Pedágio', 0, 0, dbo.trunc_date(getDate()));
-insert into classedetarifa(idclassedetarifa, idmeiopagamento, descricao, codigoprivilegio, editavel, datainsercao) values(23, 23, 'Via Expressa', 0, 0, dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(1, 'Subclassificações Confirmadas', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(2, 'Sobreclassificações Confirmadas', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(3, 'Subclassificações Eliminadas', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(4, 'Subclassificações Minimizadas', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(5, 'Subclassificações Criadas', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(6, 'Subclassificações Aumentadas', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(7, 'Subclassificações sem Categoria Detectada Válida', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(8, 'Sobreclassificações sem Categria Detectada Válida', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(9, 'Confirmação de Classificação sem Categoria Detectada Válida', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(10, 'Classificadas como Candidatas a Violação', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(11, 'Classificadas como Candidatas a Violação que foram Confirmadas', dbo.trunc_date(getDate()));
+insert into sgcfgtiposumario(idtiposumario, descricao, datainsercao) values(12, 'Classificadas como Candidatas a Violação que foram Ignoradas', dbo.trunc_date(getDate()));
 
 insert into preferencias(idpreferencia, valor, sistema, tipo) values(10001, 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\Temp\\ImportacaoSGMP\\AProcessar', 3, 4 );
 insert into preferencias(idpreferencia, valor, sistema, tipo) values(10002, 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\Temp\\ImportacaoSGMP\\Historico' , 3, 4 );
@@ -1012,151 +1008,85 @@ insert into funcionalidadesacesso (idfuncionalidade, acesso, nivelpormetodo, ace
 insert into funcionalidadesacesso (idfuncionalidade, acesso, nivelpormetodo, acessometodo)values (3015,'ControleDesconto/perfilDesconto.do',0,null);
 insert into funcionalidadesacesso (idfuncionalidade, acesso, nivelpormetodo, acessometodo)values (3016,'ControleDesconto/midiaPerfilDesconto.do',0,null);
 
-
-
-
 insert into Preferencias(idpreferencia, valor, sistema, tipo) values(93, null, 0, 4);
 insert into Preferencias(idpreferencia, valor, sistema, tipo) values(95, null, 0, 4);
 insert into Preferencias(idpreferencia, valor, sistema, tipo) values(97, null, 0, 4);
 insert into preferencias(idpreferencia, valor, sistema, tipo) values(4060, null, 0, 4);
 insert into preferencias(idpreferencia, valor, sistema, tipo) values(10005, null, 0, 4);
 
+-- Condição 1: Existência de lacuna.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (1,'Lacunas Abertas ou em Recuperação','Não deve haver lacunas de dados, ou essa condição deve ser explicitamente ignorada.','Para verificar acesse o menu Receita > Completude > Lacunas com o perfil Administrativo.',1,1,0,0,0,1,1,0,1,dbo.trunc_date(getdate()));
+-- Condição 2: Atualização da praça.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (2,'Praça Atualizada','A praça deve estar atualizada num instante posterior à data declaração ou à data fim do período a ser bloqueado.','Para verificar acesse o menu Receita > Completude > Atualização com o perfil Administrativo.',1,1,0,0,0,1,1,0,1, dbo.trunc_date(getdate()));
+-- Condição 3: Declaração de mesma praça.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (3,'Declaração Local','A declaração deve ser da mesma praça local.','Verifique os dados do login na barra superior da interface com o perfil Administrativo ou Supervisor.',1,1,1,1,1,1,1,1,0, dbo.trunc_date(getdate()));
+-- Condição 4: Estado da declaração
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (4,'Estado da Declaração','A declaração deve estar em um dos seguintes estados: Encerrada; Pré-consolidada; ou Desconsolidada.','Para verificar acesse o menu Declaração > Apuração de Resultados com o perfil Administrativo ou Supervisor, filtre pela declaração a ser consolidada e verifique a coluna estado.',1,1,1,1,1,1,1,1,0, dbo.trunc_date(getdate()));
+-- Condição 5: Todas as transações definitivamente corrigidas.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (5,'Transações Corrigidas','Todas as transações correspondentes ao período de trabalho devem ter sido corrigidas de forma definitiva.','Para verificar acesse o menu Receita > Transações > Correção Definitiva com o perfil Supervisor.',1,0,0,0,0,1,1,0,1, dbo.trunc_date(getdate()));
+-- Condição 6: Declaração de Coletores de Sangria consolidadas.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (6,'Declaração de Coletores de Sangria','As declarações dos coletores de sangria que receberam valores do arrecadador já devem ter sido consolidadas, pré-consolidadas ou bloqueadas.','Para verificar acesse o menu Declaração > Apuração de Resultados com o perfil Administrativo ou Supervisor, filtre pelas declarações de coletores de sangria e verifique a coluna estado.',1,0,0,0,0,0,0,0,0, dbo.trunc_date(getdate()));
+-- Condição 7: Malotes depositados.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (7,'Depósito de Malotes','Todos os malotes associados à declaração, caso existam malotes associados à declaração, deve ter sido depositado.','Para verificar acesse o menu Tesouraria > Malotes > Registro de Depósito com o perfil Tesoureiro.',1,1,1,1,1,1,1,1,1, dbo.trunc_date(getdate()));
+-- Condição 8: Outra declaração para o período coberto.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (8,'Período da Declaração','Não deve haver outra declaração (consolidada ou pré-consolidada) para o mesmo operador, mesmo papel, mesma origem, no período coberto pela declaração em questão.','Para verificar acesse o menu Declaração > Apuração de Resultados com o perfil Administrativo ou Supervisor.',1,1,1,1,1,1,1,1,0, dbo.trunc_date(getdate()));
+-- Condição 9: Operadores entregaram dinheiro no caixa.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (9,'Operadores que Entregaram Arrecadação no Caixa','As declarações dos operador que entregaram dinheiro no caixa já devem ter sido consolidadas.','Para verificar acesse o menu Declaração > Apuração de Resultados com o perfil Administrativo ou Supervisor, filtre pelas declarações de operadores que entregaram dinheiro no caixa e verifique a coluna estado.',0,0,0,1,0,0,0,0,0, dbo.trunc_date(getdate()));
+-- Condição 10: Verifica se possui sangrias associadas à declação com o estado "a conferir"
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (10,'Estado das Sangrias da Declaração','As sangrias associadas à declaração devem estar encerradas.','Para verificar acesse o menu Declaração > Apuracao de Resultados com o perfil Administrativo ou Supervisor, filtre pelas sangrias realizadas que não estejam encerradas.',1,1,1,1,1,1,1,1,0, dbo.trunc_date(getdate()));
+-- Condição 11: Verifica se existe troco pendente, estado "a conferir"
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (11,'Estado do Troco','Os trocos associados à declaração devem estar com o estado encerrado (Para forma de devolução de troco configurada como explícita).','Para verificar acesse o menu Tesouraria > Caixa > Recebimento de Valores, com o perfil Tesoureiro, e filtre pelos trocos a receber.',1,1,1,1,1,1,1,1,0, dbo.trunc_date(getdate()));
+-- Condição 12: Verifica se a declaração de pista está incompleta.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (12,'Declaração de Pista','As declarações realizadas em pista devem estar completas.','Para verificar acesse o menu Ferramentas > Relatórios e emita o relatório 1025 - Trilha de Auditoria, selecionar a operação: Mensagens de Declaração ou Sangria feitas na Pista.',1,0,0,0,0,0,0,0,0, dbo.trunc_date(getdate()));
+-- Condição 13: Verifica se as sangrias estão incompletas.
+insert into CondicaoConsolidacao(IDCondicao, Condicao, Descricao, Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, Periodo, DataInsercao)values (13,'Sangrias de Pista','As sangrias devem estar completas.','Para verificar acesse o menu Ferramentas > Relatórios e emita o relatório 1025 - Trilha de Auditoria, selecionar a operação: Mensagens de Declaração ou Sangria feitas na Pista.',1,0,0,0,0,0,0,0,0, dbo.trunc_date(getdate()));
+
+--------------------------------------
+-- Check List Operacional - Período -- 
+--------------------------------------										 
+--Condição 14 - Lacunas Ignoradas
+insert into CondicaoConsolidacao(IDCondicao,Condicao,Descricao,Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, PERIODO, DataInsercao) Values (14, 'Lacunas Ignoradas', 'Há lacunas ignoradas, se o período for bloqueado, não será possível atualizá-las.', 'Para verificar acesse o menu Receita > Completude > Lacunas com o perfil Administrativo.', 0, 0, 0, 0, 0, 0, 0, 0, 1,dbo.trunc_date(getDate()));
+--Condição 15 - Declarações Consolidadas
+insert into CondicaoConsolidacao(IDCondicao,Condicao,Descricao,Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, PERIODO, DataInsercao) values (15, 'Declarações Consolidadas', 'As declarações feitas no período devem estar consolidadas.', 'Para verificar acesse o menu Declaração > Apuração de Resultados com o perfil de Supervisor ou Administrativo, e filtre as declarações do período que não estejam consolidadas.', 0, 0, 0, 0, 0, 0, 0, 0, 1,dbo.trunc_date(getdate()));
+--Condição 16 - Declarações Bloqueadas
+insert into CondicaoConsolidacao(IDCondicao,Condicao,Descricao,Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, PERIODO, DataInsercao)values (16, 'Declarações Bloqueadas', 'As declarações feitas no período devem estar bloqueadas.', 'Para verificar acesse o menu Declaração > Apuração de Resultados com o perfil de Supervisor ou Administrativo, e filtre as declarações do período que não estejam bloqueadas.', 0, 0, 0, 0, 0, 0, 0, 0, 1,dbo.trunc_date(getdate()));
+--Condição 17 - Miniturnos Declarados
+insert into CondicaoConsolidacao(IDCondicao,Condicao,Descricao,Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, PERIODO, DataInsercao)values (17, 'Miniturnos Declarados', 'Todos os miniturnos do período devem estar declarados.', 'Para verificar acesse o menu Declaração > Apuração de Resultados com o perfil de Supervisor ou Administrativo, e filtre por miniturnos do período com estado pendente.', 0, 0, 0, 0, 0, 0, 0, 0, 1,dbo.trunc_date(getdate()));
+--Condição 18 - Sangrias Associadas às Declarações
+insert into CondicaoConsolidacao(IDCondicao,Condicao,Descricao,Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, PERIODO, DataInsercao)values (18, 'Sangrias Associadas às Declarações', 'Todos os sangrias do período devem associadas à uma declaração.', 'Para verificar acesse o menu Declaração > Apuração de Resultados com o perfil de Supervisor ou Administrativo, e filtre pelas sangrias do período.', 0, 0, 0, 0, 0, 0, 0, 0, 1,dbo.trunc_date(getdate()));
+--Condição 19 - Malotes Associados às Declarações
+insert into CondicaoConsolidacao(IDCondicao,Condicao,Descricao,Verificacao, Arrecadador, ColetorSangria, Supervisor, Tesoureiro, VendedorCupom, PistaFechada, PistaAutomatica, ResponsavelPista, PERIODO, DataInsercao) values (19, 'Malotes Associados às Declarações', 'Todos os malotes do período devem associadas à uma declaração.', 'Verifique em Declaração > Apuração de Resultados com o perfil de Supervisor ou Administrativo, se há declarações do período que não foram consolidadas.', 0, 0, 0, 0, 0, 0, 0, 0, 1,dbo.trunc_date(getdate()));
 
 
-insert into pastatrabalhomeiopagamento ( 
-idmeiopagamentointeroperacao, 
-pastaarquivoscomerro,
-pastagravacaolotes, 
-pastahistoricocadastros, 
-pastalotesenviados, 
-pastarecebimentocadastros,
-pastarecebimentoprotocolostecn, 
-datainsercao, 
-pastarecebimentoprotocolosfina,
-pastahistoricorecebimentoproto, 
-pastaenviolotes, 
-pastarecebimentobd, 
-pastaenvioimagens,
-pastaenviotarifas, 
-pastarecebimentolistafull, 
-pastaprotocolofinanceirotmp, 
-pastaprotocolotecnicotmp,
-pastarecebimentocadastrotmp,
-pastaenviotarifastmp, 
-pastarecebimentotarifas, 
-pastarecebimentotarifastmp) 
-values ( 
-19, 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PF\Erro', 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PF\Envio\Lotes\tmp', 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PF\Recebimento\HistoricoCadastros', 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PF\Envio\LotesEnviados', 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PF\Recebimento\Cadastros', 
-null,  
-trunc(sysdate), 
-null, 
-null, 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PF\Envio\Lotes', 
-null, null, null, null, null, null, null, null, null, null); 
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00000', 'Não Aplicável', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00290', 'CGMP', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00256', 'ALESP', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00258', 'Dersa', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00259', 'AutoBan', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00260', 'Tebe', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00261', 'Via Norte', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00262', 'Intervias', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00263', 'Centrovias', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00264', 'Triangulo do Sol', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00265', 'Autovias', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00266', 'Renovias', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00267', 'Via Oeste', 0);
+Insert into cgmpconcessionarias (codigo, descricao, status) values ('00270', 'Ecovias', 0);
 
-insert into pastatrabalhomeiopagamento ( 
-idmeiopagamentointeroperacao, 
-pastaarquivoscomerro,
-pastagravacaolotes, 
-pastahistoricocadastros, 
-pastalotesenviados, 
-pastarecebimentocadastros,
-pastarecebimentoprotocolostecn, 
-datainsercao, 
-pastarecebimentoprotocolosfina,
-pastahistoricorecebimentoproto, 
-pastaenviolotes, 
-pastarecebimentobd, 
-pastaenvioimagens,
-pastaenviotarifas, 
-pastarecebimentolistafull, 
-pastaprotocolofinanceirotmp, 
-pastaprotocolotecnicotmp,
-pastarecebimentocadastrotmp,
-pastaenviotarifastmp, 
-pastarecebimentotarifas, 
-pastarecebimentotarifastmp) values ( 
-20, 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PJ\Erro', 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PJ\Envio\Lotes\tmp', 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PJ\Recebimento\HistoricoCadastros', 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PJ\Envio\LotesEnviados', 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PJ\Recebimento\Cadastros', 
-null,  
-trunc(sysdate), 
-null, 
-null, 
-'D:\Sicat\app\server\sgap\deploy\interop.war\SGMP\PJ\Envio\Lotes', 
-null, null, null, null, null, null, null, null, null, null); 
+insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(0, 'Estorno', 0, dbo.trunc_date(getDate()));
+insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(0, 'Estorno', 1, dbo.trunc_date(getDate()));
+insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(1, 'Pagamento', 0, dbo.trunc_date(getDate()));
+insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(1, 'Pagamento', 1, dbo.trunc_date(getDate()));
+insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(2, 'Ajuste', 0, dbo.trunc_date(getDate()));
+insert into tipolancamentofinanceirocc(idtipolancamentofinanceiro, descricao, tipooperacao, datainsercao) values(2, 'Ajuste', 1, dbo.trunc_date(getDate()));
 
 
-insert into pastatrabalhomeiopagamento(
-idmeiopagamentointeroperacao,
-pastaarquivoscomerro,
-pastagravacaolotes,
-pastahistoricocadastros,
-pastalotesenviados,
-pastarecebimentocadastros,
-pastarecebimentoprotocolostecn,
-datainsercao,
-pastarecebimentoprotocolosfina,
-pastahistoricorecebimentoproto,
-pastaenviolotes,
-pastarecebimentoBD,
-pastaenvioimagens,
-pastarecebimentolistafull,
-pastarecebimentocadastrotmp,
-pastaprotocolofinanceirotmp,
-pastaprotocolotecnicotmp,
-PastaEnvioTarifas,
-PastaRecebimentoTarifas,
-PastaRecebimentoTarifasTMP,
-PastaEnvioTarifasTMP) values(
-14,
-'D:\Sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\Erros',
-'D:\Sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\Lotes',
-'D:\Sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\HistoricoCadastros',
-'D:\Sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\LotesEnviados',
-'D:\cgmp-edi\2.RECEBIMENTO',
-'D:\cgmp-edi\2.RECEBIMENTO\TRT',
-trunc(sysdate),
-'D:\cgmp-edi\2.RECEBIMENTO\TRF',
-'D:\Sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\HistoricoProtocolos',
-'D:\cgmp-edi\1.ENVIO\TRN',
-'\\192.168.152.21\recebimento',
-'D:\cgmp-edi\1.ENVIO\TRN\IMAGENS',
-'D:\sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\CadastrosListaFull',
-'D:\sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\Cadastros\tmp',
-'D:\sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\ProtocolosFinanceiros\tmp',
-'D:\sicat\app\server\sgap\deploy\interop.war\CGMP\ViaFacilSemParar\ProtocolosTecnicos\tmp',
-'D:\CGMP-EDI\1.ENVIO\TAF\',
-'D:\CGMP-EDI\2.RECEBIMENTO\TAT\',
-'D:\Sicat\app\server\sgap\deploy\interop.war\CGMP\TAF\tmp\',
-'D:\Sicat\app\server\sgap\deploy\interop.war\CGMP\TAT\tmp\');
 
 
-Insert into pastatrabalhomeiopagamento
-(idmeiopagamentointeroperacao,
-pastaarquivoscomerro,
-pastagravacaolotes, 
-pastahistoricocadastros,
-pastalotesenviados,
-pastarecebimentocadastros, 
-pastarecebimentoprotocolostecn,
-datainsercao,
-pastarecebimentoprotocolosfina,
-pastahistoricorecebimentoproto,
-pastaenviolotes, pastarecebimentobd,
-pastaenvioimagens, pastaenviotarifas,
-pastarecebimentolistafull, pastaprotocolofinanceirotmp, 
-pastaprotocolotecnicotmp, pastarecebimentocadastrotmp)
-Values
-(7, 'D:\sicat\app\server\sgap\deploy\interop.war\DBTrans\LotesComErro', '\\192.168.152.17\Publico', NULL, 
-'D:\sicat\app\server\sgap\deploy\interop.war\DBTrans\LoteProcessadosComSucesso', NULL, NULL, sysdate, NULL, 
-NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
+
+------------------------------------------------------------------------------
+-- Configuração do Cadastro dos tipos de pista que podem sofrer pré-correção
+------------------------------------------------------------------------------
+insert into origemtipopista select idorigem, 0, 0, dbo.trunc_date(getdate()) from origem where tipoorigem = 2;
+Insert Into Origemmotivocorrecao select Idorigem, Idmotivocorrecao, 0, dbo.trunc_date(getDate()) From Motivocorrecao, Origem Where Tipoorigem = 2;

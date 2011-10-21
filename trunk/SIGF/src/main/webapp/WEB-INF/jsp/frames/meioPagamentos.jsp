@@ -29,13 +29,14 @@
             });
         }
         </script>
+        <link rel="stylesheet" href="css/demo_table.css" />
     </head>
     <body>
             <p id="msg_status_mps" style="color: red;">
 
             </p>
             <form action="" method="POST" id="form_mps_utilizados" onsubmit="return false;" name="form_mps_utilizados">
-                <table width="100%">
+                <table width="100%" class="display">
                     <thead>
                         <tr>
                             <th>Utiliza?</th>
@@ -44,8 +45,12 @@
                             <th colspan="2">Observação</th>
                         </tr>
                     </thead>
+                    <% int i=0; %>
                     <c:forEach items="${mps}" var="m">
-                        <tr>
+                        <tr <% i++;
+                        	out.print((i%2==0)?"class='even'":"class='odd'");
+                        %>
+                        >
                             <td>
                                 <input onclick="showConfigMp(${m.id}, ${m.equipOrContato});"
                                        <c:if test="${m.habilitado}">checked="true"</c:if>
@@ -64,7 +69,8 @@
                                     <div id="layer_config_button${m.id}" 
                                          <c:if test="${!m.habilitado}">style="display: none;"</c:if>
                                              >
-                                             <button onclick="clickConfigMP(${m.id}, ${m.configEquipamento}, ${m.configContato});">Config</button>
+                                             <input type="image" onclick="clickConfigMP(${m.id}, ${m.configEquipamento}, ${m.configContato});" alt="Configurar" title="Configurar" style="width: 30px; height: 30px; text-align: left;" src="assets/images/icons/Settings.png" />
+                                             <%-- <button onclick="clickConfigMP(${m.id}, ${m.configEquipamento}, ${m.configContato});">Config</button> --%>
                                     </div>
                                 </c:if>
                             </td>

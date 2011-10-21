@@ -22,11 +22,17 @@ public class MeioPagamentoAdapt {
     private List<Tabela> tabelas;
     private TabelaDAO tdao = (TabelaDAO) AFactoryDao.getInstance(TabelaDAO.class);
     private int vid;
-
+    private MeioPagamento mpt;
     public MeioPagamentoAdapt(MeioPagamento mp, int vid) {
+    	mpt = mp;
         L.d(this.getClass().getName(), "Adaptando Meio de Pagamento");
         this.vid = vid;
         tabelas = new ArrayList<Tabela>();
+        
+        if(!mp.isHabilitado()){
+        	return;
+        }
+        
         Object ret = getTable(meiopagamento, getParamettersMP(mp));
         if (ret != null) {
             if (ret instanceof List) {
@@ -68,16 +74,48 @@ public class MeioPagamentoAdapt {
                 }
             }
 
+            boolean interop = false;
             ret = getTable(meiopagamentointeroperacao, getParamettersMeioPagamentoInterop(mp));
             if (ret != null) {
+            	interop = true;
                 if (ret instanceof List) {
                     List<Tabela> lst = (List<Tabela>) ret;
                     tabelas.addAll(lst);
+                    
+                    //Insert into processamentosmeiopagamento(idmeiopagamentointeroperacao, situacao, codigotipoprocessamento, datainsercao, sistema)Values(14, 0, 0, dbo.trunc_date(getDate()),1);
+                    for(Tabela ttb : lst){
+                    	if(ttb!=null){
+                    		String idmp = String.valueOf(mp.getConfiguracao());
+                    		for(int i=0;i<13;i++){
+                            	Object ret2 = getTable(ProcessamentosMeioPagamento, "idmeiopagamentointeroperacao='"+idmp+"';situacao=0;codigotipoprocessamento="+i+";idmeiopagamento="+idmp+";");
+                            	if (ret2 != null) {
+                                    if (ret2 instanceof List) {
+                                        List<Tabela> lst2 = (List<Tabela>) ret2;
+                                        tabelas.addAll(lst2);
+                                    } else if (ret2 instanceof Tabela) {
+                                        tabelas.add((Tabela) ret2);
+                                    }
+                                }
+                            }
+                    	}
+                    }
                 } else if (ret instanceof Tabela) {
                     tabelas.add((Tabela) ret);
+                    String idmp = String.valueOf(mp.getConfiguracao());
+            		for(int i=0;i<13;i++){
+                    	Object ret2 = getTable(ProcessamentosMeioPagamento, "idmeiopagamentointeroperacao='"+idmp+"';situacao=0;codigotipoprocessamento="+i+";idmeiopagamento="+idmp+";");
+                    	if (ret2 != null) {
+                            if (ret2 instanceof List) {
+                                List<Tabela> lst2 = (List<Tabela>) ret2;
+                                tabelas.addAll(lst2);
+                            } else if (ret2 instanceof Tabela) {
+                                tabelas.add((Tabela) ret2);
+                            }
+                        }
+                    }
                 }
             }
-
+            
             ret = getTable(gestor, getParamettersGestor(mp));
             if (ret != null) {
                 if (ret instanceof List) {
@@ -103,9 +141,96 @@ public class MeioPagamentoAdapt {
         Collections.sort(tabelas);
         L.d(this.getClass().getName(), "Meio de pagamento adaptado e ordenado.");
     }
-
+    private String getDependencias(){
+    	StringBuffer sb = new StringBuffer();
+    	
+    	switch(mpt.getConfiguracao()){
+    	case 100:{
+    			sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(100, 'br.com.compsisnet.xp.sgcc.interop.ccrio.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCCRIORemote', null, null, 'br.com.compsisnet.xp.sgcc.interop.ccrio.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeCCRIORemote', 'appletManutencaoTransacaoCcrio', 'recebimentoCadastrosCCRIO', null, null, null, dbo.trunc_date(getDate()));");
+    			sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+        		sb.append(mpt.getConfiguracao());
+        		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+        		sb.append("insert into configuracaomeiopagamento(idmeiopagamentointeroperacao, codigoconcessionaria, enviotransacoesbloqueadas, modoenviolotes, modogeracaolotes, modorecebimentolotesajuste, modorecebimentoprottecnicos, modorecebimentoprotfinanceiros, quantidademaximacadastros, quantidademaxiPIRegistroslote, tempomaximodadoscadastro, tempomaximoregistroslotes, tempopermanenciaregistroscadas, datainsercao, modorecebimentocadastros, flagpermiteinsercaomanual, tipoorigem) values(100, '5', 0, 1, 1, 1, 1, 1, 2, 100000, 720, 43200, 43200, dbo.trunc_date(getDate()), 1,0,2);");
+    		break;
+    	}
+    	case 101 : {
+    			sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(101, 'br.com.compsisnet.xp.sgcc.interop.ccrio.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCCRIORemote', null, null, 'br.com.compsisnet.xp.sgcc.interop.ccrio.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeCCRIORemote', 'appletManutencaoTransacaoCcrio', 'recebimentoCadastrosCCRIO', null, null, null, dbo.trunc_date(getDate())); ");
+    			sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+        		sb.append(mpt.getConfiguracao());
+        		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+        		sb.append("insert into configuracaomeiopagamento(idmeiopagamentointeroperacao, codigoconcessionaria, enviotransacoesbloqueadas, modoenviolotes, modogeracaolotes, modorecebimentolotesajuste, modorecebimentoprottecnicos, modorecebimentoprotfinanceiros, quantidademaximacadastros, quantidademaxiPIRegistroslote, tempomaximodadoscadastro, tempomaximoregistroslotes, tempopermanenciaregistroscadas, datainsercao, modorecebimentocadastros, flagpermiteinsercaomanual, tipoorigem) values(101, '5', 0, 1, 1, 1, 1, 1, 2, 100000, 720, 43200, 43200, dbo.trunc_date(getDate()), 1,0,2);");
+    		break;
+    	}
+    	case 7 : {
+    		sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(7, 'br.com.compsisnet.xp.sgcc.interop.dbtrans.facade.interfaces.DisponibilizacaoCadastroDBTransRemote', 'envioLotesDBTrans', 'geracaoLotesDBTrans', '', 'appletManutencaoTransacaoCartao', '', '', '', '', dbo.trunc_date(getDate())); ");
+    		sb.append("insert into temposmeiopagamento(idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos, varreduraprotocolosfinanceiros, datainsercao)values(7, '', '', '0 0/60 * * * ?', null, '', '', dbo.trunc_date(getDate()));");
+    		sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+    		sb.append(mpt.getConfiguracao());
+    		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+    		break;
+    	}
+    	case 14 : {
+    		sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(14, 'br.com.compsisnet.xp.sgcc.interop.cgmp.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCGMPRemote', 'envioLotesCGMP', 'geracaoLotesCGMP', 'br.com.compsisnet.xp.sgcc.interop.cgmp.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeCGMPRemote', 'appletManutencaoTransacaoCgmp', 'recebimentoCadastrosCGMP', null, 'recebimentoProtocolosFinanceirosCGMP', 'recebimentoProtocolosTecnicosCGMP', dbo.trunc_date(getDate())); ");
+    		sb.append("insert into temposmeiopagamento (idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos, varreduraprotocolosfinanceiros, datainsercao)values (14, '0 0/30 * * * ?', '0 40 0,8,16 * * ?', '0 0 0,8,16 * * ?', null, '0 0 1,9,17 * * ?', '0 0 2,10,18 * * ?', dbo.trunc_date(getDate()));");
+    		sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+    		sb.append(mpt.getConfiguracao());
+    		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+    		sb.append("insert into configuracaomeiopagamento(idmeiopagamentointeroperacao, codigoconcessionaria, enviotransacoesbloqueadas, modoenviolotes, modogeracaolotes, modorecebimentolotesajuste, modorecebimentoprottecnicos, modorecebimentoprotfinanceiros, quantidademaximacadastros, quantidademaximaregistroslote, tempomaximodadoscadastro, tempomaximoregistroslotes, tempopermanenciaregistroscadastros, datainsercao, modorecebimentocadastros, flagpermiteinsercaomanual, tipoorigem, ModoRecebPassagemCompradaVP, ModoRecebPassagemRealizadaVP,PermiteAtribuicaoTagBloqueado, nomeconcessionaria, recebemanual,MODORECEBDESCMANUTGERAL, MODORECEBDESCMANUTSUBST, MODORECEBDESCMANUTMANUT, MODORECEBDESCMANUTCONC) values (14, '277', 0, 1, 1, 1, 1, 1, 2, 2500, 720, 43200, 43200, dbo.trunc_date(getDate()), 1,1,6,1,1,1,'Porto Morrinho',1,1,1,1,1);");
+    		sb.append("INSERT  into classedetarifa(idclassedetarifa, idmeiopagamento, descricao, codigoprivilegio, editavel, datainsercao) values(14, 14, 'Via Fácil/Sem Parar', 0, 0, dbo.trunc_date(getDate())); ");
+    		sb.append("insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 0, 'TAG OK', 'BOA VIAGEM', dbo.trunc_date(getDate()), 1);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 1, 'Veículo Roubado', 'COD1 CGMP', dbo.trunc_date(getDate()), 0);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 2, 'Inadimplente', 'COD2 CGMP', dbo.trunc_date(getDate()), 1);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 3, 'Sem Contrato', 'COD3 CGMP', dbo.trunc_date(getDate()), 0);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 4, 'TAG Extraviado', 'COD4 CGMP', dbo.trunc_date(getDate()), 0);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 5, 'Bloqueado', 'COD5 CGMP', dbo.trunc_date(getDate()), 0);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 6, 'Verificação', 'COD6 CGMP', dbo.trunc_date(getDate()), 1);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 7, 'TAG na Mão', 'COD7 CGMP', dbo.trunc_date(getDate()), 1);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 8, 'CAT DAC Diferente CAT TAG', 'COD8 CGMP', dbo.trunc_date(getDate()), 1);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 9, 'TAG não Devolvido', 'COD9 CGMP', dbo.trunc_date(getDate()), 1);insert into mensagemproblema(idmeiopagamentointeroperacao, codigoproblema, descricao, mensagemit, datainsercao, permiteisencao) values(14, 10, 'TAG de Outro Veículo', 'COD10 CGMP', dbo.trunc_date(getDate()), 1);");
+    		break;
+    	}
+    	case 15:{
+    		sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(15, '', '', '', '', 'appletManutencaoTransacaoCartao', '', '', '', '', dbo.trunc_date(getDate())); ");
+    		sb.append("insert into temposmeiopagamento(idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos,varreduraprotocolosfinanceiros, datainsercao) values(15, '', '', '', null, '', '', dbo.trunc_date(getDate()));");
+    		sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+    		sb.append(mpt.getConfiguracao());
+    		sb.append("insert into classedetarifa(idclassedetarifa, idmeiopagamento, descricao, codigoprivilegio, editavel, datainsercao) values(15, 15, 'Visa Vale Pedágio', 0, 0, dbo.trunc_date(getDate()));");
+    		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+    		break;
+    	}
+    	case 17 : {
+    		sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, dispoibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(17, 'br.com.compsisnet.xp.sgcc.interop.cartao.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCartaoRemote', NULL, NULL, NULL, 'appletManutencaoTransacaoCartao', NULL, NULL, NULL, NULL, dbo.trunc_date(getDate())); INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(15, '', '', '', '', 'appletManutencaoTransacaoCartao', '', '', '', '', dbo.trunc_date(getDate())); ");
+    		sb.append("insert into temposmeiopagamento(idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos, varreduraprotocolosfinanceiros, datainsercao)values(17, NULL, NULL, NULL, NULL, NULL, NULL,dbo.trunc_date(getDate()));");
+    		sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+    		sb.append(mpt.getConfiguracao());
+    		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+    		sb.append("insert into configuracaomeiopagamento(idmeiopagamentointeroperacao, codigoconcessionaria, enviotransacoesbloqueadas, modoenviolotes, modogeracaolotes, modorecebimentolotesajuste, modorecebimentoprottecnicos, modorecebimentoprotfinanceiros, quantidademaximacadastros, quantidademaxiPIRegistroslote, tempomaximodadoscadastro, tempomaximoregistroslotes, tempopermanenciaregistroscadas, datainsercao, modorecebimentocadastros, flagpermiteinsercaomanual, recebemanual, tipoorigem)values (17,5,0,1,1,1,1,1,1,1,720,43200,43200,sysdate,0,0,1,2);");
+    		break;
+    	}
+    	case 18 :{
+    		sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros, recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico, datainsercao) values(18, 'br.com.compsisnet.xp.sgcc.interop.cartao.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroCartaoRemote', NULL, NULL, NULL, 'appletManutencaoTransacaoCartao', NULL, NULL, NULL, NULL, dbo.trunc_date(getDate())); ");
+    		sb.append("insert into temposmeiopagamento(idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos, varreduraprotocolosfinanceiros, datainsercao)values(18, NULL, NULL, NULL, NULL, NULL, NULL, dbo.trunc_date(getDate()));");
+    		sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+    		sb.append(mpt.getConfiguracao());
+    		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+    		sb.append("insert into configuracaomeiopagamento(idmeiopagamentointeroperacao, codigoconcessionaria, enviotransacoesbloqueadas, modoenviolotes, modogeracaolotes, modorecebimentolotesajuste, modorecebimentoprottecnicos, modorecebimentoprotfinanceiros, quantidademaximacadastros, quantidademaxiPIRegistroslote, tempomaximodadoscadastro, tempomaximoregistroslotes, tempopermanenciaregistroscadas, datainsercao, modorecebimentocadastros, flagpermiteinsercaomanual, recebemanual, tipoorigem)values (18,5,0,1,1,1,1,1,1,1,720,43200,43200,sysdate,0,0,1,2);");
+    		break;
+    	}
+    	case 19 : {
+    		sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros,recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico,datainsercao ) values ( 19, 'br.com.compsisnet.xp.sgcc.interop.sgmp.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroSGMPRemote', 'envioLotesSGMP', 'geracaoLotesSGMP', 'br.com.compsisnet.xp.sgcc.interop.sgmp.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeSGMPRemote', 'appletManutencaoTransacaoSgmp', 'recebimentoCadastrosSGMP', null, 'recebimentoProtocolosFinanceirosSGMP', 'recebimentoProtocolosTecnicosSGMP',  dbo.trunc_date(getDate()));  ");
+    		sb.append("insert into temposmeiopagamento (idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos,varreduraprotocolosfinanceiros, datainsercao) values (19, '0 0/5 * * * ?', null, '0 0/30 * * * ?', null, null, null, dbo.trunc_date(getDate()));");
+    		sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+    		sb.append(mpt.getConfiguracao());
+    		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+    		break;
+    	}
+    	case 20 :{
+    		sb.append("INSERT  into rotinasinteroperabilidade(idmeiopagamentointeroperacao, disponibilizacaocadastros, enviolotes, geracaolotes, insercaotransacao, manipulacaotransacao, recebimentocadastros,recebimentolotesajuste, recebimentoprotocolofinanceiro, recebimentoprotocolotecnico,datainsercao ) values ( 20, 'br.com.compsisnet.xp.sgcc.interop.sgmp.facade.disponibilizacaocadastro.facade.interfaces.DisponibilizacaoCadastroSGMPRemote', 'envioLotesSGMP', 'geracaoLotesSGMP', 'br.com.compsisnet.xp.sgcc.interop.sgmp.facade.insercaocontadetalhes.facade.interfaces.InsercaoContaDetalhesFacadeSGMPRemote', 'appletManutencaoTransacaoSgmp', 'recebimentoCadastrosSGMP', null, 'recebimentoProtocolosFinanceirosSGMP', 'recebimentoProtocolosTecnicosSGMP',  dbo.trunc_date(getDate())); ");
+    		sb.append("insert into temposmeiopagamento (idmeiopagamentointeroperacao, varreduracadastros, frequenciaenviolotes, frequenciageracaolotes, varreduralotesajuste, varreduraprotocolostecnicos,varreduraprotocolosfinanceiros, datainsercao) values (20, '0 0/5 * * * ?', null, '0 0/30 * * * ?', null, null, null, dbo.trunc_date(getDate()));");
+    		sb.append("INSERT  into pastatrabalhomeiopagamento (idmeiopagamentointeroperacao,pastaarquivoscomerro, pastagravacaolotes,pastahistoricocadastros,pastalotesenviados,pastarecebimentocadastros,pastarecebimentoprotocolostecn,datainsercao,pastarecebimentoprotocolosfina,pastahistoricorecebimentoproto,pastaenviolotes,pastarecebimentobd,pastaenvioimagens,pastaenviotarifas,pastarecebimentolistafull,pastaprotocolofinanceirotmp,pastaprotocolotecnicotmp,pastarecebimentocadastrotmp,pastaenviotarifastmp,pastarecebimentotarifas,pastarecebimentotarifastmp)values (");
+    		sb.append(mpt.getConfiguracao());
+    		sb.append(", 'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Erro','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes\\tmp','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\HistoricoCadastros','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\LotesEnviados','D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Recebimento\\Cadastros',null,dbo.trunc_date(getDate()),null,null,'D:\\Sicat\\app\\server\\sgap\\deploy\\interop.war\\SGMP\\PF\\Envio\\Lotes',null, null, null, null, null, null, null, null, null, null);");
+    		break;
+    	}
+    	}
+    	
+    	return sb.toString();
+    }
     public String getScripts() {
-        return ManagementScript.getInstance().export(tabelas);
+    	String scr = ManagementScript.getInstance().export(tabelas);
+    	scr = scr.concat(getDependencias());
+        return scr;
     }
 
     public List<Tabela> getTabelas() {
@@ -230,7 +355,7 @@ public class MeioPagamentoAdapt {
                 res = res.replace("#contapagamento#", String.valueOf(14 * 2));
                 return res;
             }
-            case 7:
+            case 7:{break;}
             case 16: {
                 res = res.replace("#idreal#", "DBT");
                 res = res.replace("#contarecebimento#", String.valueOf(14));
@@ -239,7 +364,7 @@ public class MeioPagamentoAdapt {
                 break;
             }
 
-            case 19:
+            case 19:{break;}
             case 20: {
                 res = res.replace("#idreal#", "170");
                 break;
@@ -252,6 +377,9 @@ public class MeioPagamentoAdapt {
                 res = res.replace("#contarecebimento#", String.valueOf(mp.getConfiguracao()));
                 res = res.replace("#contapagamento#", String.valueOf(mp.getConfiguracao()));
                 return res;
+            }
+            case 1: case 2: case 3:{
+            	return null;
             }
         }
 
@@ -270,9 +398,11 @@ public class MeioPagamentoAdapt {
         sb.append("idreal=#idreal#;");
         sb.append("idgestor=#idgestor#;");
         sb.append("modelo=#modelo#;");
+        sb.append("idmeiopagamento=#idmeiopagamento#;");
 
         String res = sb.toString();
         res = res.replace("#idmeiopagamentointeroperacao#", String.valueOf(mp.getConfiguracao()));
+        res = res.replace("#idmeiopagamento#", String.valueOf(mp.getConfiguracao()));
         res = res.replace("#descricao#", mp.getNome());
         res = res.replace("#idgestor#", String.valueOf(mp.getConfiguracao()));
         switch (mp.getConfiguracao()) {
@@ -391,9 +521,12 @@ public class MeioPagamentoAdapt {
         sb.append("idconta=#idconta1#;");
         sb.append("idorigem=#idorigem#;");
         sb.append("descricaobanco=#descricaobanco1#;");
-        sb.append("&&idconta=#idconta2#;");
-        sb.append("idorigem=#idorigem#;");
-        sb.append("descricaobanco=#descricaobanco2#;");
+        int config = mp.getConfiguracao();
+        if(config >=14 && config <= 23){
+        	sb.append("&&idconta=#idconta2#;");
+            sb.append("idorigem=#idorigem#;");
+            sb.append("descricaobanco=#descricaobanco2#;");
+        }
         //sb.append("descricaobanco=#descricaobanco#;");
         //sb.append("agencia=#agencia#;");
         //sb.append("numeroconta=#numeroconta#;");
@@ -419,14 +552,15 @@ public class MeioPagamentoAdapt {
             }
             case 14: {
                 res = res.replace("#numero#", "842");
-                res = res.replace("#descricaobanco1#", "Conta Recebimento Visa Vale");
-                res = res.replace("#descricaobanco2#", "Conta Pagamento Visa Vale");
+                res = res.replace("#numero#", "125");
+                res = res.replace("#descricaobanco1#", "Conta Recebimento CGMP");
+                res = res.replace("#descricaobanco2#", "Conta Pagto CGMP");
                 return res;
             }
             case 15: {
                 res = res.replace("#numero#", "125");
-                res = res.replace("#descricaobanco1#", "Conta Recebimento CGMP");
-                res = res.replace("#descricaobanco2#", "Conta Pagto CGMP");
+                res = res.replace("#descricaobanco1#", "Conta Recebimento Visa Vale");
+                res = res.replace("#descricaobanco2#", "Conta Pagamento Visa Vale");
                 return res;
             }
             case 19:
@@ -507,13 +641,13 @@ public class MeioPagamentoAdapt {
             //tdao.clear();
             return tblg;
         }
-
     }
     private final static String pessoajuridica = "pessoajuridica";
     private final static String enderecopessoajuridica = "enderecopessoajuridica";
     private final static String contabanco = "contabanco";
     private final static String camaracompensacao = "camaracompensacao";
     private final static String gestor = "gestor";
+    private final static String ProcessamentosMeioPagamento = "ProcessamentosMeioPagamento";
     private final static String meiopagamento = "meiopagamento";
     private static final String meiopagamentointeroperacao = "meiopagamentointeroperacao";
     private static final String pastatrabalhomeiopagamento = "pastatrabalhomeiopagamento";

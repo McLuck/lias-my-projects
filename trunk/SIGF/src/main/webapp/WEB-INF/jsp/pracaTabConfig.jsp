@@ -19,7 +19,29 @@
 		}
 	</style>
 <![endif]-->
+	<!-- HTML5 Shim, IE8 and bellow recognize HTML5 elements -->
+	<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->		
+	<!-- Modernizr -->
+	<script src="js/modernizr-1.5.min.js"></script>
+	<!-- Webforms2 -->
+	<script src="webforms2/webforms2-p.js"></script>	
+	<!-- jQuery and jQuery UI -->
+	<link rel="stylesheet" href="ui-themes/aristo/jquery.ui.all.css"> 
+	<script src="js/jquery-1.4.3.min.js"></script>
+	<script src="js/jquery-ui-1.8.5.min.js"></script>
+	<!-- jQuery Numeric Spinner -->	
+	<link rel="stylesheet" href="components/spinner/ui.spinner.css"> 
+	<script src="components/spinner/ui.spinner.js"></script>
+	<!-- jQuery Color Picker -->
+	<link rel="stylesheet" href="components/colorpicker/colorpicker.css">
+	<script src="components/colorpicker/colorpicker.js"></script>
+	<!-- jQuery Placehol -->
+	<script src="components/placeholder/jquery.placehold-0.2.min.js"></script>
 
+	<!-- Demo page layout -->
+	<link rel="stylesheet" href="css/html5forms.layout.css">
+	<!-- <script src="js/html5forms.js"></script> -->
+	<script src="js/html5forms.fallback.js"></script>	
 </head>
 <body>
 	<p id="msg_status_pracas_tab" style="text-align: center; color: red;">
@@ -29,7 +51,7 @@
 		<form action="" method="post" onsubmit="return false;"
 			id="form_geoSensores">
 			<input type="hidden" name="cid" id="cid" value="${cid}" />
-			<ul>
+			<ul style="border: 0px; border-bottom: 1px #AAA solid;">
 				<li><a href="#tabsPraca1">Periféricos</a>
 				</li>
 				<li><a href="#tabsPraca2">Sensores</a>
@@ -49,7 +71,7 @@
 					<fieldset>
 						<legend>no-break</legend>
 						<label>Marca:</label>
-						<form:input path="confp.nobreakMarca" />
+						<form:input path="confp.nobreakMarca" placeholder="APC" />
 						<input type="hidden" name="pracaid" value="${pracaid}" /> <input
 							type="hidden" name="pid" value="${pracaid}" /> <input
 							type="hidden" name="phase" value="1" />
@@ -94,7 +116,7 @@
 								cssClass="SpecialCaseForLabel" />
 						</div>
 						<form:input path="confp.cvDesOutrosAlarmes"
-							cssStyle="float: left; clear:none;" />
+							cssStyle="float: left; clear:none;" placeholder="Outros alarmes" />
 					</fieldset>
 	
 					<fieldset>
@@ -201,7 +223,7 @@
 	
 	<div style="text-align: right;">
 		<button onclick="saveConfigSensores();" value="Salvar"
-			style="margin-right: 15px;">Salvar</button>
+			style="margin-right: 15px; ">Salvar</button>
 	</div>
 </body>
 </html>

@@ -9,7 +9,7 @@ package com.compsis.sigf.domain;
  * 
  */
 public class Categoria extends DomainObject implements Replicable{
-    private int ordem;
+    private int ordem, catid;
     private boolean habilitada;
     private int cgmp, tipo, ef, rd, av, rm;
     private String descricao, modelo, descOutroCalculoCatEsp;
@@ -19,6 +19,13 @@ public class Categoria extends DomainObject implements Replicable{
         return BASE.TIPOS.GET_TIPO_CATEGORIA(tipo);
     }
 
+    public int getCatid() {
+		return catid;
+	}
+
+	public void setCatid(int catid) {
+		this.catid = catid;
+	}
     public String getHabilitaStr() {
         return (habilitada) ? "Sim" : "Não";
     }

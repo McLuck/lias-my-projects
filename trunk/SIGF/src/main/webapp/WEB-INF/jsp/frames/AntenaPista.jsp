@@ -37,10 +37,10 @@
                     <input type="hidden" name="_pracaid" value="${pracaid}" />
                     <tr>
                         <td>
-                            <form:input path="atn.fabricante" cssStyle="width: 150px" />
+                            <form:input path="atn.fabricante" placeholder="QFREE" cssStyle="width: 150px" />
                         </td>
                         <td>
-                            <form:input path="atn.modelo" cssStyle="width: 150px" />
+                            <form:input path="atn.modelo" cssStyle="width: 150px" placeholder="MD0987" />
                         </td>
                         <td>
                             <form:select path="atn.interfaceAcesso" cssStyle="width: 150px;">

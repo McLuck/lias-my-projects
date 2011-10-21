@@ -52,10 +52,22 @@ public class RelatorioCommand implements PropertyRetriever, Command {
 
     @Override
     public void execute() {
-        L.d(this.getClass().getName() , "Tratando relatório e suas dependencias...");
+        L.d(this.getClass().getName() , "Tratando relatorio e suas dependencias...");
         
         for (RelatorioConcessionaria rc : rcLista) {
             if(rc==null)continue;
+            //RELATORIOS DA ROTA
+            if(rc.getRelatorio().getIdrelatorio()>=1089 && rc.getRelatorio().getIdrelatorio() <=1097){
+            	continue;
+            }
+            if(rc.getRelatorio().getIdrelatorio()==1134){
+            	continue;
+            }
+            //AINDA NAO IMPLEMENTADO
+            if(rc.getRelatorio().getIdrelatorio()>=1161 && rc.getRelatorio().getIdrelatorio()<=1164){
+            	continue;
+            }
+            
             Tabela tb = (Tabela) relTabela.replicate(null);
             //add o relatorio selecionado
             for (Campo cp : tb.getCampos()) {
@@ -82,7 +94,7 @@ public class RelatorioCommand implements PropertyRetriever, Command {
                 }
             }
             lista.add(tb);
-            L.d(this.getClass().getName() , "Relatórios carregados, tratando dependencias de relatorios...");
+            L.d(this.getClass().getName() , "Relatorios carregados, tratando dependencias de relatorios...");
             //Add todos os inserts de relatorioparametro par ao relatorio selecionado
             List<Tabela> listaRelParametros = tdao.getRelatorioParametroByRelatorio(vid, String.valueOf(rc.getRelatorio().getIdrelatorio()));
             lista.addAll(listaRelParametros);

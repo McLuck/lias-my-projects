@@ -39,15 +39,14 @@
                             <form:textarea path="mal.detalheFormatoArquivo" cols="40" rows="5" />
                         </div>
 						<br/>
-						
-                        <form:checkbox path="mal.lacreRepete" onclick="opc_lacre_malote();" label="Repetir lacre no Malote?" id="radio_repete_lacre_malote1" cssClass="SpecialCaseForLabel" />
+					
+                        <form:checkbox path="mal.lacreRepete" onclick="opc_lacre_malote();" label="Repetir lacre no Malote?" id="radio_repete_lacre_malote1" cssClass="SpecialCaseForLabel" cssStyle="margin-top: 5px; margin-bottom: 10px;" />
                         
                         <div id="layer_config_repeticao_lacre_malote" style="display: none;">
                             <label>Por quantos dias não pode se repetir?</label>
-                            <form:textarea path="mal.diasSemRepetirLacre" cols="10" rows="1" />
+                            <form:textarea path="mal.diasSemRepetirLacre" cols="10" rows="1" cssStyle="margin-left: 20px;" />
                         </div>
-                        
-                        <label>Exibição da Interface em Malotes</label>
+                        <label style="clear: both;">Exibição da Interface em Malotes</label>
                         <form:select path="mal.opcExibicaoInterface">
                             <form:option value="1" label="Valor depositado" />
                             <form:option value="2" label="Valor depositado em dinheiro, em cheques e em cupons" />

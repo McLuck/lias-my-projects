@@ -20,7 +20,7 @@
 			else if (e.which) code = e.which;
 			
 			if(nCaract.value.length<2){
-				if(code<65 || code > 90){
+				if(code<65 || code > 90 && (code<97 && code > 122)){
 					return false;
 				}
 			}

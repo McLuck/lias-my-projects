@@ -264,8 +264,25 @@ function saveCATEG(id, cid){
     });
 }
 
+function saveDividas(cid){
+	$("#msg_sts_divida").html("&nbsp;");
+	var params = $('#formDividaTermo').serialize();
+    params += "&cmd=saveDivida&cid="+cid;
+    var dataType = "html";
+    $.ajax({
+        url : "config_geral.htm",
+        type: "get",
+        data: params,
+        dataType: dataType,
+        contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1' ,
+        success : function(data) {
+            $("#msg_sts_divida").html("Salvo!");
+        }
+    });
+}
+
 function loadCATEGsTable(cid){
-	ogn('dadosgeraiscategorias');
+	//ogn('dadosgeraiscategorias');
     var dataType = "html";
     $.ajax({
         url : "formCategoria.htm?cid="+cid,
@@ -332,6 +349,21 @@ function saveConc1(cid){
             }
         }
     });
+}
+
+function saveConc3(cid){
+	var params = $('#formConfigPracasConc').serialize();
+	var dataType = "html";
+	$.ajax({
+		url : "formConcessinaria.htm?cmd=cfgprc&cid="+cid,
+		type: "post",
+		data: params,
+		dataType: dataType,
+		contentType: 'application/x-www-form-urlencoded; charset=ISO-8859-1' ,
+		success : function(data) {
+			$("#msg_status_cfgprc").html("Salvo com sucesso!");
+		}
+	});
 }
 
 function saveConc2(cid){
@@ -420,9 +452,9 @@ function saveFormConfigImg(cid){
 
 function opc_operacao_sa(){
     if(document.getElementById("c_dg_link1").checked == true){
-        $("#fildset_link").show();
+        $("#htabtolinks").show();
     }else{
-        $("#fildset_link").hide();
+        $("#htabtolinks").hide();
     }
 }
 
