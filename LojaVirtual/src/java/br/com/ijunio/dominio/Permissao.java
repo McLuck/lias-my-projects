@@ -12,6 +12,7 @@ public class Permissao {
      */
     public int getIdPermissao() {
         return idPermissao;
+        //Israel Junio
     }
 
     /**
