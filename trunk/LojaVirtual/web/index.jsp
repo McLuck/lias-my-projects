@@ -9,6 +9,7 @@
 <html>
     <%@include file="header.jsp" %>
     <body>
-        <h1>Hello World!</h1>
+        <h1><a href="cadastro.jsp?get=Cadastro">
+                Cadastre-se</a></h1>
     </body>
 </html>
