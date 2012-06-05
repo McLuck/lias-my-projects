@@ -528,9 +528,9 @@ public class Concessionaria extends DomainObject implements Serializable, Replic
     	return numeroPais;
     }
 	@Override
-	public Integer getIdOrigem() {
+	public Long getIdOrigem() {
 		String idorigem = IDUtils.IdOrigem.getIdOrigem(this);
-		return idorigem!=null?Integer.parseInt(idorigem):null;
+		return idorigem!=null?Long.parseLong(idorigem):null;
 	}
 	@Override
 	public Integer getTipoOrigem() {
@@ -561,7 +561,7 @@ public class Concessionaria extends DomainObject implements Serializable, Replic
 		return null;
 	}
 	@Override
-	public Integer getIdOrigemPai() {
+	public Long getIdOrigemPai() {
 		return null;
 	}
 	@Override
