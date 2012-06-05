@@ -7,6 +7,7 @@
     </id>
     <property name="sigla"/>
     <property name="sentido"/>
+    <property name="numero"/>
     
     <many-to-one cascade="merge" class="com.compsis.sigf.domain.Localizacao" column="local_id" lazy="false" name="localizacao" not-null="true"/>
    
