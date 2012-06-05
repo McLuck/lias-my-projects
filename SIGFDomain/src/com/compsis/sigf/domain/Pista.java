@@ -343,7 +343,7 @@ public class Pista extends DomainObject implements Replicable, IOrigem{
 
 	@Override
 	public Integer getNumeroCabine() {
-		return Integer.valueOf(this.getNumeroCabine());
+		return Integer.valueOf(this.numeroPista);
 	}
 
 	@Override
