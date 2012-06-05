@@ -69,9 +69,9 @@ public class Sentido extends DomainObject implements Replicable, IOrigem{
 	}
 
 	@Override
-	public Integer getIdOrigem() {
+	public Long getIdOrigem() {
 		String idorigem = IDUtils.IdOrigem.getIdOrigem(this);
-		return idorigem!=null?Integer.parseInt(idorigem):null;
+		return idorigem!=null?Long.parseLong(idorigem):null;
 	}
 
 	@Override
@@ -110,9 +110,9 @@ public class Sentido extends DomainObject implements Replicable, IOrigem{
 	}
 
 	@Override
-	public Integer getIdOrigemPai() {
+	public Long getIdOrigemPai() {
 		String idorigem = IDUtils.IdOrigem.getIdOrigem(this.getLocalizacao());
-		return idorigem!=null?Integer.parseInt(idorigem):null;
+		return idorigem!=null?Long.parseLong(idorigem):null;
 	}
 
 	@Override
