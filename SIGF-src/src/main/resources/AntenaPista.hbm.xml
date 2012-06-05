@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.compsis.sigf.domain.AntenaPista" table="antenapista">
+    <id column="id" name="id" type="integer">
+      <generator class="increment"/>
+    </id>
+    <property name="fabricante" type="string"/>
+    <property name="interfaceAcesso" type="integer"/>
+    <property name="modelo" type="string"/>
+    <many-to-one cascade="merge" class="com.compsis.sigf.domain.ConfiguracaoPraca" column="config_praca_id" name="configuracaoPraca" not-null="true"/>
+  </class>
+</hibernate-mapping>

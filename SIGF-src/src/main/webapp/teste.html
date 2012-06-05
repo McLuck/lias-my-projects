@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Teste</title>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script src="js/ui/jquery.ui.core.js"></script>
+
+<link rel="stylesheet" href="css/themes/base/jquery.ui.core.css">
+<link rel="stylesheet" href="css/themes/base/jquery.ui.theme.css">
+<link rel="stylesheet" href="css/themes/base/jquery.ui.allplugins.css">
+<link rel="stylesheet" href="css/themes/base/jquery.ui.theme.css">
+
+
+<script src="js/jquery-ui-1.8.5.min.js"></script>
+
+<script type="text/javascript">
+	function add() {
+		$("#sigla").val("");
+		$("#descc").val("");
+		$("#novoSentido").dialog({
+			buttons: {
+				"Sair": function() { $(this).dialog("destroy"); },
+				"Salvar" : function(){
+					var sigla = $("#sigla").val();
+					var descc = $("#descc").val();
+					if(sigla.length ==2 && descc.length>=3){
+						$("#sentidos").append("<option value='"+sigla+"'>"+descc+"</option>");
+					}
+					$(this).dialog("destroy");
+				}
+			}
+		});
+	}
+	
+	
+	$(document).ready(function () {
+		$("#sentidos").change(function () {
+			$("#teste1").html("");
+	        $("#sentidos option").each(function () {
+	              //str += $(this).text() + " ";
+	              var optn = "<option value='"+$(this).val()+"'>"+$(this).text()+"</option>";
+	              $("#teste1").append(optn);
+	            });
+	      }).trigger('change');
+	});
+	function remove() {
+		$('#sentidos option:selected').remove();
+	}
+	function digita() {
+		if ($("#sigla").val().length == 2) {
+			$("#descc").focus();
+		}
+		$("#sigla").val($("#sigla").val().toUpperCase());
+	}
+</script>
+</head>
+<body>
+
+	<select id="sentidos" class="multiselect" name="sentidos" size="4" style="width: 160px;">
+		<option value="SP">São Paulo</option>
+		<option value="RJ">Rio de Janeiro</option>
+		<option value="AM">Amazonas</option>
+		<option value="BH">Belo Horizonte</option>
+	</select>
+
+	<select id="teste1">
+	</select>
+</body>
+</html>
