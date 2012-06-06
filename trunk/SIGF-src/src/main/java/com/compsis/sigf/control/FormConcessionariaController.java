@@ -3,6 +3,7 @@ package com.compsis.sigf.control;
 import com.compsis.sigf.base.BaseTemp;
 import com.compsis.sigf.dao.AFactoryDao;
 import com.compsis.sigf.dao.ConcessionariaDAO;
+import com.compsis.sigf.dao.ConfiguracaoImagemDAO;
 import com.compsis.sigf.dao.VersaoDAO;
 import com.compsis.sigf.domain.Arrecadacao;
 import com.compsis.sigf.domain.BASE;
@@ -29,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @version 1.0
  * 
  */
-public class FormConcessionariaController extends SimpleFormController {
+public class FormConcessionariaController extends AbstractSimpleForm {
 
     private Concessionaria conc;
     private boolean novo = false;
@@ -115,7 +116,7 @@ public class FormConcessionariaController extends SimpleFormController {
 
     @Override
     protected Map referenceData(HttpServletRequest request) throws Exception {
-        Map<Object, Object> dataMap = new HashMap<Object, Object>();
+        Map<Object, Object> dataMap = super.referenceData(request);
         String cid = request.getParameter("cid");
         Concessionaria ccs;// = (Concessionaria)BaseTemp.GET(conc.getId(), Concessionaria.class, null);
         if (cid == null || cid.equals("") || cid.equals("undefined")) {
@@ -167,7 +168,7 @@ public class FormConcessionariaController extends SimpleFormController {
     	String cmd = request.getParameter("cmd");
         String cid = request.getParameter("cid");
         if (cid != null && !cid.equals("") && !cid.equals("undefined")) {
-            conc = (Concessionaria) BaseTemp.GET(Integer.parseInt(cid), Concessionaria.class, null);
+            conc = getConcessonaria(request, Integer.parseInt(cid));
             novo = false;
         } else {
             conc = new Concessionaria();
@@ -194,11 +195,10 @@ public class FormConcessionariaController extends SimpleFormController {
         	conc.getConfigImagem().setConcatenaCodigoUrl(request.getParameter("configImagem.concatenaCodigoUrl")!=null);
         	conc.getConfigImagem().setOrdemExibicaCrescente(request.getParameter("configImagem.ordemExibicaCrescente")!=null);
         	conc.getConfigImagem().setTransacaoCorrecaoImg(request.getParameter("configImagem.transacaoCorrecaoImg")!=null);
-        	ConcessionariaDAO cdao = (ConcessionariaDAO) AFactoryDao.getInstance(ConcessionariaDAO.class);
-        	cdao.salvar(conc);
-        	cdao.commit();
-        	cdao.close();
-        	cdao.clear();
+        	ConfiguracaoImagemDAO.getInstance().atualizar(conc.getConfigImagem());
+        	ConfiguracaoImagemDAO.getInstance().commit();
+        	ConfiguracaoImagemDAO.getInstance().clear();
+        	ConfiguracaoImagemDAO.getInstance().close();
         }else if(cmd!=null && cmd.equals("cfgprc")){
         	conc.setAnosEstimativaTrafego(Integer.parseInt(request.getParameter("anosEstimativaTrafego")));
         	conc.setExibirDescricaoPracaRelatorios((request.getParameter("exibirDescricaoPracaRelatorios")!=null)?request.getParameter("exibirDescricaoPracaRelatorios").equals("true"):false);
