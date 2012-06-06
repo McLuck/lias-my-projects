@@ -417,7 +417,7 @@ function getChbParametters(cid){
     var params = "cmd=chb&"+$('#form_pts_img_adq').serialize();
     params += "&"+$('#form_capt_por_tipo').serialize();
     params += "&cid="+cid;
-    alert(params);
+    //alert(params);
     var dataType = "html";
     $.ajax({
         url : "formConfigImagem.htm",

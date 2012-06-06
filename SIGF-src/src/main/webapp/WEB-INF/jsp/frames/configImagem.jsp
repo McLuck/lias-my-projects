@@ -28,8 +28,7 @@
 				</tr>
 			</thead>
 
-			<form action="" onsubmit="return false;" method="POST"
-				name="form_pts_img_adq" id="form_pts_img_adq">
+			<form action="" onsubmit="return false;" method="POST" name="form_pts_img_adq" id="form_pts_img_adq">
 				<c:forEach items="${confimg.tipoPista}" var="pts">
 					<tr>
 						<td>${pts.nome}</td>
@@ -118,7 +117,7 @@
 		</div>
 		<div style="float: left;">
 			Quantidade a ser adquirida:<br />
-			<form:input path="confimg.qtdAdquirida" />
+			<form:input path="confimg.qtdAdquirida" id="qtdAdquirida" />
 		</div>
 	</fieldset>
 	<div style="text-align: right;">
