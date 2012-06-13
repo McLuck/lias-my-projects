@@ -414,7 +414,7 @@ public class ManagementScript {
                 } else {
                     sb2.append(", ");
                 }
-                if(cp.getNome().equals("valor")){
+                if(cp.getNome().equals("valor") && t.getNome().toLowerCase().equals("preferencias")){
                     sb2.append("'");
                     sb2.append(cp.getValor());
                     sb2.append("'");

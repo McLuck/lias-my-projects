@@ -34,7 +34,7 @@ public class CategoriaController extends SimpleFormController {
         setCommandClass(Categoria.class);
         setCommandName("cat");
     }
-
+    
     @Override
     protected ModelAndView onSubmit(Object command) throws Exception {
         cat = (Categoria) command;

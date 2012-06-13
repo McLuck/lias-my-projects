@@ -2,13 +2,23 @@ package com.compsis.sigf.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
+import com.compsis.sigf.domain.Categoria;
 import com.compsis.sigf.domain.Concessionaria;
 
 public class UtilidadesGenericas {
 	
 	public static final String LINE_BREAK = System.getProperty("line.separator");
 	
+	public static Categoria getCatEsp(List<Categoria> listaCats){
+		for(Categoria c : listaCats){
+			if(c.getDescricao().toLowerCase().contains("esp")){
+				return c;
+			}
+		}
+		return null;
+	}
 	
     public static String validarRemoverScript(String sql, String tag){
         String[] linhas = sql.split(LINE_BREAK);
