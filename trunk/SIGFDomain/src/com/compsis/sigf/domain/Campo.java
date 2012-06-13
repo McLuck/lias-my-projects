@@ -25,6 +25,10 @@ public class Campo extends DomainObject implements Replicable, Comparable<Campo>
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
+    public String toString(){
+    	return nome.concat("=").concat(valor);
+    }
 
     /**
      * @return the valor

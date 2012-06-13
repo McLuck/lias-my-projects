@@ -1,12 +1,14 @@
 package com.compsis.sigf.domain;
+import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import br.com.compsis.sigf.util.IDUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import br.com.compsis.sigf.util.IDUtils;
 /**
  * Compsis
  * @author Lucas Israel
@@ -21,10 +23,9 @@ public class Praca extends DomainObject implements Replicable, IOrigem{
     private int numeroPraca;
     private transient Concessionaria concessionaria;
     private ConfiguracaoPraca configuracao;
-    /*private List<Pista> pistas;*/
     private List<PracaMeioPagamento> pracaMeiosPgto;
     private List<Localizacao> localizacoes;
-    private String cnpj, trafegoEstimado, distanciaCCA, descricao/*, sentido1, siglaSentido1, sentido2, siglaSentido2, prcSent1, prcSent2*/;
+    private String cnpj, trafegoEstimado, distanciaCCA, descricao;
 
 	public List<Localizacao> getLocalizacoes() {
 		return localizacoes;
@@ -40,41 +41,7 @@ public class Praca extends DomainObject implements Replicable, IOrigem{
 		Gson gson = new GsonBuilder().excludeFieldsWithModifiers(new int[]{Modifier.STATIC, Modifier.TRANSIENT, Modifier.VOLATILE}).create();
 		return gson.toJson(p, Praca.class);
 	}
-	
-    /*
-    public String getPrcSent1() {
-    	prcSent1 = (siglaSentido1!=null && sentido1!=null)?siglaSentido1.concat(", ").concat(sentido1):"";
-		return prcSent1;
-	}
 
-	public void setPrcSent1(String prcSent1) {
-		this.prcSent1 = prcSent1;
-		if(prcSent1!=null && !prcSent1.isEmpty()){
-			try{
-				String v[] = prcSent1.split(",");
-				this.siglaSentido1 = v[0].trim();
-				this.sentido1 = v[1].trim();
-			}catch(Exception e){
-			}
-		}
-	}
-
-	public String getPrcSent2() {
-		prcSent2 = (siglaSentido2!=null && sentido2!=null)?siglaSentido2.concat(", ").concat(sentido2):"";
-		return prcSent2;
-	}
-
-	public void setPrcSent2(String prcSent2) {
-		this.prcSent2 = prcSent2;
-		if(prcSent2!=null && !prcSent2.isEmpty()){
-			try{
-				String v[] = prcSent2.split(",");
-				this.siglaSentido2 = v[0].trim();
-				this.sentido2 = v[1].trim();
-			}catch(Exception e){
-			}
-		}
-	}*/
 
 	public Praca(){
         configuracao = new ConfiguracaoPraca(this);
@@ -135,19 +102,7 @@ public class Praca extends DomainObject implements Replicable, IOrigem{
         if ((this.descricao == null) ? (other.descricao != null) : !this.descricao.equals(other.descricao)) {
             return false;
         }
-        /*
-        if ((this.sentido1 == null) ? (other.sentido1 != null) : !this.sentido1.equals(other.sentido1)) {
-            return false;
-        }
-        if ((this.siglaSentido1 == null) ? (other.siglaSentido1 != null) : !this.siglaSentido1.equals(other.siglaSentido1)) {
-            return false;
-        }
-        if ((this.sentido2 == null) ? (other.sentido2 != null) : !this.sentido2.equals(other.sentido2)) {
-            return false;
-        }
-        if ((this.siglaSentido2 == null) ? (other.siglaSentido2 != null) : !this.siglaSentido2.equals(other.siglaSentido2)) {
-            return false;
-        }*/
+  
         return true;
     }
    
@@ -206,81 +161,6 @@ public class Praca extends DomainObject implements Replicable, IOrigem{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-/*
-    *//**
-     * @return the sentido1
-     *//*
-    public String getSentido1() {
-        return sentido1;
-    }
-
-    *//**
-     * @param sentido1 the sentido1 to set
-     *//*
-    public void setSentido1(String sentido1) {
-        this.sentido1 = sentido1;
-    }
-
-    *//**
-     * @return the siglaSentido1
-     *//*
-    public String getSiglaSentido1() {
-        return siglaSentido1;
-    }
-
-    *//**
-     * @param siglaSentido1 the siglaSentido1 to set
-     *//*
-    public void setSiglaSentido1(String siglaSentido1) {
-        this.siglaSentido1 = siglaSentido1;
-    }
-
-    *//**
-     * @return the sentido2
-     *//*
-    public String getSentido2() {
-        return sentido2;
-    }
-
-    *//**
-     * @param sentido2 the sentido2 to set
-     *//*
-    public void setSentido2(String sentido2) {
-        this.sentido2 = sentido2;
-    }
-
-    *//**
-     * @return the siglaSentido2
-     *//*
-    public String getSiglaSentido2() {
-        return siglaSentido2;
-    }
-    
-    public String getSigla3(){
-        return siglaSentido1+"/"+siglaSentido2;
-    }
-
-    *//**
-     * @param siglaSentido2 the siglaSentido2 to set
-     *//*
-    public void setSiglaSentido2(String siglaSentido2) {
-        this.siglaSentido2 = siglaSentido2;
-    }
-*/
-
-   /* *//**
-     * @return the pistas
-     *//*
-    public List<Pista> getPistas() {
-        return pistas;
-    }
-
-    *//**
-     * @param pistas the pistas to set
-     *//*
-    public void setPistas(List<Pista> pistas) {
-        this.pistas = pistas;
-    }*/
 
     /**
      * @return the nome
@@ -453,5 +333,1003 @@ public class Praca extends DomainObject implements Replicable, IOrigem{
 	@Override
 	public Integer getAtiva() {
 		return Integer.valueOf(1);
+	}
+	
+	private Dependencias dependencias;
+	public Dependencias getDependencia(){
+		if(dependencias==null){
+			dependencias = new Dependencias();
+		}
+		return dependencias;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	public class Dependencias{
+		public Dependencias(){
+			montarDados();
+		}
+		private boolean inicializado = false;
+		private List<Denominacao> denominacoes;
+		private List<Pacote> pacotes;
+		private List<Area> areas;
+		private List<PacotesArea> pacotesDaArea;
+		
+		private Tabela get(Object obj, Field[] fields, Tabela t){
+			t = (Tabela)t.replicate(null);
+			for(Campo c : t.getCampos()){
+				if(c.getNome().toLowerCase().trim().equals("datainsercao")){
+					c.setValor("dbo.trunc_date(getDate())");
+					continue;
+				}
+				for(Field f : fields){
+					if(f.getName().toLowerCase().trim().equals(c.getNome().toLowerCase().trim())){
+						f.setAccessible(true);
+						try {
+							c.setValor(f.get(obj));break;
+						} catch (IllegalArgumentException e) {
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			return t;
+		}
+		
+		public List<Tabela> getTabelasAreas(List<Area> areas, Tabela t){
+			List<Tabela> lista = new ArrayList<Tabela>();
+			Field[] fields = Area.class.getDeclaredFields();
+			for(Area d : areas){
+				lista.add(get(d,fields,t));
+			}
+			return lista;
+		}
+		
+		public List<Tabela> getTabelasDenominacoes(List<Denominacao> denominacoes, Tabela t){
+			List<Tabela> lista = new ArrayList<Tabela>();
+			Field[] fields = Denominacao.class.getDeclaredFields();
+			for(Denominacao d : denominacoes){
+				lista.add(get(d,fields,t));
+			}
+			return lista;
+		}
+		
+		public List<Tabela> getTabelasPacotes(List<Pacote> pacotes, Tabela t){
+			List<Tabela> lista = new ArrayList<Tabela>();
+			Field[] fields = Pacote.class.getDeclaredFields();
+			for(Pacote d : pacotes){
+				lista.add(get(d,fields,t));
+			}
+			return lista;
+		}
+		
+		public List<Tabela> getTabelasPacotesDaArea(List<PacotesArea> pacotesAreas, Tabela t){
+			List<Tabela> lista = new ArrayList<Tabela>();
+			Field[] fields = PacotesArea.class.getDeclaredFields();
+			for(PacotesArea d : pacotesAreas){
+				lista.add(get(d,fields,t));
+			}
+			return lista;
+		}
+	
+	
+		/**
+		 * @return the denominacoes
+		 */
+		public List<Denominacao> getDenominacoes() {
+			return denominacoes;
+		}
+
+
+		/**
+		 * @param denominacoes the denominacoes to set
+		 */
+		public void setDenominacoes(List<Denominacao> denominacoes) {
+			this.denominacoes = denominacoes;
+		}
+
+
+		/**
+		 * @return the pacotes
+		 */
+		public List<Pacote> getPacotes() {
+			return pacotes;
+		}
+
+
+		/**
+		 * @param pacotes the pacotes to set
+		 */
+		public void setPacotes(List<Pacote> pacotes) {
+			this.pacotes = pacotes;
+		}
+
+
+		/**
+		 * @return the areas
+		 */
+		public List<Area> getAreas() {
+			return areas;
+		}
+
+
+		/**
+		 * @param areas the areas to set
+		 */
+		public void setAreas(List<Area> areas) {
+			this.areas = areas;
+		}
+
+
+		/**
+		 * @return the pacotesDaArea
+		 */
+		public List<PacotesArea> getPacotesDaArea() {
+			return pacotesDaArea;
+		}
+
+
+		/**
+		 * @param pacotesDaArea the pacotesDaArea to set
+		 */
+		public void setPacotesDaArea(List<PacotesArea> pacotesDaArea) {
+			this.pacotesDaArea = pacotesDaArea;
+		}
+
+
+		public void montarDados(){
+			areas = new ArrayList<Praca.Area>();
+			denominacoes = new ArrayList<Praca.Denominacao>();
+			pacotes = new ArrayList<Praca.Pacote>();
+			pacotesDaArea = new ArrayList<Praca.PacotesArea>();
+			
+			Area a = new Area();
+			a.setAtivado(1);
+			a.setDescricao("Cofre Forte");
+			a.setGeramalotetransf(1);
+			a.setIdarea(Area.getNextId(getConcessionaria().getId()));
+			a.setIdorigem(getIdOrigem());
+			a.setParticipacompactacao(1);
+			a.setQuantidadecheque(0);
+			a.setValorcheque(0);
+			a.setValordinheiro(0);
+			areas.add(a);
+
+			a = new Area();
+			a.setAtivado(1);//
+			a.setDescricao("Armário Forte");
+			a.setGeramalotetransf(1);
+			a.setIdarea(Area.getNextId(getConcessionaria().getId()));//
+			a.setIdorigem(getIdOrigem());//
+			a.setParticipacompactacao(1);
+			a.setQuantidadecheque(0);//
+			a.setValorcheque(0);//
+			a.setValordinheiro(0);//
+			areas.add(a);
+			
+			a = new Area();
+			a.setAtivado(1);//
+			a.setDescricao("Fundo para Troca");
+			a.setGeramalotetransf(1);
+			a.setIdarea(Area.getNextId(getConcessionaria().getId()));//
+			a.setIdorigem(getIdOrigem());//
+			a.setParticipacompactacao(1);
+			a.setQuantidadecheque(0);//
+			a.setValorcheque(0);//
+			a.setValordinheiro(0);//
+			areas.add(a);
+			
+			a = new Area();
+			a.setAtivado(1);//
+			a.setDescricao("Fundo de Troco");
+			a.setGeramalotetransf(0);
+			a.setIdarea(Area.getNextId(getConcessionaria().getId()));//
+			a.setIdorigem(getIdOrigem());//
+			a.setParticipacompactacao(0);
+			a.setQuantidadecheque(0);//
+			a.setValorcheque(0);//
+			a.setValordinheiro(0);//
+			areas.add(a);
+			
+			a = new Area();
+			a.setAtivado(1);//
+			a.setDescricao("Arrecadação");
+			a.setGeramalotetransf(1);
+			a.setIdarea(Area.getNextId(getConcessionaria().getId()));//
+			a.setIdorigem(getIdOrigem());//
+			a.setParticipacompactacao(0);
+			a.setQuantidadecheque(0);//
+			a.setValorcheque(0);//
+			a.setValordinheiro(0);//
+			areas.add(a);
+			
+			Denominacao d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 0,01");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(0.01);
+			denominacoes.add(d);
+		
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 0,05");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(0.05);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 0,10");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(0.10);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 0,25");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(0.25);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 0,50");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(0.50);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 1,00 m");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(1.00);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 1,00 c");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(1.00);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 2,00");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(2.00);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 5,00");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(5.00);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 10,00");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(10.00);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 20,00");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(20.00);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 50,00");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(50.00);
+			denominacoes.add(d);
+			
+			d = new Denominacao();
+			d.setAtivado(1);
+			d.setDescricao("R$ 100,00");
+			d.setIddenominacao(Denominacao.getNextId(getConcessionaria().getId()));
+			d.setIdorigem(getIdOrigem());
+			d.setValor(100.00);
+			denominacoes.add(d);
+			
+			
+			for(Denominacao dn : denominacoes){
+				Pacote p = new Pacote();
+				p.setAtivado(1);
+				p.setIdpacote(Pacote.getNextId(getConcessionaria().getId()));
+				p.setDescricao(dn.getDescricao());
+				p.setIddenominacao(dn.getIddenominacao());
+				p.setIdorigem(getIdOrigem());
+				p.setQuantidade(1);
+				p.setValor(dn.getValor());
+				pacotes.add(p);
+			}
+			
+			for(Area ar : areas){
+				for(Pacote pc : pacotes){
+					PacotesArea pa = new PacotesArea();
+					pa.setIdarea(ar.getIdarea());
+					pa.setIdorigem(getIdOrigem());
+					pa.setIdpacote(pc.getIdpacote());
+					pa.setQuantidade(0);
+					pacotesDaArea.add(pa);
+				}
+			}
+			inicializado=true;
+		}
+	}
+	
+	
+	public static class Denominacao{
+		public final static String nomeTabela = "denominacao";
+		private static final HashMap<Integer, Integer> idAreaPorConcessionaria = new HashMap<Integer, Integer>();
+		public static Integer getNextId(Integer idConcessionaria){
+			Integer next = Integer.valueOf(0);
+			if(idAreaPorConcessionaria.containsKey(idConcessionaria)){
+				next = idAreaPorConcessionaria.get(idConcessionaria);
+				next++;
+			}
+			idAreaPorConcessionaria.put(idConcessionaria, next);
+			return next;
+		}
+		private int iddenominacao,ativado;
+		private double valor;
+		/**
+		 * @return the iddenominacao
+		 */
+		public int getIddenominacao() {
+			return iddenominacao;
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "Denominacao [iddenominacao=" + iddenominacao + ", valor="
+					+ valor + ", ativado=" + ativado + ", descricao="
+					+ descricao + ", idorigem=" + idorigem + "]";
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + iddenominacao;
+			result = prime * result
+					+ ((idorigem == null) ? 0 : idorigem.hashCode());
+			return result;
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof Denominacao)) {
+				return false;
+			}
+			Denominacao other = (Denominacao) obj;
+			if (iddenominacao != other.iddenominacao) {
+				return false;
+			}
+			if (idorigem == null) {
+				if (other.idorigem != null) {
+					return false;
+				}
+			} else if (!idorigem.equals(other.idorigem)) {
+				return false;
+			}
+			return true;
+		}
+		/**
+		 * @param iddenominacao the iddenominacao to set
+		 */
+		public void setIddenominacao(int iddenominacao) {
+			this.iddenominacao = iddenominacao;
+		}
+		/**
+		 * @return the valor
+		 */
+		public double getValor() {
+			return valor;
+		}
+		/**
+		 * @param valor the valor to set
+		 */
+		public void setValor(double valor) {
+			this.valor = valor;
+		}
+		/**
+		 * @return the ativado
+		 */
+		public int getAtivado() {
+			return ativado;
+		}
+		/**
+		 * @param ativado the ativado to set
+		 */
+		public void setAtivado(int ativado) {
+			this.ativado = ativado;
+		}
+		/**
+		 * @return the descricao
+		 */
+		public String getDescricao() {
+			return descricao;
+		}
+		/**
+		 * @param descricao the descricao to set
+		 */
+		public void setDescricao(String descricao) {
+			this.descricao = descricao;
+		}
+		/**
+		 * @return the idorigem
+		 */
+		public Long getIdorigem() {
+			return idorigem;
+		}
+		/**
+		 * @param idorigem the idorigem to set
+		 */
+		public void setIdorigem(Long idorigem) {
+			this.idorigem = idorigem;
+		}
+		/**
+		 * @return the nometabela
+		 */
+		public static String getNometabela() {
+			return nomeTabela;
+		}
+		private String descricao;
+		private Long idorigem;
+    }
+	
+	public static class Area{
+		private static final HashMap<Integer, Integer> idAreaPorConcessionaria = new HashMap<Integer, Integer>();
+		public static Integer getNextId(Integer idConcessionaria){
+			Integer next = Integer.valueOf(0);
+			if(idAreaPorConcessionaria.containsKey(idConcessionaria)){
+				next = idAreaPorConcessionaria.get(idConcessionaria);
+				next++;
+			}
+			idAreaPorConcessionaria.put(idConcessionaria, next);
+			return next;
+		}
+		private Tabela tabela;
+		public void setTabela(Tabela t){
+			this.tabela = t;
+		}
+		public Tabela getTabela(){
+			return tabela;
+		}
+		public final static String nomeTabela = "area";
+		private int idarea, quantidadecheque, valorcheque, participacompactacao,geramalotetransf,valordinheiro,ativado;
+		private Long idorigem;
+		private String descricao;
+		/**
+		 * @return the idarea
+		 */
+		public int getIdarea() {
+			return idarea;
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + idarea;
+			result = prime * result
+					+ ((idorigem == null) ? 0 : idorigem.hashCode());
+			return result;
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "Area [idarea=" + idarea + ", quantidadecheque="
+					+ quantidadecheque + ", valorcheque=" + valorcheque
+					+ ", participacompactacao=" + participacompactacao
+					+ ", geramalotetransf=" + geramalotetransf
+					+ ", valordinheiro=" + valordinheiro + ", ativado="
+					+ ativado + ", idorigem=" + idorigem + ", descricao="
+					+ descricao + "]";
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof Area)) {
+				return false;
+			}
+			Area other = (Area) obj;
+			if (idarea != other.idarea) {
+				return false;
+			}
+			if (idorigem == null) {
+				if (other.idorigem != null) {
+					return false;
+				}
+			} else if (!idorigem.equals(other.idorigem)) {
+				return false;
+			}
+			return true;
+		}
+		/**
+		 * @param idarea the idarea to set
+		 */
+		public void setIdarea(int idarea) {
+			this.idarea = idarea;
+		}
+		/**
+		 * @return the quantidadecheque
+		 */
+		public int getQuantidadecheque() {
+			return quantidadecheque;
+		}
+		/**
+		 * @param quantidadecheque the quantidadecheque to set
+		 */
+		public void setQuantidadecheque(int quantidadecheque) {
+			this.quantidadecheque = quantidadecheque;
+		}
+		/**
+		 * @return the valorcheque
+		 */
+		public int getValorcheque() {
+			return valorcheque;
+		}
+		/**
+		 * @param valorcheque the valorcheque to set
+		 */
+		public void setValorcheque(int valorcheque) {
+			this.valorcheque = valorcheque;
+		}
+		/**
+		 * @return the participacompactacao
+		 */
+		public int getParticipacompactacao() {
+			return participacompactacao;
+		}
+		/**
+		 * @param participacompactacao the participacompactacao to set
+		 */
+		public void setParticipacompactacao(int participacompactacao) {
+			this.participacompactacao = participacompactacao;
+		}
+		/**
+		 * @return the geramalotetransf
+		 */
+		public int getGeramalotetransf() {
+			return geramalotetransf;
+		}
+		/**
+		 * @param geramalotetransf the geramalotetransf to set
+		 */
+		public void setGeramalotetransf(int geramalotetransf) {
+			this.geramalotetransf = geramalotetransf;
+		}
+		/**
+		 * @return the valordinheiro
+		 */
+		public int getValordinheiro() {
+			return valordinheiro;
+		}
+		/**
+		 * @param valordinheiro the valordinheiro to set
+		 */
+		public void setValordinheiro(int valordinheiro) {
+			this.valordinheiro = valordinheiro;
+		}
+		/**
+		 * @return the ativado
+		 */
+		public int getAtivado() {
+			return ativado;
+		}
+		/**
+		 * @param ativado the ativado to set
+		 */
+		public void setAtivado(int ativado) {
+			this.ativado = ativado;
+		}
+		/**
+		 * @return the idorigem
+		 */
+		public Long getIdorigem() {
+			return idorigem;
+		}
+		/**
+		 * @param idorigem the idorigem to set
+		 */
+		public void setIdorigem(Long idorigem) {
+			this.idorigem = idorigem;
+		}
+		/**
+		 * @return the descricao
+		 */
+		public String getDescricao() {
+			return descricao;
+		}
+		/**
+		 * @param descricao the descricao to set
+		 */
+		public void setDescricao(String descricao) {
+			this.descricao = descricao;
+		}
+		/**
+		 * @return the nometabela
+		 */
+		public static String getNometabela() {
+			return nomeTabela;
+		}
+	}
+	
+	public static class Pacote{
+		private static final HashMap<Integer, Integer> idPacotePorConcessionaria = new HashMap<Integer, Integer>();
+		public static Integer getNextId(Integer idConcessionaria){
+			Integer next = Integer.valueOf(0);
+			if(idPacotePorConcessionaria.containsKey(idConcessionaria)){
+				next = idPacotePorConcessionaria.get(idConcessionaria);
+				next++;
+			}
+			idPacotePorConcessionaria.put(idConcessionaria, next);
+			return next;
+		}
+		private Tabela tabela;
+		public void setTabela(Tabela t){
+			this.tabela = t;
+		}
+		public Tabela getTabela(){
+			return tabela;
+		}
+		public final static String nomeTabela = "pacote";
+		private int idpacote,iddenominacao,quantidade,ativado;
+		private double valor;
+		/* (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ativado;
+			result = prime * result
+					+ ((descricao == null) ? 0 : descricao.hashCode());
+			result = prime * result + iddenominacao;
+			result = prime * result
+					+ ((idorigem == null) ? 0 : idorigem.hashCode());
+			result = prime * result + idpacote;
+			result = prime * result + quantidade;
+			result = prime * result + (int)valor;
+			return result;
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof Pacote)) {
+				return false;
+			}
+			Pacote other = (Pacote) obj;
+			if (ativado != other.ativado) {
+				return false;
+			}
+			if (descricao == null) {
+				if (other.descricao != null) {
+					return false;
+				}
+			} else if (!descricao.equals(other.descricao)) {
+				return false;
+			}
+			if (iddenominacao != other.iddenominacao) {
+				return false;
+			}
+			if (idorigem == null) {
+				if (other.idorigem != null) {
+					return false;
+				}
+			} else if (!idorigem.equals(other.idorigem)) {
+				return false;
+			}
+			if (idpacote != other.idpacote) {
+				return false;
+			}
+			if (quantidade != other.quantidade) {
+				return false;
+			}
+			if (valor != other.valor) {
+				return false;
+			}
+			return true;
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "Pacote [idpacote=" + idpacote + ", iddenominacao="
+					+ iddenominacao + ", quantidade=" + quantidade + ", valor="
+					+ valor + ", ativado=" + ativado + ", descricao="
+					+ descricao + ", idorigem=" + idorigem + "]";
+		}
+		/**
+		 * @return the idpacote
+		 */
+		public int getIdpacote() {
+			return idpacote;
+		}
+		/**
+		 * @param idpacote the idpacote to set
+		 */
+		public void setIdpacote(int idpacote) {
+			this.idpacote = idpacote;
+		}
+		/**
+		 * @return the iddenominacao
+		 */
+		public int getIddenominacao() {
+			return iddenominacao;
+		}
+		/**
+		 * @param iddenominacao the iddenominacao to set
+		 */
+		public void setIddenominacao(int iddenominacao) {
+			this.iddenominacao = iddenominacao;
+		}
+		/**
+		 * @return the quantidade
+		 */
+		public int getQuantidade() {
+			return quantidade;
+		}
+		/**
+		 * @param quantidade the quantidade to set
+		 */
+		public void setQuantidade(int quantidade) {
+			this.quantidade = quantidade;
+		}
+		/**
+		 * @return the valor
+		 */
+		public double getValor() {
+			return valor;
+		}
+		/**
+		 * @param valor the valor to set
+		 */
+		public void setValor(double valor) {
+			this.valor = valor;
+		}
+		/**
+		 * @return the ativado
+		 */
+		public int getAtivado() {
+			return ativado;
+		}
+		/**
+		 * @param ativado the ativado to set
+		 */
+		public void setAtivado(int ativado) {
+			this.ativado = ativado;
+		}
+		/**
+		 * @return the descricao
+		 */
+		public String getDescricao() {
+			return descricao;
+		}
+		/**
+		 * @param descricao the descricao to set
+		 */
+		public void setDescricao(String descricao) {
+			this.descricao = descricao;
+		}
+		/**
+		 * @return the idorigem
+		 */
+		public Long getIdorigem() {
+			return idorigem;
+		}
+		/**
+		 * @param idorigem the idorigem to set
+		 */
+		public void setIdorigem(Long idorigem) {
+			this.idorigem = idorigem;
+		}
+		/**
+		 * @return the nometabela
+		 */
+		public static String getNometabela() {
+			return nomeTabela;
+		}
+		private String descricao;
+		private Long idorigem;
+	}
+	
+	public static class PacotesArea{
+		private Tabela tabela;
+		public void setTabela(Tabela t){
+			this.tabela = t;
+		}
+		public Tabela getTabela(){
+			return tabela;
+		}
+		private static final HashMap<Integer, Integer> idPacotesAreaPorConcessionaria = new HashMap<Integer, Integer>();
+		public static Integer getNextId(Integer idConcessionaria){
+			Integer next = Integer.valueOf(0);
+			if(idPacotesAreaPorConcessionaria.containsKey(idConcessionaria)){
+				next = idPacotesAreaPorConcessionaria.get(idConcessionaria);
+				next++;
+			}
+			idPacotesAreaPorConcessionaria.put(idConcessionaria, next);
+			return next;
+		}
+		public final static String nomeTabela = "pacotesdaarea";
+		private int idarea, idpacote, quantidade;
+		private Long idorigem;
+		/* (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "PacotesArea [idarea=" + idarea + ", idpacote=" + idpacote
+					+ ", quantidade=" + quantidade + ", idorigem=" + idorigem
+					+ "]";
+		}
+		/**
+		 * @return the idarea
+		 */
+		public int getIdarea() {
+			return idarea;
+		}
+		/**
+		 * @param idarea the idarea to set
+		 */
+		public void setIdarea(int idarea) {
+			this.idarea = idarea;
+		}
+		/**
+		 * @return the idpacote
+		 */
+		public int getIdpacote() {
+			return idpacote;
+		}
+		/**
+		 * @param idpacote the idpacote to set
+		 */
+		public void setIdpacote(int idpacote) {
+			this.idpacote = idpacote;
+		}
+		/**
+		 * @return the quantidade
+		 */
+		public int getQuantidade() {
+			return quantidade;
+		}
+		/**
+		 * @param quantidade the quantidade to set
+		 */
+		public void setQuantidade(int quantidade) {
+			this.quantidade = quantidade;
+		}
+		/**
+		 * @return the idorigem
+		 */
+		public Long getIdorigem() {
+			return idorigem;
+		}
+		/**
+		 * @param idorigem the idorigem to set
+		 */
+		public void setIdorigem(Long idorigem) {
+			this.idorigem = idorigem;
+		}
+		/**
+		 * @return the nometabela
+		 */
+		public static String getNometabela() {
+			return nomeTabela;
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#hashCode()
+		 */
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + idarea;
+			result = prime * result
+					+ ((idorigem == null) ? 0 : idorigem.hashCode());
+			result = prime * result + idpacote;
+			return result;
+		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof PacotesArea)) {
+				return false;
+			}
+			PacotesArea other = (PacotesArea) obj;
+			if (idarea != other.idarea) {
+				return false;
+			}
+			if (idorigem == null) {
+				if (other.idorigem != null) {
+					return false;
+				}
+			} else if (!idorigem.equals(other.idorigem)) {
+				return false;
+			}
+			if (idpacote != other.idpacote) {
+				return false;
+			}
+			return true;
+		}
 	}
 }
