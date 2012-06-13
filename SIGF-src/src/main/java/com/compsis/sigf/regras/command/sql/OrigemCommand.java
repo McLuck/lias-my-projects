@@ -399,16 +399,8 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
             L.d(this.getClass().getName(), "Tratando Meios de Pagamento e suas dependencias...");
             //Agrega Scripts defaults dos Meios de Pagamentos Selecionados
             List<Tabela> lstAux = new ArrayList<Tabela>();
-            String a = "";
-            for (MeioPagamento mp : conc.getMeiosPagamento()) {
-                if (mp != null) {
-                	if(!mp.isHabilitado()){
-                		continue;
-                	}
-                    MeioPagamentoAdapt mpa = new MeioPagamentoAdapt(mp, vid);
-                    a = a.concat(mpa.getScripts());
-                }
-            }
+            String a = new MeioPagamentoAdapt(conc.getMeiosPagamento(), vid).getScripts();
+            
             //ordena
             //Collections.sort(lstAux);
             String temp = scriptsProntos.toString();
@@ -423,7 +415,7 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
             L.d(this.getClass().getName() , "Tratando dados de Pracas...");
             for (Praca pr : conc.getPracas()) {
                 if (pr != null) {
-                    //Insere a praca
+                	//Insere a praca
                     Tabela t = (Tabela) modelo.replicate(null);
                     for (Campo cp : t.getCampos()) {
                         if (cp.getNome().equals("idorigem")) {
@@ -458,31 +450,16 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
                             tabelas.add(tbl);
                         }
                     }
-
-/*                    //Insere a localizacao
-                    for(Localizacao loc : pr.getLocalizacoes()){
-                    	if(loc!=null){
-                    		t = (Tabela) modelo.replicate(null);
-                            for (Campo cp : t.getCampos()) {
-                                if (cp.getNome().equals("idorigem")) {
-                                    cp.setValor(GeralConverte.IDS.GET_ID_LOCALIZACAO(loc));
-                                } else if (cp.getNome().equals("tipoorigem")) {
-                                    cp.setValor("3");
-                                } else if (cp.getNome().equals("descricao")) {
-                                    cp.setValor("Principal " + pr.getNome());
-                                } else if (cp.getNome().equals("praca")) {
-                                    cp.setValor(pr.getNumeroPraca());
-                                } else if (cp.getNome().equals("idorigempai")) {
-                                    cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
-                                }else if (cp.getNome().equals("sentido")) {
-	                            	cp.setValor(GeralConverte.IDS.GET_ID_PRACA(pr));
-	                            }
-                            }
-                            tabelasPrincipais.add(t);
-                    	}
-                    }
-                    //Implementar Lista de Localizacpes AQUI, caso seja necessario.
-*/
+                    
+                    //Insere dependencias 
+                    Tabela tDenominacao = TabelaDAO.getInstance().getByVersaoAndNome(vid, "denominacao").get(0);
+                	Tabela tPacote = TabelaDAO.getInstance().getByVersaoAndNome(vid, "pacote").get(0);
+                	Tabela tArea = TabelaDAO.getInstance().getByVersaoAndNome(vid, "area").get(0);
+                	Tabela tpacotesArea = TabelaDAO.getInstance().getByVersaoAndNome(vid, "pacotesdaarea").get(0);
+                	tabelas.addAll(pr.getDependencia().getTabelasAreas(pr.getDependencia().getAreas(), tArea));
+                	tabelas.addAll(pr.getDependencia().getTabelasDenominacoes(pr.getDependencia().getDenominacoes(), tDenominacao));
+                	tabelas.addAll(pr.getDependencia().getTabelasPacotes(pr.getDependencia().getPacotes(), tPacote));
+                	tabelas.addAll(pr.getDependencia().getTabelasPacotesDaArea(pr.getDependencia().getPacotesDaArea(), tpacotesArea));
 
 
 
@@ -704,6 +681,8 @@ public class OrigemCommand extends SQLInserts implements Command, PropertyRetrie
             }
         }
     }
+    
+    
 
     private void gc() {
         try {

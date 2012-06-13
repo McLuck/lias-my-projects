@@ -33,6 +33,7 @@ public class ClearSql extends SQLInserts implements Command, PropertyRetriever {
         System.gc();
         String idOrigemConc = String.valueOf(GeralConverte.IDS.GET_ID_CONCESSIONARIA(conc));
         script = script.replace("#concorigem#", idOrigemConc);
+        script = script.replace("#IDCATESP#", String.valueOf(UtilidadesGenericas.getCatEsp(conc.getCategorias()).getCatid()));
         script = script.replace("insert", "INSERT");
         String[] inserts = script.split("INSERT");
         for(String sc : inserts){
@@ -40,9 +41,6 @@ public class ClearSql extends SQLInserts implements Command, PropertyRetriever {
             String aux = sc.replace(" ", "").toLowerCase();
             if(!aux.isEmpty() && unificados.add(aux) && !aux.contains("#"))
                 sb.append("INSERT ").append(sc).append(UtilidadesGenericas.LINE_BREAK);
-            /*sc = "insert ".concat(sc).trim().concat("\n");
-            if(!sb.toString().toLowerCase().contains(sc.toLowerCase()) && !sc.toLowerCase().contains("#"))
-                sb.append(sc);*/
         }
         
         
@@ -51,8 +49,7 @@ public class ClearSql extends SQLInserts implements Command, PropertyRetriever {
         /*
          * APPEND SCRIPTS POS INSERTS
          */
-        sb.append("INSERT  into origemtipopista select idorigem, 0, 0, dbo.trunc_date(getdate()) from origem where tipoorigem = 2;" ).append(UtilidadesGenericas.LINE_BREAK);
-        sb.append("Insert Into Origemmotivocorrecao select Idorigem, Idmotivocorrecao, 0, dbo.trunc_date(getDate()) From Motivocorrecao, Origem Where Tipoorigem = 2;").append(UtilidadesGenericas.LINE_BREAK);
+        
         String aux = sb.toString();
         
         //Padroniza data

@@ -1129,20 +1129,6 @@ public class PreferenciasCommand extends SQLInserts implements Command, Property
         t = (Tabela) modelo.replicate(null);
         for (Campo cp : t.getCampos()) {
             if (cp.getNome().equals("idpreferencia")) {
-                cp.setValor("4025");
-            } else if (cp.getNome().equals("valor")) {
-                cp.setValor(conc.getConfigMalote().getDiasSemRepetirLacre());
-            } else if (cp.getNome().equals("sistema")) {
-                cp.setValor("1");
-            } else if (cp.getNome().equals("tipo")) {
-                cp.setValor("1");
-            }
-        }
-        tabelas.add(t);
-
-        t = (Tabela) modelo.replicate(null);
-        for (Campo cp : t.getCampos()) {
-            if (cp.getNome().equals("idpreferencia")) {
                 cp.setValor("4002");
             } else if (cp.getNome().equals("valor")) {
                 cp.setValor(conc.getConfigMalote().getOpcCriacaoMalote());

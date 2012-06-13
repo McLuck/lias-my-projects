@@ -264,7 +264,7 @@ public class TabelaDAO extends BaseDAO<Tabela> {
             if(t==null){
                 t = new Tabela();
                 t.setNome(String.valueOf(ob[1]));
-                if(t.getNome().trim().toLowerCase().equals("funcionalidade")){
+                if(t.getNome().trim().toLowerCase().equals("funcionalidade") && ob[4]!=null && !String.valueOf(ob[4]).equals("3016")){
                     continue;
                 }
                 t.setOrdem((Integer)ob[2]);
